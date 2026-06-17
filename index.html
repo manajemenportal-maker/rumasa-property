@@ -146,6 +146,16 @@
         .animate-marquee:hover {
             animation-play-state: paused;
         }
+
+        /* Animasi Denyut Tombol WA (Mobile Optimized) */
+        @keyframes pulse-wa {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.5); }
+            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+        .btn-wa {
+            animation: pulse-wa 2s infinite;
+        }
     </style>
 </head>
 <body class="text-slate-800 pb-20 md:pb-0">
@@ -938,11 +948,32 @@
                                         </div>
                                     </div>
                                     
-                                    <!-- Artikel (Mock) -->
+                                    <!-- Artikel (Mini Rich Text Editor) -->
                                     <div>
                                         <h3 class="text-lg font-bold text-slate-800 mb-4 border-b border-slate-100 pb-2">Isi Artikel Ulasan</h3>
-                                        <p class="text-sm text-slate-500 mb-2">Teks artikel panjang (Mendukung tag HTML untuk cetak tebal, paragraf, dll).</p>
-                                        <textarea rows="6" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition bg-slate-50 focus:bg-white font-mono text-xs text-slate-600" required><p>Mencari hunian mewah di kawasan elit Pantai Indah Kapuk (PIK) 2? Smart Home Mansion ini menawarkan kombinasi sempurna antara teknologi mutakhir abad ke-21 dan desain arsitektur neoklasik yang memukau mata dari segala sudut.</p> ...</textarea>
+                                        <p class="text-sm text-slate-500 mb-2">Tuliskan ulasan lengkap di sini. Gunakan tombol untuk merapikan paragraf, membuat list, atau membuat sub-judul.</p>
+                                        
+                                        <!-- Toolbar Editor -->
+                                        <div class="flex flex-wrap gap-2 mb-0 bg-slate-100 p-2 rounded-t-xl border border-slate-300 border-b-0">
+                                            <button type="button" onclick="formatDoc('bold')" class="w-8 h-8 flex items-center justify-center bg-white border border-slate-200 rounded hover:bg-blue-50 hover:text-primary transition font-bold" title="Tebal">B</button>
+                                            <button type="button" onclick="formatDoc('italic')" class="w-8 h-8 flex items-center justify-center bg-white border border-slate-200 rounded hover:bg-blue-50 hover:text-primary transition italic font-serif" title="Miring">I</button>
+                                            <button type="button" onclick="formatDoc('underline')" class="w-8 h-8 flex items-center justify-center bg-white border border-slate-200 rounded hover:bg-blue-50 hover:text-primary transition underline" title="Garis Bawah">U</button>
+                                            <div class="w-px h-8 bg-slate-300 mx-1"></div>
+                                            <button type="button" onclick="formatDoc('formatBlock', 'H3')" class="px-3 h-8 flex items-center justify-center bg-white border border-slate-200 rounded hover:bg-blue-50 hover:text-primary transition text-xs font-bold" title="Jadikan Sub-judul">Sub-Judul (H3)</button>
+                                            <button type="button" onclick="formatDoc('formatBlock', 'P')" class="px-3 h-8 flex items-center justify-center bg-white border border-slate-200 rounded hover:bg-blue-50 hover:text-primary transition text-xs font-bold" title="Jadikan Paragraf Biasa">Paragraf Normal</button>
+                                            <div class="w-px h-8 bg-slate-300 mx-1"></div>
+                                            <button type="button" onclick="formatDoc('insertUnorderedList')" class="w-8 h-8 flex items-center justify-center bg-white border border-slate-200 rounded hover:bg-blue-50 hover:text-primary transition" title="List Titik"><i class="ph ph-list-bullets font-bold text-lg"></i></button>
+                                            <button type="button" onclick="formatDoc('insertOrderedList')" class="w-8 h-8 flex items-center justify-center bg-white border border-slate-200 rounded hover:bg-blue-50 hover:text-primary transition" title="List Angka"><i class="ph ph-list-numbers font-bold text-lg"></i></button>
+                                        </div>
+                                        
+                                        <!-- Area Ketik (Content Editable) -->
+                                        <div id="editor-review" contenteditable="true" class="w-full min-h-[300px] px-5 py-4 rounded-b-xl border border-slate-300 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition bg-white text-slate-700 leading-relaxed overflow-y-auto [&>p]:mb-4 [&>h3]:text-xl [&>h3]:font-bold [&>h3]:mt-6 [&>h3]:mb-2 [&>h3]:text-slate-800 [&>ul]:list-disc [&>ul]:ml-5 [&>ul]:mb-4 [&>ol]:list-decimal [&>ol]:ml-5 [&>ol]:mb-4 [&>b]:font-bold [&>i]:italic">
+                                            <p>Mencari hunian mewah di kawasan elit Pantai Indah Kapuk (PIK) 2? Smart Home Mansion ini menawarkan kombinasi sempurna antara teknologi mutakhir abad ke-21 dan desain arsitektur neoklasik yang memukau mata dari segala sudut.</p>
+                                            <h3>1. Desain Eksterior & Interior</h3>
+                                            <p>Saat pertama kali tim RUMASA melihat fasad rumah ini, kita disambut oleh pilar-pilar tinggi bergaya Eropa klasik yang memberikan kesan grandeur. Masuk ke bagian dalam, lantai marmer import dari Italia mendominasi ruang tamu yang dirancang dengan konsep open space.</p>
+                                            <h3>2. Integrasi Teknologi Smart Home</h3>
+                                            <p>Keunggulan absolut dari properti ini terletak pada sistem Smart Home-nya yang menyeluruh. Tidak lagi menggunakan kunci konvensional, pintu masuk utama dilengkapi sistem Face Recognition dan sensor biometrik terkini.</p>
+                                        </div>
                                     </div>
 
                                     <div class="flex justify-end pt-4 border-t border-slate-200">
@@ -1083,15 +1114,29 @@
             <div class="container mx-auto px-4">
                 <img src="logo rumasa.jpg" alt="RUMASA Logo" class="h-12 w-12 rounded-xl shadow-sm mx-auto mb-3 opacity-90">
                 <h3 class="font-bold text-slate-800 text-lg mb-1">RUMASA Marketplace</h3>
-                <p class="text-sm mb-3">Pusat Jual Beli Properti Terbaik & Terpercaya</p>
-                <a href="https://www.rumasa.web.id" target="_blank" class="inline-block bg-blue-50 text-primary px-4 py-1.5 rounded-full hover:bg-primary hover:text-white text-sm font-medium transition-colors mb-6">
-                    <i class="ph ph-globe mr-1"></i> www.rumasa.web.id
-                </a>
+                <p class="text-sm mb-4">Pusat Jual Beli Properti Terbaik & Terpercaya</p>
+                
+                <div class="flex flex-col md:flex-row justify-center items-center gap-3 mb-6">
+                    <a href="https://www.rumasa.web.id" target="_blank" class="flex items-center bg-blue-50 text-primary px-5 py-2 rounded-full hover:bg-primary hover:text-white text-sm font-medium transition-colors shadow-sm">
+                        <i class="ph ph-globe mr-2 text-lg"></i> www.rumasa.web.id
+                    </a>
+                    <a href="https://wa.me/6285111033789" target="_blank" class="flex items-center bg-[#25D366]/10 text-[#25D366] px-5 py-2 rounded-full hover:bg-[#25D366] hover:text-white text-sm font-bold transition-colors shadow-sm">
+                        <i class="ph-fill ph-whatsapp-logo mr-2 text-lg"></i> Admin: 0851-1103-3789
+                    </a>
+                </div>
+
                 <p class="text-xs">&copy; 2026 RUMASA. Hak Cipta Dilindungi.</p>
             </div>
         </footer>
 
     </main>
+
+    <!-- Floating WhatsApp Admin Button (Di HP aman, tidak menutupi Navigasi Bawah) -->
+    <a href="https://wa.me/6285111033789?text=Halo%20Admin%20RUMASA,%20saya%20butuh%20bantuan%20terkait%20layanan%20properti" target="_blank" 
+       class="btn-wa fixed bottom-24 md:bottom-8 right-4 md:right-8 bg-[#25D366] text-white p-3.5 md:p-4 rounded-full z-[60] hover:bg-[#20bd5a] hover:scale-110 transition-transform duration-300 flex items-center justify-center group app-ui cursor-pointer">
+        <i class="ph-fill ph-whatsapp-logo text-3xl md:text-4xl"></i>
+        <span class="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-[150px] transition-all duration-500 ease-in-out font-bold text-sm ml-0 group-hover:ml-3">Hubungi Admin</span>
+    </a>
 
     <!-- PWA Install Banner (Hanya muncul di HP saat bisa di-install) -->
     <div id="pwa-install-banner" class="hidden fixed bottom-20 left-4 right-4 bg-slate-900 text-white p-4 rounded-2xl shadow-2xl z-[60] md:hidden border border-slate-700 app-ui">
@@ -1909,6 +1954,17 @@
         window.processLogin = processLogin;
         window.processLogout = processLogout;
         window.installPWA = installPWA;
+
+        // Rich Text Editor Logic
+        function formatDoc(cmd, value=null) {
+            if (value) {
+                document.execCommand(cmd, false, value);
+            } else {
+                document.execCommand(cmd);
+            }
+            document.getElementById('editor-review').focus();
+        }
+        window.formatDoc = formatDoc;
     </script>
 </body>
 </html>
