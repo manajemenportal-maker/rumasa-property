@@ -988,6 +988,7 @@
                 <div class="sm:mx-auto sm:w-full sm:max-w-md relative z-10">
                     <img src="logo rumasa.jpg" alt="RUMASA Logo" class="mx-auto h-16 w-16 rounded-2xl shadow-md cursor-pointer" onclick="navigate('home')">
                     <h2 id="auth-title" class="mt-6 text-center text-3xl font-extrabold text-slate-900">Daftar Akun Baru</h2>
+                    <p id="auth-subtitle" class="mt-2 text-center text-sm text-slate-600">Bergabunglah dan temukan properti impianmu.</p>
             </div>
 
             <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md relative">
@@ -998,9 +999,9 @@
                 <div class="bg-white py-8 px-4 shadow-xl sm:rounded-3xl sm:px-10 border border-slate-100 relative z-10">
                     
                     <!-- Toggle Switch -->
-                    <div class="flex p-1 bg-slate-100 rounded-xl mb-6 hidden" id="auth-toggle-container">
-                        <button id="btn-tab-login" onclick="toggleAuth('login')" class="flex-1 py-2.5 text-sm font-bold rounded-lg text-slate-500 hover:text-slate-700 transition">Masuk</button>
-                        <button id="btn-tab-register" onclick="toggleAuth('register')" class="flex-1 py-2.5 text-sm font-bold rounded-lg bg-white text-primary shadow-sm transition">Daftar</button>
+                    <div class="flex p-1 bg-slate-100 rounded-xl mb-6" id="auth-toggle-container">
+                        <button id="btn-tab-login" type="button" onclick="toggleAuth('login')" class="flex-1 py-2.5 text-sm font-bold rounded-lg text-slate-500 hover:text-slate-700 transition">Masuk</button>
+                        <button id="btn-tab-register" type="button" onclick="toggleAuth('register')" class="flex-1 py-2.5 text-sm font-bold rounded-lg bg-white text-primary shadow-sm transition">Daftar</button>
                     </div>
 
                     <!-- Register Form -->
@@ -1879,19 +1880,41 @@
             const formRegister = document.getElementById('form-register');
             const title = document.getElementById('auth-title');
             const subtitle = document.getElementById('auth-subtitle');
+            const btnLogin = document.getElementById('btn-tab-login');
+            const btnRegister = document.getElementById('btn-tab-register');
 
             if(type === 'login') {
                 formLogin.classList.remove('hidden');
                 formRegister.classList.add('hidden');
 
                 title.innerText = 'Selamat Datang Kembali';
-                subtitle.innerText = 'Masuk ke akun RUMASA Anda.';
+                if(subtitle) subtitle.innerText = 'Masuk ke akun RUMASA Anda.';
+                
+                // Ubah gaya tombol toggle
+                if(btnLogin) {
+                    btnLogin.classList.add('bg-white', 'text-primary', 'shadow-sm');
+                    btnLogin.classList.remove('text-slate-500', 'hover:text-slate-700');
+                }
+                if(btnRegister) {
+                    btnRegister.classList.remove('bg-white', 'text-primary', 'shadow-sm');
+                    btnRegister.classList.add('text-slate-500', 'hover:text-slate-700');
+                }
             } else {
                 formRegister.classList.remove('hidden');
                 formLogin.classList.add('hidden');
 
                 title.innerText = 'Daftar Akun Baru';
-                subtitle.innerText = 'Bergabunglah dan temukan properti impianmu.';
+                if(subtitle) subtitle.innerText = 'Bergabunglah dan temukan properti impianmu.';
+                
+                // Ubah gaya tombol toggle
+                if(btnRegister) {
+                    btnRegister.classList.add('bg-white', 'text-primary', 'shadow-sm');
+                    btnRegister.classList.remove('text-slate-500', 'hover:text-slate-700');
+                }
+                if(btnLogin) {
+                    btnLogin.classList.remove('bg-white', 'text-primary', 'shadow-sm');
+                    btnLogin.classList.add('text-slate-500', 'hover:text-slate-700');
+                }
             }
         }
 
@@ -2091,7 +2114,6 @@
 
         // Expose functions to window agar bisa dipanggil dari atribut onclick di HTML (Karena menggunakan type="module")
         window.showMessage = showMessage;
-        window.updateUploadText = updateUploadText;
         window.goToSlide = goToSlide;
         window.nextSlide = nextSlide;
         window.prevSlide = prevSlide;
