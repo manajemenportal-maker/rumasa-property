@@ -1144,7 +1144,40 @@
     </div>
 
     <!-- Javascript Logic -->
-    <script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Firebase Configuration (Data dari Anda)
+        const firebaseConfig = {
+            apiKey: "AIzaSyCOwyyhNKRF0bl6t3ozSP2CrcxIo1gY7BA",
+            authDomain: "alarm-sos-b73cc.firebaseapp.com",
+            projectId: "alarm-sos-b73cc",
+            storageBucket: "alarm-sos-b73cc.firebasestorage.app",
+            messagingSenderId: "745103732098",
+            appId: "1:745103732098:web:a7f5ae578a0c548669739b",
+            measurementId: "G-9VK9JJB9N9"
+        };
+
+        // Initialize Firebase Services
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Sign In secara Anonim di latar belakang (Standard praktik Firebase Web)
+        signInAnonymously(auth).catch((error) => {
+            console.error("Firebase Auth Error:", error);
+        });
+        
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                console.log("Terhubung dengan Firebase. User ID Sementara:", user.uid);
+            }
+        });
+
         // Custom message logic replacing alert()
         function showMessage(msg) {
             const box = document.getElementById('message-box');
@@ -1857,6 +1890,25 @@
                     .catch(err => console.log('SW Reg failed (expected in some restricted iframes)', err));
             }
         });
+
+        // Expose functions to window agar bisa dipanggil dari atribut onclick di HTML (Karena menggunakan type="module")
+        window.showMessage = showMessage;
+        window.updateUploadText = updateUploadText;
+        window.goToSlide = goToSlide;
+        window.nextSlide = nextSlide;
+        window.prevSlide = prevSlide;
+        window.switchAdminTab = switchAdminTab;
+        window.saveCarousel = saveCarousel;
+        window.filterData = filterData;
+        window.updateNav = updateNav;
+        window.changePage = changePage;
+        window.navigate = navigate;
+        window.toggleAuth = toggleAuth;
+        window.showReview = showReview;
+        window.showDetails = showDetails;
+        window.processLogin = processLogin;
+        window.processLogout = processLogout;
+        window.installPWA = installPWA;
     </script>
 </body>
 </html>
