@@ -263,14 +263,14 @@
                             <p id="hero-subtitle" class="text-lg md:text-xl text-slate-200 mb-8 drop-shadow-md transition-all duration-300">Rumah, Apartemen, Gudang hingga Kantor terbaik di RUMASA.</p>
                             
                             <!-- Search Box -->
-                            <div class="bg-white p-2 rounded-full md:rounded-2xl shadow-2xl flex flex-col md:flex-row gap-2 w-full mx-auto lg:mx-0">
-                                <div class="flex-1 flex items-center px-4 py-3 bg-slate-50 rounded-full md:rounded-xl border border-slate-200 focus-within:border-primary transition">
+                            <div class="bg-white p-3 rounded-3xl md:rounded-full shadow-2xl flex flex-col md:flex-row gap-3 md:gap-2 w-full mx-auto lg:mx-0">
+                                <div class="flex-1 flex items-center px-4 py-3.5 bg-slate-50 rounded-2xl md:rounded-full border border-slate-200 focus-within:border-primary transition">
                                     <i class="ph ph-map-pin text-slate-400 text-xl mr-3"></i>
                                     <input type="text" placeholder="Lokasi, kota, atau area..." class="w-full bg-transparent border-none outline-none text-slate-800 placeholder-slate-400">
                                 </div>
-                                <div class="hidden md:flex flex-1 items-center px-4 py-3 bg-slate-50 rounded-xl border border-slate-200">
+                                <div class="flex-1 flex items-center px-4 py-3.5 bg-slate-50 rounded-2xl md:rounded-full border border-slate-200 focus-within:border-primary transition">
                                     <i class="ph ph-house text-slate-400 text-xl mr-3"></i>
-                                    <select class="w-full bg-transparent border-none outline-none text-slate-800 cursor-pointer">
+                                    <select class="w-full bg-transparent border-none outline-none text-slate-800 cursor-pointer appearance-none">
                                         <option value="">Tipe Properti</option>
                                         <option value="rumah">Rumah</option>
                                         <option value="apartemen">Apartemen</option>
@@ -282,10 +282,11 @@
                                         <option value="villa">Villa</option>
                                         <option value="pabrik">Pabrik</option>
                                     </select>
+                                    <i class="ph ph-caret-down text-slate-400 ml-2"></i>
                                 </div>
-                                <button class="bg-primary hover:bg-secondary text-white rounded-full md:rounded-xl px-8 py-3 md:py-4 font-semibold transition flex items-center justify-center gap-2 h-14 md:h-auto">
+                                <button class="bg-primary hover:bg-secondary text-white rounded-2xl md:rounded-full px-8 py-4 font-semibold transition flex items-center justify-center gap-2">
                                     <i class="ph ph-magnifying-glass text-xl"></i>
-                                    <span class="hidden sm:inline">Cari</span>
+                                    <span>Cari</span>
                                 </button>
                             </div>
                         </div>
@@ -574,10 +575,10 @@
                     <h2 class="text-2xl font-bold">Pasang Iklan Properti</h2>
                 </div>
                 
-                <form onsubmit="event.preventDefault(); showMessage('Iklan berhasil disubmit untuk direview!'); navigate('home');" class="space-y-6">
+                <form id="form-pasang-iklan" onsubmit="event.preventDefault(); submitAd();" class="space-y-6">
                     <div>
                         <label class="block text-sm font-medium text-slate-700 mb-2">Judul Iklan</label>
-                        <input type="text" placeholder="Misal: Rumah Minimalis Siap Huni di Bintaro" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition" required>
+                        <input type="text" id="ad-input-title" placeholder="Misal: Rumah Minimalis Siap Huni di Bintaro" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition" required>
                     </div>
                     
                     <div class="grid grid-cols-2 gap-4">
@@ -606,10 +607,10 @@
 
                     <div>
                         <label class="block text-sm font-medium text-slate-700 mb-2">Harga (Rp)</label>
-                        <input type="number" placeholder="Contoh: 1500000000" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary outline-none transition" required>
+                        <input type="number" id="ad-input-price" placeholder="Contoh: 1500000000" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary outline-none transition" required>
                     </div>
 
-                    <!-- Spesifikasi Fisik -->
+                    <!-- Spesifikasi Fisik (BARU) -->
                     <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl space-y-5">
                         <h3 class="font-bold text-slate-800 text-sm border-b border-slate-200 pb-2">Spesifikasi Detail Properti</h3>
                         
@@ -674,14 +675,17 @@
                         <textarea rows="5" placeholder="Ceritakan detail keunggulan properti Anda, akses fasilitas umum terdekat, kondisi bangunan, dll..." class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary outline-none transition" required></textarea>
                     </div>
 
-                    <!-- REAL Image Upload (Perbaikan Disini) -->
+                    <!-- REAL Image Upload dengan Preview & Kompresi -->
                     <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-2">Foto Properti</label>
-                        <input type="file" id="foto-upload" accept="image/*" multiple class="hidden" onchange="updateUploadText(this)">
+                        <label class="block text-sm font-medium text-slate-700 mb-2">Foto Properti (Maks 5 Foto)</label>
+                        <input type="file" id="foto-upload" accept="image/*" multiple class="hidden" onchange="handleImageUpload(this)">
                         <div onclick="document.getElementById('foto-upload').click()" class="border-2 border-dashed border-slate-300 rounded-xl p-8 text-center hover:bg-slate-50 hover:border-primary transition cursor-pointer group">
                             <i id="upload-icon" class="ph ph-upload-simple text-3xl text-slate-400 mb-2 group-hover:text-primary transition"></i>
-                            <p id="upload-text" class="text-sm text-slate-500 group-hover:text-primary transition">Klik atau drag foto ke sini (Maks 10 foto)</p>
+                            <p id="upload-text" class="text-sm text-slate-500 group-hover:text-primary transition">Klik atau drag foto ke sini (Maks 5 foto)</p>
                         </div>
+                        <!-- Container Preview -->
+                        <div id="image-preview-container" class="grid grid-cols-5 gap-3 mt-4 empty:hidden"></div>
+                        <p class="text-xs text-slate-400 mt-2 font-medium">*Sistem akan otomatis mengecilkan ukuran foto agar cepat dimuat.</p>
                     </div>
 
                     <button type="submit" class="w-full bg-primary text-white py-4 rounded-xl font-bold text-lg hover:bg-secondary transition shadow-lg shadow-blue-500/30">
@@ -722,29 +726,17 @@
                         <h3 class="text-lg font-bold text-slate-800">Iklan Properti Saya</h3>
                         <button onclick="navigate('sell')" class="text-primary text-sm font-medium hover:underline">+ Pasang Baru</button>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <!-- Active Ad -->
+                    <div id="user-ads-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Active Ad (Iklan Pertama Gratis) -->
                         <div class="flex gap-4 bg-white p-4 rounded-xl shadow-sm border border-slate-100">
                             <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=200&q=80" class="w-24 h-24 rounded-lg object-cover">
                             <div class="flex-1">
                                 <h4 class="font-bold text-slate-800 line-clamp-1 text-sm">Rumah Minimalis Serpong</h4>
                                 <div class="text-primary font-bold text-sm mb-1">Rp 1.850.000.000</div>
-                                <div class="text-xs text-slate-500 mb-3">Status: <span class="text-green-600 font-medium">Aktif</span></div>
+                                <div class="text-xs text-slate-500 mb-3">Status: <span class="text-green-600 font-medium">Aktif (Gratis)</span></div>
                                 <div class="flex gap-2">
                                     <button onclick="showMessage('Membuka editor iklan...')" class="text-xs bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded transition font-medium">Edit</button>
                                     <button onclick="showMessage('Iklan berhasil dihapus.')" class="text-xs bg-red-50 text-red-600 hover:bg-red-100 px-3 py-1.5 rounded transition font-medium">Hapus</button>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Pending Ad -->
-                        <div class="flex gap-4 bg-white p-4 rounded-xl shadow-sm border border-slate-100">
-                            <img src="https://images.unsplash.com/photo-1577995166023-ebc96924ab02?auto=format&fit=crop&w=200&q=80" class="w-24 h-24 rounded-lg object-cover">
-                            <div class="flex-1">
-                                <h4 class="font-bold text-slate-800 line-clamp-1 text-sm">Ruko Strategis Kelapa Gading</h4>
-                                <div class="text-primary font-bold text-sm mb-1">Rp 3.200.000.000</div>
-                                <div class="text-xs text-slate-500 mb-3">Status: <span class="text-accent font-medium">Menunggu Review</span></div>
-                                <div class="flex gap-2">
-                                    <button onclick="showMessage('Membuka editor iklan...')" class="text-xs bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded transition font-medium">Edit</button>
                                 </div>
                             </div>
                         </div>
@@ -1233,23 +1225,184 @@
             }, 3000);
         }
 
-        // Logic Upload Foto Text
-        function updateUploadText(input) {
+        // --- Logika Kuota & Submit Iklan (Freemium Logic) ---
+        let userAdCount = 1; // Asumsi user sudah punya 1 iklan gratis yang terpasang di dashboard
+        let uploadedImages = []; // Array untuk menampung gambar base64 yang sudah dikompres
+
+        function submitAd() {
+            const title = document.getElementById('ad-input-title').value;
+            const price = document.getElementById('ad-input-price').value;
+            
+            // Gunakan foto pertama sebagai sampul, jika tidak ada, pakai gambar placeholder
+            const coverImage = uploadedImages.length > 0 ? uploadedImages[0] : 'https://placehold.co/400x300/e2e8f0/64748b?text=Tanpa+Foto';
+
+            if (userAdCount === 0) {
+                // Kuota gratis masih ada
+                userAdCount++;
+                showMessage('Iklan pertama berhasil ditayangkan secara GRATIS!');
+                addAdToDashboard(title, price, 'Aktif', 'text-green-600', coverImage);
+            } else {
+                // Kuota gratis habis, masuk database tapi status Menunggu Upgrade
+                userAdCount++;
+                showMessage('Iklan disimpan! Silakan UPGRADE LAYANAN agar iklan ini tayang di pencarian.');
+                addAdToDashboard(title, price, 'Menunggu Upgrade', 'text-accent', coverImage);
+            }
+            
+            // Reset form dan preview foto
+            document.getElementById('form-pasang-iklan').reset();
+            uploadedImages = [];
+            renderImagePreviews();
+            
+            navigate('user'); // Kembali ke dashboard
+        }
+
+        function addAdToDashboard(title, price, status, statusColor, coverImage) {
+            const list = document.getElementById('user-ads-list');
+            const formatPrice = "Rp " + price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+            
+            const upgradeBtnHtml = status !== 'Aktif' 
+                ? `<button onclick="showMessage('Membuka halaman Pembayaran Premium...')" class="text-xs bg-accent text-white hover:bg-yellow-600 px-3 py-1.5 rounded transition font-medium shadow-sm">Upgrade Tayang</button>` 
+                : '';
+
+            const newAdHtml = `
+                <div class="flex gap-4 bg-white p-4 rounded-xl shadow-sm border border-slate-100">
+                    <img src="${coverImage}" class="w-24 h-24 rounded-lg object-cover border border-slate-200 bg-slate-100">
+                    <div class="flex-1">
+                        <h4 class="font-bold text-slate-800 line-clamp-1 text-sm">${title}</h4>
+                        <div class="text-primary font-bold text-sm mb-1">${formatPrice}</div>
+                        <div class="text-xs text-slate-500 mb-3">Status: <span class="${statusColor} font-medium">${status}</span></div>
+                        <div class="flex gap-2">
+                            ${upgradeBtnHtml}
+                            <button onclick="showMessage('Membuka editor iklan...')" class="text-xs bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded transition font-medium">Edit</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            list.insertAdjacentHTML('beforeend', newAdHtml);
+        }
+
+        // --- Simulasi Algoritma Rotasi Premium 30 Hari ---
+        // Catatan: Algoritma ini akan diaplikasikan di Backend (Firebase Cloud Functions / Node.js)
+        function sortPropertiesByPremiumLogic(propertiesArray) {
+            const today = new Date();
+            
+            return propertiesArray.sort((a, b) => {
+                // 1. Prioritaskan iklan Premium berbayar
+                if (a.isPremium && !b.isPremium) return -1;
+                if (!a.isPremium && b.isPremium) return 1;
+                
+                // 2. Jika keduanya premium, hitung bobot berdasarkan umur iklan (jatuh tempo 30 hari)
+                if (a.isPremium && b.isPremium) {
+                    const uploadDateA = new Date(a.uploadDate);
+                    const uploadDateB = new Date(b.uploadDate);
+                    
+                    const ageA = Math.floor((today - uploadDateA) / (1000 * 60 * 60 * 24)); // Umur dalam hari
+                    const ageB = Math.floor((today - uploadDateB) / (1000 * 60 * 60 * 24));
+                    
+                    // Bobot dasar: Iklan baru bobotnya tinggi (Maksimal 30)
+                    let weightA = Math.max(0, 30 - ageA);
+                    let weightB = Math.max(0, 30 - ageB);
+                    
+                    // Rotasi setiap 3 hari: Algoritma untuk me-rotasi iklan yang poinnya mirip
+                    const rotationCycle = Math.floor(today.getDate() / 3); 
+                    
+                    // Faktor acak namun terstruktur agar Top 10 bergantian
+                    weightA += (a.id + rotationCycle) % 5; 
+                    weightB += (b.id + rotationCycle) % 5;
+                    
+                    return weightB - weightA; // Sort Descending (Poin tertinggi di atas)
+                }
+                
+                // 3. Iklan gratis (Non-premium) bersaing biasa (berdasarkan ID atau tanggal)
+                return b.id - a.id; 
+            });
+        }
+
+        // --- Logika Upload Foto (Kompresi & Preview Maks 5 Foto) ---
+        function handleImageUpload(input) {
+            const files = Array.from(input.files);
+            const remainingSlots = 5 - uploadedImages.length;
+            
+            if (files.length > remainingSlots) {
+                showMessage(`Anda hanya bisa menambahkan ${remainingSlots} foto lagi (Maksimal 5 Foto).`);
+                return;
+            }
+
+            files.slice(0, remainingSlots).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        // Kompresi menggunakan Canvas API
+                        const canvas = document.createElement('canvas');
+                        const MAX_WIDTH = 800; // Maksimal lebar 800px agar ringan di database
+                        const MAX_HEIGHT = 800;
+                        let width = img.width;
+                        let height = img.height;
+
+                        if (width > height) {
+                            if (width > MAX_WIDTH) {
+                                height *= MAX_WIDTH / width;
+                                width = MAX_WIDTH;
+                            }
+                        } else {
+                            if (height > MAX_HEIGHT) {
+                                width *= MAX_HEIGHT / height;
+                                height = MAX_HEIGHT;
+                            }
+                        }
+                        
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+                        
+                        // Ubah menjadi Base64 string kualitas 60% (Sangat hemat size)
+                        const base64Str = canvas.toDataURL('image/jpeg', 0.6);
+                        uploadedImages.push(base64Str);
+                        renderImagePreviews();
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+            input.value = ''; // Reset input value agar bisa pilih foto yang sama lagi jika dihapus
+        }
+
+        function removeImage(index) {
+            uploadedImages.splice(index, 1);
+            renderImagePreviews();
+        }
+
+        function renderImagePreviews() {
+            const container = document.getElementById('image-preview-container');
             const textEl = document.getElementById('upload-text');
             const iconEl = document.getElementById('upload-icon');
-            
-            if (input.files && input.files.length > 0) {
-                textEl.innerText = `${input.files.length} foto berhasil dipilih`;
+
+            container.innerHTML = uploadedImages.map((src, index) => `
+                <div class="relative rounded-xl overflow-hidden border border-slate-200 aspect-square group shadow-sm">
+                    <img src="${src}" class="w-full h-full object-cover">
+                    <!-- Tombol Hapus -->
+                    <button type="button" onclick="event.preventDefault(); event.stopPropagation(); removeImage(${index})" class="absolute top-1 right-1 w-6 h-6 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition shadow-sm z-10">
+                        <i class="ph ph-x text-xs font-bold"></i>
+                    </button>
+                    <!-- Label Sampul -->
+                    ${index === 0 ? '<div class="absolute bottom-0 left-0 right-0 bg-primary/90 text-white text-[10px] text-center py-1 font-bold backdrop-blur-sm">SAMPUL</div>' : ''}
+                </div>
+            `).join('');
+
+            if (uploadedImages.length > 0) {
+                textEl.innerText = `${uploadedImages.length} dari 5 foto terpilih`;
                 textEl.classList.add('text-primary', 'font-bold');
-                iconEl.classList.remove('text-slate-400');
-                iconEl.classList.add('text-primary');
+                iconEl.classList.replace('text-slate-400', 'text-primary');
             } else {
-                textEl.innerText = 'Klik atau drag foto ke sini (Maks 10 foto)';
+                textEl.innerText = 'Klik atau drag foto ke sini (Maks 5 foto)';
                 textEl.classList.remove('text-primary', 'font-bold');
-                iconEl.classList.remove('text-primary');
-                iconEl.classList.add('text-slate-400');
+                iconEl.classList.replace('text-primary', 'text-slate-400');
             }
         }
+
+        // Hapus function updateUploadText lama karena digantikan renderImagePreviews
 
         // --- Carousel Logic & Data ---
         let carouselItems = [
@@ -1954,6 +2107,11 @@
         window.processLogin = processLogin;
         window.processLogout = processLogout;
         window.installPWA = installPWA;
+        window.submitAd = submitAd;
+        
+        // Daftarkan fungsi foto ke window
+        window.handleImageUpload = handleImageUpload;
+        window.removeImage = removeImage;
 
         // Rich Text Editor Logic
         function formatDoc(cmd, value=null) {
