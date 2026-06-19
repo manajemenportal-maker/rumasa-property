@@ -696,7 +696,7 @@
         </section>
 
         <!-- VIEW: USER DASHBOARD -->
-        <section id="view-user" class="view-section pb-12 bg-slate-50 min-h-screen">
+        <section id="view-user" class="view-section pb-12 bg-slate-50 min-h-screen relative">
             <div class="bg-primary pt-12 pb-24 text-white">
                 <div class="container mx-auto px-4 flex items-center gap-4">
                     <button onclick="navigate('home')" class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center hover:bg-white/30 transition md:hidden">
@@ -709,14 +709,17 @@
                 </div>
             </div>
             <div class="container mx-auto px-4 -mt-16">
-                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex flex-col md:flex-row items-center gap-6 mb-8 max-w-4xl">
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex flex-col md:flex-row items-center gap-6 mb-8 max-w-4xl relative z-10">
                     <img src="https://i.pravatar.cc/150?u=user123" class="w-24 h-24 rounded-full border-4 border-white shadow-md">
                     <div class="text-center md:text-left">
                         <h2 class="text-2xl font-bold text-slate-800">Budi Pengguna</h2>
                         <p class="text-slate-500 text-sm mt-1">budi@contoh.com | +62 812 3456 7890</p>
                         <span class="inline-block mt-3 bg-green-100 text-green-700 text-xs font-bold px-3 py-1.5 rounded-full">Akun Terverifikasi</span>
                     </div>
-                    <div class="md:ml-auto flex gap-3">
+                    <div class="md:ml-auto flex gap-3 mt-4 md:mt-0">
+                         <button onclick="toggleUserChat()" class="bg-slate-900 hover:bg-slate-800 text-white px-4 py-2 rounded-lg font-medium transition text-sm flex items-center gap-2 shadow-md">
+                            <i class="ph-fill ph-chat-circle-dots text-lg"></i> Chat Admin
+                         </button>
                          <button onclick="showMessage('Membuka halaman Edit Profil...')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2 rounded-lg font-medium transition text-sm">Edit Profil</button>
                     </div>
                 </div>
@@ -743,6 +746,32 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Panel Floating Chat untuk User -->
+            <div id="user-chat-panel" class="hidden fixed bottom-4 md:bottom-8 right-4 md:right-8 w-[90%] md:w-80 bg-white rounded-2xl shadow-2xl border border-slate-200 z-[70] flex-col overflow-hidden transition-all duration-300 transform translate-y-0">
+                <!-- Header Chat -->
+                <div class="bg-primary text-white p-4 flex justify-between items-center">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center"><i class="ph-fill ph-headset text-lg"></i></div>
+                        <div>
+                            <div class="font-bold text-sm">Pusat Bantuan</div>
+                            <div class="text-[10px] text-blue-200">Admin RUMASA (Online)</div>
+                        </div>
+                    </div>
+                    <button onclick="toggleUserChat()" class="text-white hover:bg-white/20 p-1.5 rounded-lg transition"><i class="ph ph-x text-lg"></i></button>
+                </div>
+                <!-- Body Chat -->
+                <div id="user-chat-body" class="h-72 bg-slate-50 p-4 overflow-y-auto flex flex-col gap-3">
+                    <!-- Chat bubbles injected by JS -->
+                </div>
+                <!-- Input Chat -->
+                <form onsubmit="event.preventDefault(); sendUserMessage();" class="p-3 bg-white border-t border-slate-200 flex gap-2">
+                    <input type="text" id="user-chat-input" placeholder="Ketik pesan..." class="flex-1 px-3 py-2 bg-slate-100 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary" required>
+                    <button type="submit" class="bg-primary hover:bg-secondary text-white w-10 h-10 rounded-xl flex items-center justify-center transition shadow-sm shrink-0">
+                        <i class="ph-fill ph-paper-plane-right"></i>
+                    </button>
+                </form>
+            </div>
         </section>
 
         <!-- VIEW: ADMIN DASHBOARD -->
@@ -761,6 +790,7 @@
                             </div>
                             <nav class="space-y-2">
                                 <a href="javascript:void(0)" onclick="switchAdminTab('ringkasan')" id="tab-btn-ringkasan" class="admin-tab-btn flex items-center gap-3 bg-blue-600 text-white px-4 py-3 rounded-xl transition"><i class="ph ph-squares-four text-xl"></i> Ringkasan</a>
+                                <a href="javascript:void(0)" onclick="switchAdminTab('chat')" id="tab-btn-chat" class="admin-tab-btn flex items-center gap-3 text-slate-300 hover:bg-slate-800 px-4 py-3 rounded-xl transition"><i class="ph ph-chats text-xl"></i> Pesan Pengguna <span id="admin-chat-badge" class="ml-auto bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">1</span></a>
                                 <a href="javascript:void(0)" onclick="switchAdminTab('carousel')" id="tab-btn-carousel" class="admin-tab-btn flex items-center gap-3 text-slate-300 hover:bg-slate-800 px-4 py-3 rounded-xl transition"><i class="ph ph-images text-xl"></i> Kelola Banner</a>
                                 <a href="javascript:void(0)" onclick="switchAdminTab('iklan')" id="tab-btn-iklan" class="admin-tab-btn flex items-center gap-3 text-slate-300 hover:bg-slate-800 px-4 py-3 rounded-xl transition"><i class="ph ph-buildings text-xl"></i> Kelola Iklan</a>
                                 <a href="javascript:void(0)" onclick="switchAdminTab('ulasan')" id="tab-btn-ulasan" class="admin-tab-btn flex items-center gap-3 text-slate-300 hover:bg-slate-800 px-4 py-3 rounded-xl transition"><i class="ph ph-star text-xl"></i> Kelola Ulasan</a>
@@ -798,6 +828,51 @@
                             <h3 class="text-xl font-bold mb-4 text-slate-800">Aktivitas Terbaru</h3>
                             <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
                                 <p class="text-slate-600">Sistem berjalan normal. Terdapat 38 iklan baru yang perlu direview pada tab <b class="text-slate-800">Kelola Iklan</b>.</p>
+                            </div>
+                        </div>
+
+                        <!-- TAB: KELOLA PESAN (CHAT) -->
+                        <div id="admin-tab-chat" class="admin-tab-content hidden h-[600px]">
+                            <div class="flex items-center justify-between mb-6">
+                                <h2 class="text-2xl font-bold text-slate-800">Pusat Pesan Bantuan</h2>
+                                <button onclick="navigate('home')" class="md:hidden flex items-center gap-2 bg-slate-200 text-slate-700 px-4 py-2 rounded-lg text-sm font-medium">
+                                    <i class="ph ph-arrow-left"></i>
+                                </button>
+                            </div>
+                            
+                            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 h-[500px] flex overflow-hidden">
+                                <!-- Sidebar Chat List -->
+                                <div class="w-1/3 md:w-64 border-r border-slate-200 bg-slate-50 flex flex-col h-full overflow-y-auto">
+                                    <div class="p-4 border-b border-slate-200 font-bold text-slate-700 bg-white sticky top-0">Daftar Obrolan</div>
+                                    <div id="admin-chat-list" class="flex-1 overflow-y-auto">
+                                        <!-- Injected by JS -->
+                                    </div>
+                                </div>
+                                
+                                <!-- Chat Area -->
+                                <div class="flex-1 flex flex-col h-full bg-slate-50/50">
+                                    <!-- Chat Header -->
+                                    <div class="p-4 border-b border-slate-200 bg-white flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold" id="admin-active-chat-avatar">B</div>
+                                        <div>
+                                            <div class="font-bold text-sm text-slate-800" id="admin-active-chat-name">Budi Pengguna</div>
+                                            <div class="text-xs text-green-600 font-medium">Online</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Chat Body -->
+                                    <div id="admin-chat-body" class="flex-1 p-4 overflow-y-auto flex flex-col gap-3">
+                                        <!-- Injected by JS -->
+                                    </div>
+                                    
+                                    <!-- Chat Input -->
+                                    <form onsubmit="event.preventDefault(); sendAdminMessage();" class="p-4 bg-white border-t border-slate-200 flex gap-2">
+                                        <input type="text" id="admin-chat-input" placeholder="Balas pesan Budi..." class="flex-1 px-4 py-3 bg-slate-100 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary" required>
+                                        <button type="submit" class="bg-primary hover:bg-secondary text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition shadow-sm">
+                                            Kirim <i class="ph-fill ph-paper-plane-right"></i>
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
 
@@ -2134,6 +2209,227 @@
         // Daftarkan fungsi foto ke window
         window.handleImageUpload = handleImageUpload;
         window.removeImage = removeImage;
+
+        // --- Live Chat Logic (Admin <-> User) ---
+        // Mock Data Database Chat
+        let chatDatabase = {
+            'budi_pengguna': {
+                name: 'Budi Pengguna',
+                avatar: 'B',
+                unreadAdmin: 1, // Untuk notif badge merah admin
+                messages: [
+                    { sender: 'admin', text: 'Halo Budi, selamat datang di RUMASA. Ada yang bisa kami bantu terkait pemasangan iklan Anda?', time: '09:00' },
+                    { sender: 'user', text: 'Halo admin, saya mau tanya. Kalau mau upgrade biar iklan saya di atas terus biayanya berapa ya?', time: '09:05' }
+                ]
+            },
+            'siti_agen': {
+                name: 'Siti Agen Properti',
+                avatar: 'S',
+                unreadAdmin: 0,
+                messages: [
+                    { sender: 'user', text: 'Min, tolong acc iklan saya yang Ruko Kelapa Gading ya.', time: 'Kemarin' },
+                    { sender: 'admin', text: 'Siap kak Siti, iklan sudah kami setujui dan sudah tayang ya.', time: 'Kemarin' }
+                ]
+            }
+        };
+
+        let currentActiveUserChat = 'budi_pengguna'; // Status siapa yang sedang dichat oleh Admin
+
+        // ================= LOGIKA UNTUK USER =================
+        function toggleUserChat() {
+            const panel = document.getElementById('user-chat-panel');
+            if (panel.classList.contains('hidden')) {
+                panel.classList.remove('hidden');
+                panel.style.display = 'flex';
+                renderUserChat();
+            } else {
+                panel.classList.add('hidden');
+                panel.style.display = 'none';
+            }
+        }
+
+        function renderUserChat() {
+            const body = document.getElementById('user-chat-body');
+            const msgs = chatDatabase['budi_pengguna'].messages;
+            
+            body.innerHTML = msgs.map(msg => {
+                if (msg.sender === 'user') {
+                    return `
+                        <div class="flex justify-end">
+                            <div class="bg-primary text-white rounded-2xl rounded-tr-sm px-4 py-2 text-sm max-w-[85%] shadow-sm">
+                                ${msg.text}
+                                <div class="text-[9px] text-blue-200 text-right mt-1">${msg.time}</div>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    return `
+                        <div class="flex justify-start">
+                            <div class="bg-white border border-slate-200 text-slate-700 rounded-2xl rounded-tl-sm px-4 py-2 text-sm max-w-[85%] shadow-sm">
+                                ${msg.text}
+                                <div class="text-[9px] text-slate-400 mt-1">${msg.time}</div>
+                            </div>
+                        </div>
+                    `;
+                }
+            }).join('');
+            
+            // Auto scroll ke bawah
+            body.scrollTop = body.scrollHeight;
+        }
+
+        function sendUserMessage() {
+            const input = document.getElementById('user-chat-input');
+            const text = input.value.trim();
+            if(!text) return;
+
+            // Tambahkan pesan ke database mock
+            const now = new Date();
+            const timeString = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+            
+            chatDatabase['budi_pengguna'].messages.push({ sender: 'user', text: text, time: timeString });
+            chatDatabase['budi_pengguna'].unreadAdmin++; // Tambah notif admin
+            
+            input.value = '';
+            renderUserChat(); // Update tampilan User
+            
+            // Jika admin kebetulan sedang buka tab chat yang sama, update juga
+            renderAdminChatList();
+            if (currentActiveUserChat === 'budi_pengguna') {
+                renderAdminChatMessages();
+            }
+            updateAdminBadge();
+        }
+
+        // ================= LOGIKA UNTUK ADMIN =================
+        function renderAdminChatList() {
+            const listEl = document.getElementById('admin-chat-list');
+            if(!listEl) return;
+
+            let html = '';
+            for (const [userId, data] of Object.entries(chatDatabase)) {
+                const lastMsg = data.messages[data.messages.length - 1];
+                const isActive = currentActiveUserChat === userId;
+                const unreadBadge = data.unreadAdmin > 0 ? `<div class="w-5 h-5 bg-red-500 text-white rounded-full flex items-center justify-center text-[10px] font-bold">${data.unreadAdmin}</div>` : '';
+                
+                html += `
+                    <div onclick="selectAdminChat('${userId}')" class="p-3 border-b border-slate-100 cursor-pointer transition ${isActive ? 'bg-blue-50 border-l-4 border-l-primary' : 'hover:bg-slate-100 border-l-4 border-l-transparent'} flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center font-bold shrink-0">${data.avatar}</div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex justify-between items-baseline mb-0.5">
+                                <div class="font-bold text-sm text-slate-800 line-clamp-1">${data.name}</div>
+                                <div class="text-[10px] text-slate-400 shrink-0">${lastMsg.time}</div>
+                            </div>
+                            <div class="flex justify-between items-center gap-2">
+                                <div class="text-xs ${data.unreadAdmin > 0 ? 'text-slate-800 font-bold' : 'text-slate-500'} line-clamp-1">${lastMsg.text}</div>
+                                ${unreadBadge}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            listEl.innerHTML = html;
+        }
+
+        function renderAdminChatMessages() {
+            const body = document.getElementById('admin-chat-body');
+            if(!body) return;
+            
+            const msgs = chatDatabase[currentActiveUserChat].messages;
+            
+            body.innerHTML = msgs.map(msg => {
+                if (msg.sender === 'admin') {
+                    return `
+                        <div class="flex justify-end">
+                            <div class="bg-primary text-white rounded-2xl rounded-tr-sm px-4 py-2 text-sm max-w-[70%] shadow-sm">
+                                ${msg.text}
+                                <div class="text-[9px] text-blue-200 text-right mt-1">${msg.time}</div>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    return `
+                        <div class="flex justify-start">
+                            <div class="bg-white border border-slate-200 text-slate-700 rounded-2xl rounded-tl-sm px-4 py-2 text-sm max-w-[70%] shadow-sm">
+                                ${msg.text}
+                                <div class="text-[9px] text-slate-400 mt-1">${msg.time}</div>
+                            </div>
+                        </div>
+                    `;
+                }
+            }).join('');
+            
+            body.scrollTop = body.scrollHeight;
+        }
+
+        function selectAdminChat(userId) {
+            currentActiveUserChat = userId;
+            chatDatabase[userId].unreadAdmin = 0; // Hapus notif merah
+            
+            // Update Header Admin Chat
+            document.getElementById('admin-active-chat-avatar').innerText = chatDatabase[userId].avatar;
+            document.getElementById('admin-active-chat-name').innerText = chatDatabase[userId].name;
+            document.getElementById('admin-chat-input').placeholder = `Balas pesan ${chatDatabase[userId].name}...`;
+            
+            renderAdminChatList();
+            renderAdminChatMessages();
+            updateAdminBadge();
+        }
+
+        function sendAdminMessage() {
+            const input = document.getElementById('admin-chat-input');
+            const text = input.value.trim();
+            if(!text) return;
+
+            const now = new Date();
+            const timeString = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+            
+            chatDatabase[currentActiveUserChat].messages.push({ sender: 'admin', text: text, time: timeString });
+            
+            input.value = '';
+            renderAdminChatMessages();
+            renderAdminChatList(); // Update waktu last message di sidebar list
+            
+            // Update tampilan user jika dia adalah Budi
+            if (currentActiveUserChat === 'budi_pengguna') {
+                renderUserChat();
+                
+                // Jika modal user tertutup, bisa opsional keluarkan notif alert kecil
+                const panel = document.getElementById('user-chat-panel');
+                if (panel.classList.contains('hidden')) {
+                    showMessage('Anda menerima balasan pesan baru dari Admin.');
+                }
+            }
+        }
+
+        function updateAdminBadge() {
+            const badge = document.getElementById('admin-chat-badge');
+            if(!badge) return;
+            let totalUnread = 0;
+            for (const key in chatDatabase) {
+                totalUnread += chatDatabase[key].unreadAdmin;
+            }
+            if(totalUnread > 0) {
+                badge.innerText = totalUnread;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+        }
+
+        // Daftarkan fungsi chat ke window agar terbaca event html
+        window.toggleUserChat = toggleUserChat;
+        window.sendUserMessage = sendUserMessage;
+        window.selectAdminChat = selectAdminChat;
+        window.sendAdminMessage = sendAdminMessage;
+
+        // Inisialisasi awal render chat
+        document.addEventListener('DOMContentLoaded', () => {
+            renderAdminChatList();
+            renderAdminChatMessages();
+            updateAdminBadge();
+        });
+
 
         // Rich Text Editor Logic
         function formatDoc(cmd, value=null) {
