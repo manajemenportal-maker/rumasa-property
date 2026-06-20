@@ -557,6 +557,86 @@
             </div>
         </section>
 
+        <!-- VIEW: AUTH / REGISTRASI -->
+        <section id="view-auth" class="view-section bg-slate-50">
+            <div class="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+                <div class="sm:mx-auto sm:w-full sm:max-w-md relative z-10">
+                    <img src="logo rumasa.jpg" alt="RUMASA Logo" class="mx-auto h-16 w-16 rounded-2xl shadow-md cursor-pointer" onclick="navigate('home')">
+                    <h2 id="auth-title" class="mt-6 text-center text-3xl font-extrabold text-slate-900">Daftar Akun Baru</h2>
+                    <p id="auth-subtitle" class="mt-2 text-center text-sm text-slate-600">Bergabunglah dan temukan properti impianmu.</p>
+                </div>
+
+                <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md relative">
+                    <div class="absolute -top-10 -right-10 w-40 h-40 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-50 z-0"></div>
+                    <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-amber-200 rounded-full mix-blend-multiply filter blur-xl opacity-50 z-0"></div>
+                    
+                    <div class="bg-white py-8 px-4 shadow-xl sm:rounded-3xl sm:px-10 border border-slate-100 relative z-10">
+                        
+                        <!-- Toggle Switch -->
+                        <div class="flex p-1 bg-slate-100 rounded-xl mb-6" id="auth-toggle-container">
+                            <button id="btn-tab-login" onclick="toggleAuth('login')" type="button" class="flex-1 py-2.5 text-sm font-bold rounded-lg bg-white text-primary shadow-sm transition">Masuk</button>
+                            <button id="btn-tab-register" onclick="toggleAuth('register')" type="button" class="flex-1 py-2.5 text-sm font-bold rounded-lg text-slate-500 hover:text-slate-700 transition">Daftar</button>
+                        </div>
+
+                        <!-- Register Form -->
+                        <form id="form-register" class="space-y-4 hidden" onsubmit="event.preventDefault(); showMessage('Pendaftaran berhasil! Silakan masuk ke akun Anda.'); toggleAuth('login');">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Nama Lengkap</label>
+                                <input type="text" required class="appearance-none rounded-xl relative block w-full px-4 py-3 border border-slate-300 placeholder-slate-400 text-slate-900 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm transition">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Email</label>
+                                <input type="email" required class="appearance-none rounded-xl relative block w-full px-4 py-3 border border-slate-300 placeholder-slate-400 text-slate-900 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm transition">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Nomor WhatsApp</label>
+                                <input type="tel" required class="appearance-none rounded-xl relative block w-full px-4 py-3 border border-slate-300 placeholder-slate-400 text-slate-900 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm transition">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Tipe Akun</label>
+                                <select class="appearance-none rounded-xl relative block w-full px-4 py-3 border border-slate-300 bg-white text-slate-900 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm transition">
+                                    <option>Pencari Properti</option>
+                                    <option>Pemilik Properti (Owner)</option>
+                                    <option>Agen Properti Profesional</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Password</label>
+                                <input type="password" required class="appearance-none rounded-xl relative block w-full px-4 py-3 border border-slate-300 placeholder-slate-400 text-slate-900 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm transition">
+                            </div>
+                            <button type="submit" class="w-full flex justify-center py-3.5 px-4 border border-transparent text-sm font-bold rounded-xl text-white bg-primary hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition shadow-lg shadow-blue-500/30 mt-6">
+                                Buat Akun RUMASA
+                            </button>
+                        </form>
+
+                        <!-- Login Form -->
+                        <form id="form-login" class="space-y-5" onsubmit="event.preventDefault(); processLogin();">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Email</label>
+                                <input type="email" id="login-email" required class="appearance-none rounded-xl relative block w-full px-4 py-3 border border-slate-300 placeholder-slate-400 text-slate-900 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm transition">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Password</label>
+                                <input type="password" required class="appearance-none rounded-xl relative block w-full px-4 py-3 border border-slate-300 placeholder-slate-400 text-slate-900 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm transition">
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 text-primary focus:ring-primary border-slate-300 rounded">
+                                    <label for="remember-me" class="ml-2 block text-sm text-slate-900">Ingat saya</label>
+                                </div>
+                                <div class="text-sm">
+                                    <a href="javascript:void(0)" onclick="showMessage('Link reset password dikirim ke email Anda.')" class="font-medium text-primary hover:text-secondary">Lupa password?</a>
+                                </div>
+                            </div>
+                            <button type="submit" class="w-full flex justify-center py-3.5 px-4 border border-transparent text-sm font-bold rounded-xl text-white bg-primary hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition shadow-lg shadow-blue-500/30 mt-6">
+                                Masuk
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- VIEW: ADMIN DASHBOARD -->
         <section id="view-admin" class="view-section pb-12 bg-slate-50 min-h-screen">
             <div class="container mx-auto px-4 py-8 max-w-6xl">
@@ -714,7 +794,31 @@
 
     <!-- PWA Install Banner -->
     <div id="pwa-install-banner" class="hidden fixed bottom-20 left-4 right-4 bg-slate-900 text-white p-4 rounded-2xl shadow-2xl z-[60] md:hidden"></div>
-    <nav class="md:hidden fixed bottom-0 left-0 right-0 glass-nav z-50 app-ui pb-[env(safe-area-inset-bottom)]"></nav>
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 glass-nav z-50 app-ui pb-[env(safe-area-inset-bottom)]">
+        <div class="flex justify-around items-center h-16">
+            <a href="javascript:void(0)" onclick="navigate('home')" class="flex flex-col items-center justify-center w-full h-full text-primary">
+                <img src="logo rumasa.jpg" alt="RUMASA Home" class="h-6 w-6 mb-1 rounded-sm shadow-sm">
+                <span class="text-[10px] font-medium mt-1">Beranda</span>
+            </a>
+            <a href="javascript:void(0)" onclick="navigate('home'); document.querySelector('input').focus();" class="flex flex-col items-center justify-center w-full h-full text-slate-500 hover:text-primary transition">
+                <i class="ph ph-magnifying-glass text-2xl mb-1"></i>
+                <span class="text-[10px] font-medium">Cari</span>
+            </a>
+            <a href="javascript:void(0)" onclick="navigate('sell')" class="flex flex-col items-center justify-center w-full h-full text-slate-500 hover:text-primary transition relative -top-3">
+                <div class="bg-primary text-white p-3 rounded-full shadow-lg shadow-blue-500/40">
+                    <i class="ph ph-plus text-xl"></i>
+                </div>
+            </a>
+            <a href="javascript:void(0)" onclick="showMessage('Fitur Favorit akan segera hadir!')" class="flex flex-col items-center justify-center w-full h-full text-slate-500 hover:text-primary transition">
+                <i class="ph ph-heart text-2xl mb-1"></i>
+                <span class="text-[10px] font-medium">Favorit</span>
+            </a>
+            <a href="javascript:void(0)" onclick="navigate('auth'); toggleAuth('login');" class="flex flex-col items-center justify-center w-full h-full text-slate-500 hover:text-primary transition">
+                <i class="ph ph-user text-2xl mb-1"></i>
+                <span class="text-[10px] font-medium">Profil</span>
+            </a>
+        </div>
+    </nav>
 
     <!-- Custom Message Box Container -->
     <div id="message-box" class="fixed top-4 left-1/2 transform -translate-x-1/2 bg-slate-800 text-white px-6 py-3 rounded-full shadow-lg z-[100] opacity-0 pointer-events-none transition-opacity duration-300 flex items-center gap-2">
@@ -787,10 +891,13 @@
         // ================= UI FUNCTIONS =================
         function showMessage(msg) {
             const box = document.getElementById('message-box');
-            document.getElementById('message-text').innerText = msg;
-            box.classList.remove('opacity-0');
-            setTimeout(() => box.classList.add('opacity-0'), 3000);
+            if(box) {
+                document.getElementById('message-text').innerText = msg;
+                box.classList.remove('opacity-0');
+                setTimeout(() => box.classList.add('opacity-0'), 3000);
+            }
         }
+        window.showMessage = showMessage;
 
         function formatNumber(num) {
             return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
@@ -807,15 +914,19 @@
             const container = document.getElementById('hero-carousel');
             const indicators = document.getElementById('carousel-indicators');
             
-            container.innerHTML = carouselItems.map((item, index) => `
-                <div class="carousel-slide w-full h-full ${index === 0 ? 'active' : ''}" id="slide-${index}">
-                    <img src="${item.img}" alt="Slide ${index+1}" class="w-full h-full object-cover">
-                </div>
-            `).join('');
+            if(container) {
+                container.innerHTML = carouselItems.map((item, index) => `
+                    <div class="carousel-slide w-full h-full ${index === 0 ? 'active' : ''}" id="slide-${index}">
+                        <img src="${item.img}" alt="Slide ${index+1}" class="w-full h-full object-cover">
+                    </div>
+                `).join('');
+            }
 
-            indicators.innerHTML = carouselItems.map((_, index) => `
-                <button onclick="goToSlide(${index})" class="carousel-indicator w-3 h-3 rounded-full bg-white/50 transition-all duration-300 hover:bg-white/80 ${index === 0 ? 'active' : ''}"></button>
-            `).join('');
+            if(indicators) {
+                indicators.innerHTML = carouselItems.map((_, index) => `
+                    <button onclick="goToSlide(${index})" class="carousel-indicator w-3 h-3 rounded-full bg-white/50 transition-all duration-300 hover:bg-white/80 ${index === 0 ? 'active' : ''}"></button>
+                `).join('');
+            }
             
             updateHeroText(0);
         }
@@ -841,14 +952,17 @@
             currentSlide = index;
             resetSlideShow();
         }
+        window.goToSlide = goToSlide;
 
         function nextSlide() {
             goToSlide((currentSlide + 1) % carouselItems.length);
         }
+        window.nextSlide = nextSlide;
 
         function prevSlide() {
             goToSlide((currentSlide - 1 + carouselItems.length) % carouselItems.length);
         }
+        window.prevSlide = prevSlide;
 
         function startSlideShow() {
             slideInterval = setInterval(nextSlide, 4000);
@@ -868,7 +982,7 @@
             grid.innerHTML = proyekBaru.map(proyek => `
                 <div class="bg-white rounded-2xl shadow-md border border-slate-200 overflow-hidden hover:shadow-xl transition-all duration-300 group cursor-pointer" onclick="showMessage('Membuka e-brosur untuk ${proyek.name}...')">
                     <div class="relative h-56 overflow-hidden">
-                        <img src="${proyek.img}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        <img src="${proyek.img}" alt="${proyek.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent"></div>
                         <div class="absolute top-4 left-4 bg-accent text-white px-3 py-1 rounded-full text-xs font-bold shadow-md">${proyek.status}</div>
                         <div class="absolute bottom-4 left-4 right-4 z-10">
@@ -907,6 +1021,7 @@
             const gridEl = document.getElementById('property-grid');
             if(gridEl) window.scrollTo({top: gridEl.getBoundingClientRect().top + window.scrollY - 100, behavior: 'smooth'});
         }
+        window.filterData = filterData;
 
         function updateNav(activeId) {
             document.querySelectorAll('.nav-link').forEach(el => {
@@ -919,6 +1034,7 @@
                 activeEl.classList.add('text-primary');
             }
         }
+        window.updateNav = updateNav;
 
         function renderPagination(totalPages) {
             const container = document.getElementById('pagination-container');
@@ -953,6 +1069,7 @@
             const gridEl = document.getElementById('property-grid');
             if(gridEl) window.scrollTo({top: gridEl.getBoundingClientRect().top + window.scrollY - 100, behavior: 'smooth'});
         }
+        window.changePage = changePage;
 
         function renderPropertyCards() {
             const grid = document.getElementById('property-grid');
@@ -1028,8 +1145,10 @@
             if(content) content.innerHTML = detailHtml;
             navigate('details');
         }
+        window.showDetails = showDetails;
 
         function showReview() { navigate('review'); }
+        window.showReview = showReview;
 
 
         // ================= LOGIKA UPLOAD IKLAN =================
@@ -1052,6 +1171,7 @@
             document.getElementById('form-pasang-iklan').reset();
             navigate('user');
         }
+        window.submitAd = submitAd;
 
         function addAdToDashboard(id, title, price, status, statusColor) {
             const list = document.getElementById('user-ads-list');
@@ -1120,11 +1240,13 @@
             });
             input.value = ''; 
         }
+        window.handleImageUpload = handleImageUpload;
 
         function removeImage(index) {
             uploadedImages.splice(index, 1);
             renderImagePreviews();
         }
+        window.removeImage = removeImage;
 
         function renderImagePreviews() {
             const container = document.getElementById('image-preview-container');
@@ -1170,6 +1292,7 @@
             showMessage('Tagihan berhasil dibuat. Silakan cek menu Tagihan di bawah.');
             renderUserInvoices();
         }
+        window.requestUpgrade = requestUpgrade;
 
         function renderUserInvoices() {
             const list = document.getElementById('user-invoice-list');
@@ -1234,6 +1357,7 @@
                 box.classList.add('scale-100');
             }, 10);
         }
+        window.openPaymentModal = openPaymentModal;
 
         function closePaymentModal() {
             const modal = document.getElementById('payment-modal');
@@ -1244,6 +1368,7 @@
             box.classList.add('scale-95');
             setTimeout(() => modal.classList.add('hidden'), 300);
         }
+        window.closePaymentModal = closePaymentModal;
 
         function submitPaymentProof() {
             const invId = document.getElementById('pay-inv-id').value;
@@ -1256,6 +1381,7 @@
                 renderUserInvoices();
             }
         }
+        window.submitPaymentProof = submitPaymentProof;
 
         function renderAdminPayments() {
             const tbody = document.getElementById('admin-invoice-table');
@@ -1308,6 +1434,7 @@
                 if(summaryPending) summaryPending.innerText = 0;
             }
         }
+        window.renderAdminPayments = renderAdminPayments;
 
         function verifyPayment(invId, isApproved) {
             const inv = invoiceDB.find(i => i.id === invId);
@@ -1330,6 +1457,7 @@
             renderAdminPayments();
             renderUserInvoices(); 
         }
+        window.verifyPayment = verifyPayment;
 
 
         // ================= SISTEM CHAT =================
@@ -1344,6 +1472,7 @@
                 panel.style.display = 'none';
             }
         }
+        window.toggleUserChat = toggleUserChat;
 
         function renderUserChat() {
             const body = document.getElementById('user-chat-body');
@@ -1392,6 +1521,7 @@
             if (currentActiveUserChat === 'budi_pengguna') renderAdminChatMessages();
             updateAdminBadge();
         }
+        window.sendUserMessage = sendUserMessage;
 
         function renderAdminChatList() {
             const listEl = document.getElementById('admin-chat-list');
@@ -1469,6 +1599,7 @@
             renderAdminChatMessages();
             updateAdminBadge();
         }
+        window.selectAdminChat = selectAdminChat;
 
         function sendAdminMessage() {
             const input = document.getElementById('admin-chat-input');
@@ -1488,6 +1619,7 @@
                 renderUserChat();
             }
         }
+        window.sendAdminMessage = sendAdminMessage;
 
         function updateAdminBadge() {
             const badge = document.getElementById('admin-chat-badge');
@@ -1514,13 +1646,16 @@
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
         }
+        window.navigate = navigate;
 
         function switchAdminTab(tabId) {
             document.querySelectorAll('.admin-tab-content').forEach(el => el.classList.add('hidden'));
             document.querySelectorAll('.admin-tab-content').forEach(el => el.classList.remove('block'));
             const tab = document.getElementById(`admin-tab-${tabId}`);
-            if(tab) tab.classList.remove('hidden');
-            if(tab) tab.classList.add('block');
+            if(tab) {
+                tab.classList.remove('hidden');
+                tab.classList.add('block');
+            }
             
             document.querySelectorAll('.admin-tab-btn').forEach(btn => {
                 btn.classList.remove('bg-blue-600', 'text-white');
@@ -1532,6 +1667,7 @@
                 activeBtn.classList.add('bg-blue-600', 'text-white');
             }
         }
+        window.switchAdminTab = switchAdminTab;
 
         function processLogin() {
             const email = document.getElementById('login-email').value.toLowerCase();
@@ -1549,6 +1685,7 @@
                 navigate('user');
             }
         }
+        window.processLogin = processLogin;
 
         function processLogout() {
             document.getElementById('menu-guest').classList.remove('hidden');
@@ -1557,11 +1694,30 @@
             showMessage('Berjaya log keluar.');
             navigate('home');
         }
+        window.processLogout = processLogout;
 
         function toggleAuth(type) {
-            document.getElementById('form-login').classList.toggle('hidden', type !== 'login');
-            document.getElementById('form-register').classList.toggle('hidden', type === 'login');
+            const formLogin = document.getElementById('form-login');
+            const formRegister = document.getElementById('form-register');
+            const title = document.getElementById('auth-title');
+            
+            if(type === 'login') {
+                formLogin.classList.remove('hidden');
+                formRegister.classList.add('hidden');
+                if(title) title.innerText = 'Selamat Datang Kembali';
+                
+                document.getElementById('btn-tab-login').className = 'flex-1 py-2.5 text-sm font-bold rounded-lg bg-white text-primary shadow-sm transition';
+                document.getElementById('btn-tab-register').className = 'flex-1 py-2.5 text-sm font-bold rounded-lg text-slate-500 hover:text-slate-700 transition';
+            } else {
+                formRegister.classList.remove('hidden');
+                formLogin.classList.add('hidden');
+                if(title) title.innerText = 'Daftar Akun Baru';
+                
+                document.getElementById('btn-tab-register').className = 'flex-1 py-2.5 text-sm font-bold rounded-lg bg-white text-primary shadow-sm transition';
+                document.getElementById('btn-tab-login').className = 'flex-1 py-2.5 text-sm font-bold rounded-lg text-slate-500 hover:text-slate-700 transition';
+            }
         }
+        window.toggleAuth = toggleAuth;
         
         function installPWA() {
             if (deferredPrompt) {
@@ -1573,6 +1729,7 @@
             const banner = document.getElementById('pwa-install-banner');
             if (banner) banner.classList.add('hidden');
         }
+        window.installPWA = installPWA;
 
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
@@ -1582,6 +1739,7 @@
         });
 
         document.addEventListener('DOMContentLoaded', () => {
+            // Restore UI Initial State
             initCarousel();
             renderPropertyCards();
             renderProyekCards();
@@ -1592,6 +1750,10 @@
             renderAdminChatList();
             renderAdminChatMessages();
             updateAdminBadge();
+            
+            // Un-hide auth toggle switch safely on load
+            const authContainer = document.getElementById('auth-toggle-container');
+            if (authContainer) authContainer.classList.remove('hidden');
             
             // PWA Mock
             if ('serviceWorker' in navigator) {
