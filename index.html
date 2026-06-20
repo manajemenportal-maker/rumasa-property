@@ -840,8 +840,25 @@
 
                         <!-- TAB: IKLAN -->
                         <div id="admin-tab-iklan" class="admin-tab-content hidden">
-                            <h2 class="text-2xl font-bold text-slate-800 mb-6">Persetujuan Iklan</h2>
-                            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 text-center text-slate-500">Iklan yang disetujui akan diatur oleh sistem pembayaran premium.</div>
+                            <div class="flex items-center justify-between mb-6">
+                                <h2 class="text-2xl font-bold text-slate-800">Manajemen Iklan Properti</h2>
+                            </div>
+                            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-x-auto">
+                                <table class="w-full text-left text-sm">
+                                    <thead class="bg-slate-50 border-b border-slate-200">
+                                        <tr>
+                                            <th class="p-4 font-medium text-slate-600">ID / Properti</th>
+                                            <th class="p-4 font-medium text-slate-600">Pengiklan</th>
+                                            <th class="p-4 font-medium text-slate-600">Harga</th>
+                                            <th class="p-4 font-medium text-slate-600 text-center">Status</th>
+                                            <th class="p-4 font-medium text-slate-600 text-center">Aksi Admin</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="admin-ads-table" class="divide-y divide-slate-100">
+                                        <!-- Data Iklan Dimuat oleh JS -->
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
 
                         <!-- TAB: CAROUSEL MANAGE -->
@@ -855,11 +872,23 @@
 
                         <!-- TAB: PENGGUNA -->
                         <div id="admin-tab-pengguna" class="admin-tab-content hidden">
-                            <h2 class="text-2xl font-bold text-slate-800 mb-6">Manajemen Pengguna</h2>
-                            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-10 text-center">
-                                <i class="ph ph-users text-5xl text-slate-300 mb-3 block"></i>
-                                <h3 class="font-bold text-slate-700 mb-1">Daftar Pengguna Aktif</h3>
-                                <p class="text-slate-500 text-sm">Fitur manajemen data pengguna sedang dalam pemeliharaan berkala.</p>
+                            <div class="flex items-center justify-between mb-6">
+                                <h2 class="text-2xl font-bold text-slate-800">Manajemen Pengguna</h2>
+                            </div>
+                            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-x-auto">
+                                <table class="w-full text-left text-sm">
+                                    <thead class="bg-slate-50 border-b border-slate-200">
+                                        <tr>
+                                            <th class="p-4 font-medium text-slate-600">Nama Lengkap</th>
+                                            <th class="p-4 font-medium text-slate-600">Email / Kontak</th>
+                                            <th class="p-4 font-medium text-slate-600">Tipe Akun</th>
+                                            <th class="p-4 font-medium text-slate-600 text-center">Total Iklan</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="admin-users-table" class="divide-y divide-slate-100">
+                                        <!-- Data Pengguna Dimuat oleh JS -->
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
 
@@ -1093,6 +1122,7 @@
             usersDB[email] = { name, email, phone, role, ads: [] };
             showMessage('Pendaftaran berjaya! Sila log masuk.');
             toggleAuth('login');
+            renderAdminUsers(); // Kemas kini jadual pengguna di Admin
         }
         window.processRegister = processRegister;
 
@@ -1191,6 +1221,7 @@
             renderImagePreviews();
             
             renderUserDashboard(); // Update dashboard HTML dengan iklan terkini User
+            renderAdminAds(); // Kemas kini jadual iklan di Admin
             navigate('user');
         }
         window.submitAd = submitAd;
@@ -1319,6 +1350,7 @@
 
             renderAdminPayments();
             renderUserInvoices(); 
+            renderAdminAds(); // Kemas kini status iklan di jadual Admin
         }
         window.verifyPayment = verifyPayment;
 
@@ -1479,6 +1511,98 @@
             let unread = 0; for (const k in chatDatabase) unread += chatDatabase[k].unreadAdmin;
             if(unread > 0) { badge.innerText = unread; badge.classList.remove('hidden'); } else { badge.classList.add('hidden'); }
         }
+
+        // ================= DYNAMIC ADMIN MANAGE USERS & ADS =================
+        function renderAdminUsers() {
+            const tbody = document.getElementById('admin-users-table');
+            if(!tbody) return;
+            
+            let html = '';
+            for (const email in usersDB) {
+                const u = usersDB[email];
+                html += `
+                    <tr class="hover:bg-slate-50 transition border-b border-slate-100">
+                        <td class="p-4">
+                            <div class="font-bold text-slate-800">${u.name}</div>
+                        </td>
+                        <td class="p-4">
+                            <div class="text-sm text-slate-800">${u.email}</div>
+                            <div class="text-xs text-slate-500">${u.phone}</div>
+                        </td>
+                        <td class="p-4 text-sm text-slate-600">
+                            <span class="bg-blue-50 text-primary px-2 py-1 rounded-md text-xs font-bold">${u.role}</span>
+                        </td>
+                        <td class="p-4 text-center font-bold text-slate-700">
+                            ${u.ads.length}
+                        </td>
+                    </tr>
+                `;
+            }
+            tbody.innerHTML = html;
+        }
+        window.renderAdminUsers = renderAdminUsers;
+
+        function renderAdminAds() {
+            const tbody = document.getElementById('admin-ads-table');
+            if(!tbody) return;
+            
+            let html = '';
+            for (const email in usersDB) {
+                const u = usersDB[email];
+                u.ads.forEach(ad => {
+                    const formatPrice = "Rp " + ad.price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+                    let actionHtml = `
+                        <div class="flex justify-center gap-2">
+                            <button onclick="approveAdAdmin('${email}', ${ad.id})" class="bg-green-100 text-green-700 hover:bg-green-500 hover:text-white p-2 rounded-lg transition" title="Setujui (Bypass)"><i class="ph ph-check font-bold"></i></button>
+                            <button onclick="deleteAdAdmin('${email}', ${ad.id})" class="bg-red-100 text-red-700 hover:bg-red-500 hover:text-white p-2 rounded-lg transition" title="Hapus"><i class="ph ph-trash font-bold"></i></button>
+                        </div>
+                    `;
+                    
+                    html += `
+                        <tr class="hover:bg-slate-50 transition border-b border-slate-100">
+                            <td class="p-4">
+                                <div class="font-bold text-sm text-slate-800 line-clamp-1">${ad.title}</div>
+                                <div class="text-xs text-slate-500 font-mono">ID: #${ad.id}</div>
+                            </td>
+                            <td class="p-4 text-sm text-slate-600">${u.name}</td>
+                            <td class="p-4 text-sm font-bold text-primary">${formatPrice}</td>
+                            <td class="p-4 text-center">
+                                <span class="${ad.statusColor} font-bold text-[10px] uppercase tracking-wider bg-slate-50 px-2 py-1 rounded border border-slate-200">${ad.status}</span>
+                            </td>
+                            <td class="p-4">${actionHtml}</td>
+                        </tr>
+                    `;
+                });
+            }
+            tbody.innerHTML = html;
+        }
+        window.renderAdminAds = renderAdminAds;
+
+        function approveAdAdmin(email, adId) {
+            let u = usersDB[email];
+            if(u) {
+                let ad = u.ads.find(a => a.id === adId);
+                if(ad) {
+                    ad.status = 'Aktif (Disetujui Admin)';
+                    ad.statusColor = 'text-green-600';
+                    showMessage('Iklan berhasil disetujui secara manual.');
+                    renderAdminAds();
+                    if(currentUser && currentUser.email === email) renderUserDashboard();
+                }
+            }
+        }
+        window.approveAdAdmin = approveAdAdmin;
+
+        function deleteAdAdmin(email, adId) {
+            let u = usersDB[email];
+            if(u) {
+                u.ads = u.ads.filter(a => a.id !== adId);
+                showMessage('Iklan berhasil dihapus dari sistem.');
+                renderAdminAds();
+                if(currentUser && currentUser.email === email) renderUserDashboard();
+            }
+        }
+        window.deleteAdAdmin = deleteAdAdmin;
 
         // Init Carousel Functions
         function initCarousel() { renderCarousel(); startSlideShow(); }
@@ -1666,6 +1790,11 @@
             initCarousel(); renderPropertyCards(); renderProyekCards();
             renderUserInvoices(); renderAdminPayments();
             renderAdminChatList(); updateAdminBadge();
+            
+            // Render Jadual Pengguna & Iklan Admin Pertama Kali
+            renderAdminUsers();
+            renderAdminAds();
+
             const authContainer = document.getElementById('auth-toggle-container'); if (authContainer) authContainer.classList.remove('hidden');
         });
     </script>
