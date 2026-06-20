@@ -3,7 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>RUMASA - Marketplace Properti Terbaik</title>
+    
+    <!-- SEO Title Super Optimized -->
+    <title>RUMASA | Jual Beli & Sewa Properti, Rumah, Apartemen, Tanah</title>
+    
+    <!-- SEO Meta Descriptions & Keywords -->
+    <meta name="description" content="RUMASA adalah marketplace properti terpercaya di Indonesia. Cari dan temukan rumah dijual, sewa apartemen, tanah, ruko, gudang, hingga ruang kantor dengan harga terbaik. Pasang iklan properti gratis!">
+    <meta name="keywords" content="rumah dijual, jual beli properti, sewa apartemen, tanah dijual, ruko murah, sewa kantor, gudang dijual, marketplace properti, RUMASA, rumah murah, cari rumah, investasi properti">
+    <meta name="author" content="RUMASA">
+    <meta name="robots" content="index, follow">
     
     <!-- PWA Meta Tags -->
     <meta name="theme-color" content="#2563eb">
@@ -12,10 +20,50 @@
     <meta name="apple-mobile-web-app-title" content="RUMASA">
     <link rel="apple-touch-icon" href="logo rumasa.jpg">
     
-    <!-- SEO & Domain Meta -->
+    <!-- Open Graph (OG) Tags untuk Facebook / WhatsApp -->
     <link rel="canonical" href="https://www.rumasa.web.id/">
+    <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.rumasa.web.id/">
     <meta property="og:site_name" content="RUMASA Marketplace">
+    <meta property="og:title" content="RUMASA - Jual Beli Properti, Rumah & Apartemen">
+    <meta property="og:description" content="Temukan properti impian Anda atau mulai pasang iklan properti secara gratis. Jangkau ribuan pembeli potensial setiap harinya.">
+    <meta property="og:image" content="logo rumasa.jpg">
+    
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="RUMASA - Jual Beli Properti, Rumah & Apartemen">
+    <meta name="twitter:description" content="Cari rumah, apartemen, atau tanah impianmu? Temukan penawaran terbaik hanya di RUMASA.">
+    <meta name="twitter:image" content="logo rumasa.jpg">
+
+    <!-- Schema Markup JSON-LD (Rahsia Ranking Google) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "name": "RUMASA Marketplace",
+          "url": "https://www.rumasa.web.id/",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://www.rumasa.web.id/?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@type": "RealEstateAgent",
+          "name": "RUMASA",
+          "image": "https://www.rumasa.web.id/logo rumasa.jpg",
+          "description": "Platform marketplace properti untuk jual beli dan sewa rumah, apartemen, tanah, dan properti komersial lainnya.",
+          "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "ID"
+          },
+          "priceRange": "$$"
+        }
+      ]
+    }
+    </script>
     
     <!-- Injecting Manifest via Data URI for Single File execution -->
     <script>
@@ -350,21 +398,21 @@
             </div>
         </section>
 
-        <!-- VIEW: PROPERTY DETAILS -->
-        <section id="view-details" class="view-section pb-12">
-            <div id="details-content"></div>
+        <!-- SEO CONTENT BLOCK (Hanya kelihatan sedikit tapi penting untuk Google) -->
+        <section class="bg-white border-t border-slate-200 py-12 hidden md:block">
+            <div class="container mx-auto px-4 max-w-5xl">
+                <div class="prose prose-sm text-slate-500 max-w-none">
+                    <h2 class="text-xl font-bold text-slate-800 mb-3">Portal Jual Beli Properti, Rumah, Apartemen, dan Tanah Terbaik di Indonesia</h2>
+                    <p><strong>RUMASA</strong> hadir sebagai solusi marketplace properti terdepan yang menghubungkan pencari properti dengan pemilik, agen, dan developer. Apakah Anda sedang mencari <strong>rumah dijual</strong> di Jakarta, <strong>sewa apartemen</strong> murah di pusat kota, atau mencari lahan <strong>tanah dijual</strong> untuk investasi bisnis Anda? RUMASA menyediakan jutaan daftar (listing) properti yang diperbarui setiap hari.</p>
+                    <p>Sebagai platform yang komprehensif, kami memfasilitasi transaksi jual beli dan sewa untuk berbagai kategori termasuk ruko, gudang, ruang kantor, villa, hingga pabrik. Nikmati fitur unggulan kami seperti ulasan eksklusif, video tur properti, dan sistem pencarian pintar yang membantu Anda menemukan hunian impian dengan harga terbaik.</p>
+                </div>
+            </div>
         </section>
 
-        <!-- VIEW: REVIEW / DETAIL ULASAN EKSKLUSIF -->
-        <section id="view-review" class="view-section pb-12 bg-slate-50 min-h-screen">
-            <div class="bg-slate-900 pt-6 md:pt-12 pb-32 text-white relative overflow-hidden">
-                <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=1600&q=80')] bg-cover bg-center opacity-20 blur-sm"></div>
-                <div class="container mx-auto px-4 flex flex-col md:flex-row items-start md:items-center gap-6 relative z-10">
-                    <button onclick="navigate('home')" class="w-12 h-12 shrink-0 rounded-full bg-white/20 flex items-center justify-center hover:bg-accent text-white transition backdrop-blur shadow-lg border border-white/10">
-                        <i class="ph ph-arrow-left text-2xl"></i>
-                    </button>
-                    <div>
-                        <div class="inline-block bg-accent/20 border border-accent/50 text-accent font-bold text-[10px] tracking-widest uppercase px-3 py-1 rounded-full mb-3">Ulasan & Video Eksklusif</div>
+        <!-- FOOTER -->
+        <footer class="bg-slate-50 border-t border-slate-200 mt-0 py-8 text-center text-slate-500 pb-28 md:pb-8 w-full">
+            <div class="container mx-auto px-4">
+                <img src="logo rumasa.jpg" alt="Logo RUMASA Jual Beli Properti" class="h-12 w-12 rounded-xl shadow-sm mx-auto mb-3 opacity-90">
                         <h1 class="text-3xl md:text-5xl font-bold leading-tight drop-shadow-xl max-w-3xl">Review Mendalam: Smart Home Mansion di PIK 2</h1>
                     </div>
                 </div>
@@ -1436,8 +1484,8 @@
         function initCarousel() { renderCarousel(); startSlideShow(); }
         function renderCarousel() {
             const container = document.getElementById('hero-carousel'); const ind = document.getElementById('carousel-indicators');
-            if(container) container.innerHTML = carouselItems.map((c, i) => `<div class="carousel-slide w-full h-full ${i === 0 ? 'active' : ''}" id="slide-${i}"><img src="${c.img}" class="w-full h-full object-cover"></div>`).join('');
-            if(ind) ind.innerHTML = carouselItems.map((_, i) => `<button onclick="goToSlide(${i})" class="carousel-indicator w-3 h-3 rounded-full bg-white/50 hover:bg-white/80 ${i === 0 ? 'active' : ''}"></button>`).join('');
+            if(container) container.innerHTML = carouselItems.map((c, i) => `<div class="carousel-slide w-full h-full ${i === 0 ? 'active' : ''}" id="slide-${i}"><img src="${c.img}" alt="Banner Properti RUMASA ${i+1}" class="w-full h-full object-cover"></div>`).join('');
+            if(ind) ind.innerHTML = carouselItems.map((_, i) => `<button onclick="goToSlide(${i})" class="carousel-indicator w-3 h-3 rounded-full bg-white/50 hover:bg-white/80 ${i === 0 ? 'active' : ''}" aria-label="Slide ${i+1}"></button>`).join('');
             if(document.getElementById('hero-title')) document.getElementById('hero-title').innerText = carouselItems[0].title;
             if(document.getElementById('hero-subtitle')) document.getElementById('hero-subtitle').innerText = carouselItems[0].subtitle;
         }
@@ -1453,7 +1501,7 @@
 
         function renderProyekCards() {
             const grid = document.getElementById('proyek-grid'); if(!grid) return;
-            grid.innerHTML = proyekBaru.map(p => `<div class="bg-white rounded-2xl shadow-md border overflow-hidden hover:shadow-xl transition-all cursor-pointer"><div class="relative h-56 overflow-hidden"><img src="${p.img}" class="w-full h-full object-cover hover:scale-105 transition-transform"><div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-transparent"></div><div class="absolute top-4 left-4 bg-accent text-white px-3 py-1 rounded-full text-xs font-bold shadow-md">${p.status}</div><div class="absolute bottom-4 left-4 right-4 z-10"><div class="text-xs text-blue-200 font-medium mb-1">${p.developer}</div><h3 class="text-xl font-bold text-white line-clamp-1">${p.name}</h3></div></div><div class="p-6"><div class="text-slate-500 text-sm mb-4 line-clamp-2">${p.desc}</div><div class="flex items-center text-slate-600 text-xs mb-3 font-medium">${p.location}</div><div class="pt-4 border-t flex justify-between items-end"><div><div class="text-xs text-slate-500 mb-1">Mulai dari</div><div class="text-lg font-bold text-primary">${p.priceStart}</div></div><button class="bg-blue-50 text-primary w-10 h-10 rounded-full flex items-center justify-center"><i class="ph ph-arrow-right text-lg font-bold"></i></button></div></div></div>`).join('');
+            grid.innerHTML = proyekBaru.map(p => `<div class="bg-white rounded-2xl shadow-md border overflow-hidden hover:shadow-xl transition-all cursor-pointer"><div class="relative h-56 overflow-hidden"><img src="${p.img}" alt="Proyek Baru ${p.name} - ${p.location}" class="w-full h-full object-cover hover:scale-105 transition-transform"><div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-transparent"></div><div class="absolute top-4 left-4 bg-accent text-white px-3 py-1 rounded-full text-xs font-bold shadow-md">${p.status}</div><div class="absolute bottom-4 left-4 right-4 z-10"><div class="text-xs text-blue-200 font-medium mb-1">${p.developer}</div><h3 class="text-xl font-bold text-white line-clamp-1">${p.name}</h3></div></div><div class="p-6"><div class="text-slate-500 text-sm mb-4 line-clamp-2">${p.desc}</div><div class="flex items-center text-slate-600 text-xs mb-3 font-medium">${p.location}</div><div class="pt-4 border-t flex justify-between items-end"><div><div class="text-xs text-slate-500 mb-1">Mulai dari</div><div class="text-lg font-bold text-primary">${p.priceStart}</div></div><button class="bg-blue-50 text-primary w-10 h-10 rounded-full flex items-center justify-center" aria-label="Lihat Detail"><i class="ph ph-arrow-right text-lg font-bold"></i></button></div></div></div>`).join('');
         }
 
         // --- SISTEM FILTER & PAGINASI (DIKEMBALIKAN) ---
@@ -1596,7 +1644,7 @@
 
             grid.innerHTML = currentProps.map(p => `
                 <div class="bg-white rounded-2xl shadow-sm border overflow-hidden hover:shadow-xl transition-shadow cursor-pointer" onclick="showDetails(${p.id})">
-                    <div class="relative h-48 overflow-hidden"><img src="${p.img}" class="w-full h-full object-cover hover:scale-105 transition-transform"><div class="absolute top-3 left-3 bg-white/90 px-3 py-1 rounded-full text-xs font-bold text-primary">${p.status}</div></div>
+                    <div class="relative h-48 overflow-hidden"><img src="${p.img}" alt="${p.status} ${p.type} - ${p.title} di ${p.location}" class="w-full h-full object-cover hover:scale-105 transition-transform"><div class="absolute top-3 left-3 bg-white/90 px-3 py-1 rounded-full text-xs font-bold text-primary">${p.status}</div></div>
                     <div class="p-5">
                         <div class="text-xl font-bold text-slate-800 mb-1">${p.price}</div>
                         <h3 class="text-sm font-medium text-slate-600 mb-3 h-10 line-clamp-2">${p.title}</h3>
