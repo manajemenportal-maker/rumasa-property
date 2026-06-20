@@ -656,6 +656,9 @@
                                 <a href="javascript:void(0)" onclick="switchAdminTab('pembayaran')" id="tab-btn-pembayaran" class="admin-tab-btn flex items-center gap-3 text-slate-300 hover:bg-slate-800 px-4 py-3 rounded-xl transition"><i class="ph ph-receipt text-xl"></i> Pembayaran <span id="admin-pay-badge" class="ml-auto bg-accent text-white text-[10px] font-bold px-2 py-0.5 rounded-full hidden">0</span></a>
                                 <a href="javascript:void(0)" onclick="switchAdminTab('chat')" id="tab-btn-chat" class="admin-tab-btn flex items-center gap-3 text-slate-300 hover:bg-slate-800 px-4 py-3 rounded-xl transition"><i class="ph ph-chats text-xl"></i> Pesan Masuk <span id="admin-chat-badge" class="ml-auto bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full hidden">0</span></a>
                                 <a href="javascript:void(0)" onclick="switchAdminTab('iklan')" id="tab-btn-iklan" class="admin-tab-btn flex items-center gap-3 text-slate-300 hover:bg-slate-800 px-4 py-3 rounded-xl transition"><i class="ph ph-buildings text-xl"></i> Kelola Iklan</a>
+                                <a href="javascript:void(0)" onclick="switchAdminTab('carousel')" id="tab-btn-carousel" class="admin-tab-btn flex items-center gap-3 text-slate-300 hover:bg-slate-800 px-4 py-3 rounded-xl transition"><i class="ph ph-images text-xl"></i> Kelola Banner</a>
+                                <a href="javascript:void(0)" onclick="switchAdminTab('ulasan')" id="tab-btn-ulasan" class="admin-tab-btn flex items-center gap-3 text-slate-300 hover:bg-slate-800 px-4 py-3 rounded-xl transition"><i class="ph ph-star text-xl"></i> Kelola Ulasan</a>
+                                <a href="javascript:void(0)" onclick="switchAdminTab('pengguna')" id="tab-btn-pengguna" class="admin-tab-btn flex items-center gap-3 text-slate-300 hover:bg-slate-800 px-4 py-3 rounded-xl transition"><i class="ph ph-users text-xl"></i> Pengguna</a>
                                 <a href="javascript:void(0)" onclick="navigate('home')" class="flex items-center gap-3 text-slate-300 hover:bg-slate-800 px-4 py-3 rounded-xl transition mt-8 text-red-400 hover:text-red-300"><i class="ph ph-sign-out text-xl"></i> Keluar</a>
                             </nav>
                         </div>
@@ -731,8 +734,178 @@
 
                         <!-- TAB: IKLAN -->
                         <div id="admin-tab-iklan" class="admin-tab-content hidden">
-                            <h2 class="text-2xl font-bold text-slate-800 mb-6">Persetujuan Iklan</h2>
-                            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 text-center text-slate-500">Iklan yang disetujui akan diatur oleh sistem pembayaran premium.</div>
+                            <div class="flex items-center justify-between mb-6">
+                                <h2 class="text-2xl font-bold text-slate-800">Persetujuan Iklan</h2>
+                            </div>
+                            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-x-auto">
+                                <table class="w-full text-left">
+                                    <thead class="bg-slate-50 border-b border-slate-200">
+                                        <tr>
+                                            <th class="p-4 font-medium text-slate-600">Properti</th>
+                                            <th class="p-4 font-medium text-slate-600">Pengiklan</th>
+                                            <th class="p-4 font-medium text-slate-600">Harga</th>
+                                            <th class="p-4 font-medium text-slate-600 text-center">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-slate-100">
+                                        <tr>
+                                            <td class="p-4">
+                                                <div class="font-bold text-sm text-slate-800">Ruang Kantor Sudirman</div>
+                                                <div class="text-xs text-slate-500">Kantor • Disewakan</div>
+                                            </td>
+                                            <td class="p-4 text-sm text-slate-600">Budi Pengguna</td>
+                                            <td class="p-4 text-sm font-bold text-primary">Rp 120 Jt/thn</td>
+                                            <td class="p-4">
+                                                <div class="flex gap-2 justify-center">
+                                                    <button onclick="showMessage('Iklan disetujui untuk tayang!')" class="bg-green-100 text-green-700 hover:bg-green-200 p-2 rounded-lg transition" title="Setujui"><i class="ph ph-check text-lg"></i></button>
+                                                    <button onclick="showMessage('Iklan ditolak!')" class="bg-red-100 text-red-700 hover:bg-red-200 p-2 rounded-lg transition" title="Tolak"><i class="ph ph-x text-lg"></i></button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- TAB: CAROUSEL MANAGE -->
+                        <div id="admin-tab-carousel" class="admin-tab-content hidden">
+                            <div class="flex items-center justify-between mb-6">
+                                <h2 class="text-2xl font-bold text-slate-800">Kelola Banner Depan (Carousel)</h2>
+                                <button onclick="navigate('home')" class="md:hidden flex items-center gap-2 bg-slate-200 text-slate-700 px-4 py-2 rounded-lg text-sm font-medium">
+                                    <i class="ph ph-arrow-left"></i>
+                                </button>
+                            </div>
+                            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                                <p class="text-sm text-slate-500 mb-6">Atur 5 foto properti/produk yang akan tampil bergantian di halaman beranda utama.</p>
+                                
+                                <form id="carousel-admin-form" onsubmit="event.preventDefault(); saveCarousel();" class="space-y-6">
+                                    <!-- Inputs injected by JS -->
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- TAB: PENGGUNA -->
+                        <div id="admin-tab-pengguna" class="admin-tab-content hidden">
+                            <div class="flex items-center justify-between mb-6">
+                                <h2 class="text-2xl font-bold text-slate-800">Manajemen Pengguna</h2>
+                            </div>
+                            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-10 text-center">
+                                <i class="ph ph-users text-5xl text-slate-300 mb-3 block"></i>
+                                <h3 class="font-bold text-slate-700 mb-1">Daftar Pengguna Aktif</h3>
+                                <p class="text-slate-500 text-sm">Fitur manajemen data pengguna sedang dalam pemeliharaan berkala.</p>
+                            </div>
+                        </div>
+
+                        <!-- TAB: KELOLA ULASAN -->
+                        <div id="admin-tab-ulasan" class="admin-tab-content hidden">
+                            <div class="flex items-center justify-between mb-6">
+                                <h2 class="text-2xl font-bold text-slate-800">Pengaturan Ulasan Unggulan (Beranda)</h2>
+                            </div>
+                            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8">
+                                <div class="bg-blue-50 border-l-4 border-primary p-4 rounded-r-lg mb-6 flex items-start gap-3">
+                                    <i class="ph-fill ph-info text-primary text-xl mt-0.5"></i>
+                                    <p class="text-sm text-slate-600 m-0">Pengaturan ini akan mengubah konten <b>Boks Ulasan Daun (Kanan)</b> di Halaman Beranda, beserta halaman detail artikel ulasannya.</p>
+                                </div>
+                                
+                                <form onsubmit="event.preventDefault(); showMessage('Pembaruan ulasan sedang disimpan...'); setTimeout(() => { showMessage('Ulasan berhasil diperbarui di halaman depan!'); }, 1500);" class="space-y-8">
+                                    
+                                    <!-- Konten Utama -->
+                                    <div>
+                                        <h3 class="text-lg font-bold text-slate-800 mb-4 border-b border-slate-100 pb-2">Konten Utama</h3>
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            <div class="md:col-span-2">
+                                                <label class="block text-sm font-medium text-slate-700 mb-2">Judul Ulasan</label>
+                                                <input type="text" value="Review: Smart Home Mansion PIK 2" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition bg-slate-50 focus:bg-white" required>
+                                            </div>
+                                            <div class="md:col-span-2">
+                                                <label class="block text-sm font-medium text-slate-700 mb-2">Deskripsi Singkat (Cuplikan)</label>
+                                                <textarea rows="2" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition bg-slate-50 focus:bg-white" required>Kupas tuntas material bangunan mewah, potensi ROI yang tinggi, dan kecanggihan teknologi smart home terintegrasi pada unit premium ini.</textarea>
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-slate-700 mb-2">URL Foto Thumbnail</label>
+                                                <input type="text" value="https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=600&q=80" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition bg-slate-50 focus:bg-white" required>
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-slate-700 mb-2">URL Video (Youtube Embed)</label>
+                                                <input type="text" value="https://www.youtube.com/embed/dQw4w9WgXcQ" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition bg-slate-50 focus:bg-white" required>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Pengaturan Skor -->
+                                    <div>
+                                        <h3 class="text-lg font-bold text-slate-800 mb-4 border-b border-slate-100 pb-2">Penilaian & Skor</h3>
+                                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                            <div>
+                                                <label class="block text-sm font-medium text-slate-700 mb-2">Lokasi & Akses</label>
+                                                <div class="flex items-center gap-2">
+                                                    <input type="number" step="0.1" max="10" value="10" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition bg-slate-50 text-center font-bold">
+                                                    <span class="text-slate-500">/ 10</span>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-slate-700 mb-2">Desain Material</label>
+                                                <div class="flex items-center gap-2">
+                                                    <input type="number" step="0.1" max="10" value="9.5" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition bg-slate-50 text-center font-bold">
+                                                    <span class="text-slate-500">/ 10</span>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-slate-700 mb-2">Teknologi</label>
+                                                <div class="flex items-center gap-2">
+                                                    <input type="number" step="0.1" max="10" value="10" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition bg-slate-50 text-center font-bold">
+                                                    <span class="text-slate-500">/ 10</span>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-slate-700 mb-2">Harga/Value</label>
+                                                <div class="flex items-center gap-2">
+                                                    <input type="number" step="0.1" max="10" value="8.5" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition bg-slate-50 text-center font-bold">
+                                                    <span class="text-slate-500">/ 10</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-4 flex items-center justify-between bg-amber-50 p-4 rounded-xl border border-amber-200">
+                                            <span class="font-bold text-amber-800">Skor Akhir (Otomatis):</span>
+                                            <span class="text-2xl font-black text-amber-600">9.5 <span class="text-sm text-amber-800/60">/ 10</span></span>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Artikel (Mini Rich Text Editor) -->
+                                    <div>
+                                        <h3 class="text-lg font-bold text-slate-800 mb-4 border-b border-slate-100 pb-2">Isi Artikel Ulasan</h3>
+                                        <p class="text-sm text-slate-500 mb-2">Tuliskan ulasan lengkap di sini. Gunakan tombol untuk merapikan paragraf, membuat list, atau membuat sub-judul.</p>
+                                        
+                                        <!-- Toolbar Editor -->
+                                        <div class="flex flex-wrap gap-2 mb-0 bg-slate-100 p-2 rounded-t-xl border border-slate-300 border-b-0">
+                                            <button type="button" onclick="formatDoc('bold')" class="w-8 h-8 flex items-center justify-center bg-white border border-slate-200 rounded hover:bg-blue-50 hover:text-primary transition font-bold" title="Tebal">B</button>
+                                            <button type="button" onclick="formatDoc('italic')" class="w-8 h-8 flex items-center justify-center bg-white border border-slate-200 rounded hover:bg-blue-50 hover:text-primary transition italic font-serif" title="Miring">I</button>
+                                            <button type="button" onclick="formatDoc('underline')" class="w-8 h-8 flex items-center justify-center bg-white border border-slate-200 rounded hover:bg-blue-50 hover:text-primary transition underline" title="Garis Bawah">U</button>
+                                            <div class="w-px h-8 bg-slate-300 mx-1"></div>
+                                            <button type="button" onclick="formatDoc('formatBlock', 'H3')" class="px-3 h-8 flex items-center justify-center bg-white border border-slate-200 rounded hover:bg-blue-50 hover:text-primary transition text-xs font-bold" title="Jadikan Sub-judul">Sub-Judul (H3)</button>
+                                            <button type="button" onclick="formatDoc('formatBlock', 'P')" class="px-3 h-8 flex items-center justify-center bg-white border border-slate-200 rounded hover:bg-blue-50 hover:text-primary transition text-xs font-bold" title="Jadikan Paragraf Biasa">Paragraf Normal</button>
+                                            <div class="w-px h-8 bg-slate-300 mx-1"></div>
+                                            <button type="button" onclick="formatDoc('insertUnorderedList')" class="w-8 h-8 flex items-center justify-center bg-white border border-slate-200 rounded hover:bg-blue-50 hover:text-primary transition" title="List Titik"><i class="ph ph-list-bullets font-bold text-lg"></i></button>
+                                            <button type="button" onclick="formatDoc('insertOrderedList')" class="w-8 h-8 flex items-center justify-center bg-white border border-slate-200 rounded hover:bg-blue-50 hover:text-primary transition" title="List Angka"><i class="ph ph-list-numbers font-bold text-lg"></i></button>
+                                        </div>
+                                        
+                                        <!-- Area Ketik (Content Editable) -->
+                                        <div id="editor-review" contenteditable="true" class="w-full min-h-[300px] px-5 py-4 rounded-b-xl border border-slate-300 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition bg-white text-slate-700 leading-relaxed overflow-y-auto [&>p]:mb-4 [&>h3]:text-xl [&>h3]:font-bold [&>h3]:mt-6 [&>h3]:mb-2 [&>h3]:text-slate-800 [&>ul]:list-disc [&>ul]:ml-5 [&>ul]:mb-4 [&>ol]:list-decimal [&>ol]:ml-5 [&>ol]:mb-4 [&>b]:font-bold [&>i]:italic">
+                                            <p>Mencari hunian mewah di kawasan elit Pantai Indah Kapuk (PIK) 2? Smart Home Mansion ini menawarkan kombinasi sempurna antara teknologi mutakhir abad ke-21 dan desain arsitektur neoklasik yang memukau mata dari segala sudut.</p>
+                                            <h3>1. Desain Eksterior & Interior</h3>
+                                            <p>Saat pertama kali tim RUMASA melihat fasad rumah ini, kita disambut oleh pilar-pilar tinggi bergaya Eropa klasik yang memberikan kesan grandeur. Masuk ke bagian dalam, lantai marmer import dari Italia mendominasi ruang tamu yang dirancang dengan konsep open space.</p>
+                                            <h3>2. Integrasi Teknologi Smart Home</h3>
+                                            <p>Keunggulan absolut dari properti ini terletak pada sistem Smart Home-nya yang menyeluruh. Tidak lagi menggunakan kunci konvensional, pintu masuk utama dilengkapi sistem Face Recognition dan sensor biometrik terkini.</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex justify-end pt-4 border-t border-slate-200">
+                                        <button type="submit" class="bg-primary hover:bg-secondary text-white px-8 py-4 rounded-xl font-bold transition shadow-lg shadow-blue-500/30 flex items-center gap-2 text-lg">
+                                            <i class="ph ph-check-circle text-2xl"></i> Simpan & Tayangkan Ulasan
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -907,6 +1080,7 @@
         // ================= CAROUSEL =================
         function initCarousel() {
             renderCarousel();
+            renderAdminCarouselForm();
             startSlideShow();
         }
 
@@ -973,6 +1147,67 @@
             startSlideShow();
         }
 
+        function renderAdminCarouselForm() {
+            const form = document.getElementById('carousel-admin-form');
+            if(!form) return;
+            let formHtml = '';
+            
+            carouselItems.forEach((item, index) => {
+                formHtml += `
+                    <div class="border border-slate-200 rounded-xl p-4 bg-slate-50 relative">
+                        <div class="absolute -top-3 -left-3 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-bold shadow-sm z-10">${index + 1}</div>
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-4 relative z-0">
+                            <div class="md:col-span-3 h-24 bg-slate-200 rounded-lg overflow-hidden border border-slate-300">
+                                <img src="${item.img}" id="preview-img-${index}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x300/e2e8f0/64748b?text=Invalid+Image'">
+                            </div>
+                            <div class="md:col-span-9 space-y-3">
+                                <div>
+                                    <label class="block text-xs font-medium text-slate-500 mb-1">URL Gambar (Landscape)</label>
+                                    <input type="text" id="car-img-${index}" value="${item.img}" oninput="document.getElementById('preview-img-${index}').src=this.value" class="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 focus:border-primary outline-none" required>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                    <div>
+                                        <label class="block text-xs font-medium text-slate-500 mb-1">Judul Utama</label>
+                                        <input type="text" id="car-title-${index}" value="${item.title}" class="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 focus:border-primary outline-none" required>
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-medium text-slate-500 mb-1">Sub-judul / Deskripsi Pendek</label>
+                                        <input type="text" id="car-sub-${index}" value="${item.subtitle}" class="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 focus:border-primary outline-none" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            formHtml += `
+                <div class="flex justify-end pt-4 border-t border-slate-200">
+                    <button type="submit" class="bg-primary hover:bg-secondary text-white px-8 py-3 rounded-xl font-bold transition shadow-lg shadow-blue-500/30 flex items-center gap-2">
+                        <i class="ph ph-floppy-disk text-xl"></i> Simpan Perubahan Banner
+                    </button>
+                </div>
+            `;
+            
+            form.innerHTML = formHtml;
+        }
+        window.renderAdminCarouselForm = renderAdminCarouselForm;
+
+        function saveCarousel() {
+            for(let i = 0; i < 5; i++) {
+                const imgEl = document.getElementById(`car-img-${i}`);
+                const titleEl = document.getElementById(`car-title-${i}`);
+                const subEl = document.getElementById(`car-sub-${i}`);
+                if(imgEl && titleEl && subEl) {
+                    carouselItems[i].img = imgEl.value;
+                    carouselItems[i].title = titleEl.value;
+                    carouselItems[i].subtitle = subEl.value;
+                }
+            }
+            renderCarousel();
+            showMessage('Banner beranda berhasil diperbarui!');
+        }
+        window.saveCarousel = saveCarousel;
 
         // ================= PROPERTY RENDERING =================
         function renderProyekCards() {
@@ -1737,6 +1972,17 @@
             const banner = document.getElementById('pwa-install-banner');
             if(banner) banner.classList.remove('hidden');
         });
+
+        function formatDoc(cmd, value=null) {
+            if (value) {
+                document.execCommand(cmd, false, value);
+            } else {
+                document.execCommand(cmd);
+            }
+            const editor = document.getElementById('editor-review');
+            if(editor) editor.focus();
+        }
+        window.formatDoc = formatDoc;
 
         document.addEventListener('DOMContentLoaded', () => {
             // Restore UI Initial State
