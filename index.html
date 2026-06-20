@@ -35,7 +35,7 @@
     <meta name="twitter:description" content="Cari rumah, apartemen, atau tanah impianmu? Temukan penawaran terbaik hanya di RUMASA.">
     <meta name="twitter:image" content="logo rumasa.jpg">
 
-    <!-- Schema Markup JSON-LD (Rahsia Ranking Google) -->
+    <!-- Schema Markup JSON-LD -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -65,7 +65,7 @@
     }
     </script>
     
-    <!-- Injecting Manifest via Data URI for Single File execution -->
+    <!-- Injecting Manifest via Data URI -->
     <script>
         const manifest = {
             "name": "RUMASA Marketplace",
@@ -87,10 +87,8 @@
         document.write(`<link rel="manifest" href="${manifestUrl}">`);
     </script>
 
-    <!-- Tailwind CSS -->
+    <!-- Tailwind CSS & Phosphor Icons -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
     <script>
@@ -119,35 +117,13 @@
             overscroll-behavior-y: none;
         }
         
-        ::-webkit-scrollbar {
-            width: 0px;
-            height: 0px; 
-            background: transparent;
-        }
-
-        .hide-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-
-        .app-ui {
-            -webkit-user-select: none;
-            user-select: none;
-        }
+        ::-webkit-scrollbar { width: 0px; height: 0px; background: transparent; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .app-ui { -webkit-user-select: none; user-select: none; }
         
-        .carousel-slide {
-            position: absolute;
-            inset: 0;
-            opacity: 0;
-            transition: opacity 0.8s ease-in-out;
-        }
-        .carousel-slide.active {
-            opacity: 1;
-        }
-        .carousel-indicator.active {
-            background-color: #2563eb;
-            width: 2rem;
-        }
+        .carousel-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.8s ease-in-out; }
+        .carousel-slide.active { opacity: 1; }
+        .carousel-indicator.active { background-color: #2563eb; width: 2rem; }
 
         .glass-nav {
             background: rgba(255, 255, 255, 0.9);
@@ -156,47 +132,15 @@
             border-top: 1px solid rgba(226, 232, 240, 0.8);
         }
 
-        .view-section {
-            display: none;
-            animation: fadeIn 0.3s ease-in-out;
-        }
-        .view-section.active {
-            display: block;
-        }
+        .view-section { display: none; animation: fadeIn 0.3s ease-in-out; }
+        .view-section.active { display: block; }
         
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
-        .line-clamp-2 {
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;  
-            overflow: hidden;
-        }
-
-        @keyframes scroll-left {
-            0% { transform: translateX(100vw); }
-            100% { transform: translateX(-100%); }
-        }
-        .animate-marquee {
-            display: inline-block;
-            white-space: nowrap;
-            animation: scroll-left 30s linear infinite;
-        }
-        .animate-marquee:hover {
-            animation-play-state: paused;
-        }
-
-        @keyframes pulse-wa {
-            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.5); }
-            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
-        }
-        .btn-wa {
-            animation: pulse-wa 2s infinite;
-        }
+        @keyframes scroll-left { 0% { transform: translateX(100vw); } 100% { transform: translateX(-100%); } }
+        .animate-marquee { display: inline-block; white-space: nowrap; animation: scroll-left 30s linear infinite; }
+        .animate-marquee:hover { animation-play-state: paused; }
     </style>
 </head>
 <body class="text-slate-800 pb-20 md:pb-0">
@@ -204,13 +148,11 @@
     <!-- Top Header -->
     <header class="sticky top-0 z-40 bg-white shadow-sm">
         <div class="container mx-auto px-4 h-16 flex items-center justify-between">
-            <!-- Logo -->
             <div class="flex items-center gap-2 text-primary cursor-pointer" onclick="navigate('home'); filterData('all', 'all'); updateNav('home');">
                 <img src="logo rumasa.jpg" alt="RUMASA Logo" class="h-10 w-10 rounded-md shadow-sm">
                 <span class="text-xl font-bold tracking-tight">RUMASA</span>
             </div>
             
-            <!-- Desktop Nav -->
             <nav class="hidden md:flex items-center gap-8 font-medium" id="desktop-nav">
                 <a href="javascript:void(0)" onclick="navigate('home'); filterData('all', 'all'); updateNav('home')" id="nav-home" class="nav-link text-primary">Beranda</a>
                 <a href="javascript:void(0)" onclick="navigate('home'); filterData('all', 'Dijual'); updateNav('dijual')" id="nav-dijual" class="nav-link text-slate-500 hover:text-primary transition">Dijual</a>
@@ -218,11 +160,9 @@
                 <a href="javascript:void(0)" onclick="navigate('proyek'); updateNav('proyek')" id="nav-proyek" class="nav-link text-slate-500 hover:text-primary transition">Proyek Baru</a>
             </nav>
 
-            <!-- Actions -->
             <div class="flex items-center gap-4">
-                <button onclick="navigate('sell')" class="hidden md:flex items-center gap-2 bg-primary hover:bg-secondary text-white px-5 py-2.5 rounded-full font-medium transition shadow-md shadow-blue-500/30">
-                    <i class="ph ph-plus-circle text-lg"></i>
-                    Pasang Iklan
+                <button onclick="handlePasangIklanClick()" class="hidden md:flex items-center gap-2 bg-primary hover:bg-secondary text-white px-5 py-2.5 rounded-full font-medium transition shadow-md shadow-blue-500/30">
+                    <i class="ph ph-plus-circle text-lg"></i> Pasang Iklan
                 </button>
                 
                 <!-- Profil Dropdown -->
@@ -231,7 +171,6 @@
                         <i class="ph ph-user text-xl"></i>
                     </div>
                     <div id="dropdown-menu" class="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-lg border border-slate-100 hidden z-50 overflow-hidden">
-                        
                         <!-- Menu Belum Login -->
                         <div id="menu-guest">
                             <a href="javascript:void(0)" onclick="navigate('auth'); toggleAuth('login'); document.getElementById('dropdown-menu').classList.add('hidden')" class="block px-4 py-3 text-sm text-primary font-medium hover:bg-blue-50 transition border-b border-slate-50">
@@ -398,21 +337,21 @@
             </div>
         </section>
 
-        <!-- SEO CONTENT BLOCK (Hanya kelihatan sedikit tapi penting untuk Google) -->
-        <section class="bg-white border-t border-slate-200 py-12 hidden md:block">
-            <div class="container mx-auto px-4 max-w-5xl">
-                <div class="prose prose-sm text-slate-500 max-w-none">
-                    <h2 class="text-xl font-bold text-slate-800 mb-3">Portal Jual Beli Properti, Rumah, Apartemen, dan Tanah Terbaik di Indonesia</h2>
-                    <p><strong>RUMASA</strong> hadir sebagai solusi marketplace properti terdepan yang menghubungkan pencari properti dengan pemilik, agen, dan developer. Apakah Anda sedang mencari <strong>rumah dijual</strong> di Jakarta, <strong>sewa apartemen</strong> murah di pusat kota, atau mencari lahan <strong>tanah dijual</strong> untuk investasi bisnis Anda? RUMASA menyediakan jutaan daftar (listing) properti yang diperbarui setiap hari.</p>
-                    <p>Sebagai platform yang komprehensif, kami memfasilitasi transaksi jual beli dan sewa untuk berbagai kategori termasuk ruko, gudang, ruang kantor, villa, hingga pabrik. Nikmati fitur unggulan kami seperti ulasan eksklusif, video tur properti, dan sistem pencarian pintar yang membantu Anda menemukan hunian impian dengan harga terbaik.</p>
-                </div>
-            </div>
+        <!-- VIEW: PROPERTY DETAILS -->
+        <section id="view-details" class="view-section pb-12">
+            <div id="details-content"></div>
         </section>
 
-        <!-- FOOTER -->
-        <footer class="bg-slate-50 border-t border-slate-200 mt-0 py-8 text-center text-slate-500 pb-28 md:pb-8 w-full">
-            <div class="container mx-auto px-4">
-                <img src="logo rumasa.jpg" alt="Logo RUMASA Jual Beli Properti" class="h-12 w-12 rounded-xl shadow-sm mx-auto mb-3 opacity-90">
+        <!-- VIEW: REVIEW / DETAIL ULASAN EKSKLUSIF -->
+        <section id="view-review" class="view-section pb-12 bg-slate-50 min-h-screen">
+            <div class="bg-slate-900 pt-6 md:pt-12 pb-32 text-white relative overflow-hidden">
+                <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=1600&q=80')] bg-cover bg-center opacity-20 blur-sm"></div>
+                <div class="container mx-auto px-4 flex flex-col md:flex-row items-start md:items-center gap-6 relative z-10">
+                    <button onclick="navigate('home')" class="w-12 h-12 shrink-0 rounded-full bg-white/20 flex items-center justify-center hover:bg-accent text-white transition backdrop-blur shadow-lg border border-white/10">
+                        <i class="ph ph-arrow-left text-2xl"></i>
+                    </button>
+                    <div>
+                        <div class="inline-block bg-accent/20 border border-accent/50 text-accent font-bold text-[10px] tracking-widest uppercase px-3 py-1 rounded-full mb-3">Ulasan & Video Eksklusif</div>
                         <h1 class="text-3xl md:text-5xl font-bold leading-tight drop-shadow-xl max-w-3xl">Review Mendalam: Smart Home Mansion di PIK 2</h1>
                     </div>
                 </div>
@@ -452,7 +391,7 @@
         <!-- VIEW: PROYEK BARU -->
         <section id="view-proyek" class="view-section pb-12 bg-slate-50 min-h-screen">
             <div class="bg-slate-900 pt-16 pb-20 text-white relative overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80" class="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-overlay">
+                <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80" class="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-overlay" alt="Cityscape">
                 <div class="container mx-auto px-4 relative z-10 text-center">
                     <span class="inline-block px-4 py-1.5 bg-accent/20 text-accent font-bold rounded-full text-sm mb-4 border border-accent/30 shadow-sm">Eksklusif RUMASA</span>
                     <h1 class="text-3xl md:text-5xl font-bold mb-4 drop-shadow-lg">Proyek Baru & Pre-Launch</h1>
@@ -482,14 +421,14 @@
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-2">Tipe Transaksi</label>
-                            <select class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary outline-none transition" required>
+                            <select id="ad-input-transaction" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary outline-none transition" required>
                                 <option>Dijual</option>
                                 <option>Disewakan</option>
                             </select>
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-2">Tipe Properti</label>
-                            <select class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary outline-none transition" required>
+                            <select id="ad-input-type" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary outline-none transition" required>
                                 <option value="" disabled selected>Pilih Tipe Properti</option>
                                 <option>Rumah</option>
                                 <option>Apartemen</option>
@@ -509,75 +448,56 @@
                         <input type="number" id="ad-input-price" placeholder="Contoh: 1500000000" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary outline-none transition" required>
                     </div>
 
-                    <!-- Spesifikasi Fisik Properti -->
                     <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl space-y-5">
                         <h3 class="font-bold text-slate-800 text-sm border-b border-slate-200 pb-2">Spesifikasi Detail Properti</h3>
-                        
                         <div class="grid grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-xs font-medium text-slate-600 mb-1">Luas Tanah (m²)</label>
-                                <input type="number" placeholder="Contoh: 120" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-primary outline-none transition bg-white">
+                                <input type="number" id="ad-input-lt" placeholder="Contoh: 120" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-primary outline-none transition bg-white">
                             </div>
                             <div>
                                 <label class="block text-xs font-medium text-slate-600 mb-1">Luas Bangunan (m²)</label>
-                                <input type="number" placeholder="Contoh: 90" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-primary outline-none transition bg-white">
+                                <input type="number" id="ad-input-lb" placeholder="Contoh: 90" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-primary outline-none transition bg-white">
                             </div>
                         </div>
-
                         <div class="grid grid-cols-3 gap-4">
                             <div>
                                 <label class="block text-xs font-medium text-slate-600 mb-1">K. Tidur</label>
-                                <input type="number" placeholder="0" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-primary outline-none transition bg-white">
+                                <input type="number" id="ad-input-beds" placeholder="0" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-primary outline-none transition bg-white">
                             </div>
                             <div>
                                 <label class="block text-xs font-medium text-slate-600 mb-1">K. Mandi</label>
-                                <input type="number" placeholder="0" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-primary outline-none transition bg-white">
+                                <input type="number" id="ad-input-baths" placeholder="0" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-primary outline-none transition bg-white">
                             </div>
                             <div>
                                 <label class="block text-xs font-medium text-slate-600 mb-1">Lantai</label>
                                 <input type="number" placeholder="1" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-primary outline-none transition bg-white">
                             </div>
                         </div>
-
                         <div>
                             <label class="block text-xs font-medium text-slate-600 mb-1">Legalitas / Sertifikat</label>
                             <select class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-primary outline-none transition bg-white">
                                 <option value="">-- Pilih Jenis Sertifikat --</option>
-                                <option value="shm">SHM - Sertifikat Hak Milik</option>
-                                <option value="hgb">HGB - Hak Guna Bangunan</option>
-                                <option value="strata">Strata Title</option>
-                                <option value="girik">Girik / Petok D</option>
-                                <option value="lainnya">Lainnya</option>
+                                <option value="shm">SHM - Hak Milik</option>
+                                <option value="hgb">HGB - Hak Bangunan</option>
                             </select>
-                        </div>
-
-                        <div>
-                            <label class="block text-xs font-medium text-slate-600 mb-3">Fasilitas Tersedia</label>
-                            <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
-                                <label class="flex items-center gap-2 text-sm text-slate-700 cursor-pointer hover:text-primary"><input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary"> AC</label>
-                                <label class="flex items-center gap-2 text-sm text-slate-700 cursor-pointer hover:text-primary"><input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary"> Carport / Garasi</label>
-                                <label class="flex items-center gap-2 text-sm text-slate-700 cursor-pointer hover:text-primary"><input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary"> Keamanan 24 Jam</label>
-                                <label class="flex items-center gap-2 text-sm text-slate-700 cursor-pointer hover:text-primary"><input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary"> Kolam Renang</label>
-                                <label class="flex items-center gap-2 text-sm text-slate-700 cursor-pointer hover:text-primary"><input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary"> Taman</label>
-                                <label class="flex items-center gap-2 text-sm text-slate-700 cursor-pointer hover:text-primary"><input type="checkbox" class="w-4 h-4 rounded text-primary focus:ring-primary"> Fully Furnished</label>
-                            </div>
                         </div>
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-slate-700 mb-2">Lokasi Lengkap</label>
-                        <textarea rows="2" placeholder="Nama Jalan, Kecamatan, Kota..." class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary outline-none transition" required></textarea>
+                        <textarea id="ad-input-location" rows="2" placeholder="Nama Jalan, Kecamatan, Kota..." class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary outline-none transition" required></textarea>
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-slate-700 mb-2">Deskripsi Properti</label>
-                        <textarea rows="3" placeholder="Ceritakan detail keunggulan properti Anda..." class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary outline-none transition" required></textarea>
+                        <textarea id="ad-input-desc" rows="3" placeholder="Ceritakan detail keunggulan properti Anda..." class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary outline-none transition" required></textarea>
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-slate-700 mb-2">Foto Properti (Maks 5 Foto)</label>
                         <input type="file" id="foto-upload" accept="image/*" multiple class="hidden" onchange="handleImageUpload(this)">
-                        <div onclick="document.getElementById('foto-upload').click()" class="border-2 border-dashed border-slate-300 rounded-xl p-8 text-center hover:bg-slate-50 hover:border-primary transition cursor-pointer group">
+                        <div onclick="document.getElementById('foto-upload').click()" class="border-2 border-dashed border-slate-300 rounded-xl p-8 text-center hover:bg-slate-50 transition cursor-pointer group">
                             <i id="upload-icon" class="ph ph-upload-simple text-3xl text-slate-400 mb-2 group-hover:text-primary transition"></i>
                             <p id="upload-text" class="text-sm text-slate-500 group-hover:text-primary transition">Klik atau drag foto ke sini</p>
                         </div>
@@ -600,7 +520,7 @@
                     </button>
                     <div>
                         <h1 class="text-3xl font-bold">Dashboard Pengguna</h1>
-                        <p class="text-blue-100 mt-2">Kelola profil, iklan, dan tagihan pembayaran Anda</p>
+                        <p class="text-blue-100 mt-2">Kelola profil, iklan, dan tagihan Anda</p>
                     </div>
                 </div>
             </div>
@@ -608,7 +528,6 @@
                 <!-- User Profile -->
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex flex-col md:flex-row items-center gap-6 mb-8 max-w-4xl relative z-10">
                     <div class="w-24 h-24 rounded-full border-4 border-white shadow-md bg-slate-200 flex items-center justify-center text-4xl font-bold text-slate-500 overflow-hidden">
-                        <img src="https://i.pravatar.cc/150" class="w-full h-full object-cover hidden" id="user-dashboard-avatar">
                         <span id="user-dashboard-initial">U</span>
                     </div>
                     <div class="text-center md:text-left">
@@ -624,41 +543,35 @@
                 </div>
                 
                 <div class="max-w-4xl">
-                    <!-- Iklan Properti Section -->
                     <div class="flex items-center justify-between mb-4">
                         <h3 class="text-lg font-bold text-slate-800">Iklan Properti Saya</h3>
-                        <button onclick="navigate('sell')" class="text-primary text-sm font-medium hover:underline">+ Pasang Baru</button>
+                        <button onclick="handlePasangIklanClick()" class="text-primary text-sm font-medium hover:underline">+ Pasang Baru</button>
                     </div>
-                    <div id="user-ads-list" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
-                        <!-- Iklan dimuat oleh JS -->
-                    </div>
+                    <div id="user-ads-list" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10"></div>
 
-                    <!-- Pembayaran & Tagihan Section -->
                     <div class="flex items-center justify-between mb-4 pt-6 border-t border-slate-200">
                         <h3 class="text-lg font-bold text-slate-800">Tagihan & Pembayaran Saya</h3>
                     </div>
-                    <div id="user-invoice-list" class="flex flex-col gap-3">
-                        <!-- Invoice akan dimuat oleh JS -->
-                    </div>
+                    <div id="user-invoice-list" class="flex flex-col gap-3"></div>
                 </div>
             </div>
 
-            <!-- Panel Floating Chat untuk User -->
+            <!-- Panel Chat -->
             <div id="user-chat-panel" class="hidden fixed bottom-4 md:bottom-8 right-4 md:right-8 w-[90%] md:w-80 bg-white rounded-2xl shadow-2xl border border-slate-200 z-[70] flex-col overflow-hidden transition-all duration-300">
                 <div class="bg-primary text-white p-4 flex justify-between items-center">
                     <div class="flex items-center gap-2">
                         <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center"><i class="ph-fill ph-headset text-lg"></i></div>
                         <div>
                             <div class="font-bold text-sm">Pusat Bantuan</div>
-                            <div class="text-[10px] text-blue-200">Admin RUMASA (Online)</div>
+                            <div class="text-[10px] text-blue-200">Admin RUMASA</div>
                         </div>
                     </div>
                     <button onclick="toggleUserChat()" class="text-white hover:bg-white/20 p-1.5 rounded-lg transition"><i class="ph ph-x text-lg"></i></button>
                 </div>
                 <div id="user-chat-body" class="h-72 bg-slate-50 p-4 overflow-y-auto flex flex-col gap-3"></div>
                 <form onsubmit="event.preventDefault(); sendUserMessage();" class="p-3 bg-white border-t border-slate-200 flex gap-2">
-                    <input type="text" id="user-chat-input" placeholder="Ketik pesan..." class="flex-1 px-3 py-2 bg-slate-100 border border-slate-200 rounded-xl text-sm focus:outline-none" required>
-                    <button type="submit" class="bg-primary hover:bg-secondary text-white w-10 h-10 rounded-xl flex items-center justify-center transition shadow-sm shrink-0"><i class="ph-fill ph-paper-plane-right"></i></button>
+                    <input type="text" id="user-chat-input" placeholder="Ketik pesan..." class="flex-1 px-3 py-2 bg-slate-100 border border-slate-200 rounded-xl text-sm outline-none" required>
+                    <button type="submit" class="bg-primary text-white w-10 h-10 rounded-xl flex items-center justify-center shrink-0"><i class="ph-fill ph-paper-plane-right"></i></button>
                 </form>
             </div>
         </section>
@@ -668,13 +581,13 @@
             <div class="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8">
                 <div class="sm:mx-auto sm:w-full sm:max-w-md relative z-10">
                     <img src="logo rumasa.jpg" alt="RUMASA Logo" class="mx-auto h-16 w-16 rounded-2xl shadow-md cursor-pointer" onclick="navigate('home')">
-                    <h2 id="auth-title" class="mt-6 text-center text-3xl font-extrabold text-slate-900">Daftar Akun Baru</h2>
-                    <p id="auth-subtitle" class="mt-2 text-center text-sm text-slate-600">Bergabunglah dan temukan properti impianmu.</p>
+                    <h2 id="auth-title" class="mt-6 text-center text-3xl font-extrabold text-slate-900">Selamat Datang Kembali</h2>
+                    <p id="auth-subtitle" class="mt-2 text-center text-sm text-slate-600">Masuk ke akun RUMASA Anda.</p>
                 </div>
 
                 <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md relative">
-                    <div class="absolute -top-10 -right-10 w-40 h-40 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-50 z-0"></div>
-                    <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-amber-200 rounded-full mix-blend-multiply filter blur-xl opacity-50 z-0"></div>
+                    <div class="absolute -top-10 -right-10 w-40 h-40 bg-blue-200 rounded-full mix-blend-multiply blur-xl opacity-50"></div>
+                    <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-amber-200 rounded-full mix-blend-multiply blur-xl opacity-50"></div>
                     
                     <div class="bg-white py-8 px-4 shadow-xl sm:rounded-3xl sm:px-10 border border-slate-100 relative z-10">
                         
@@ -684,23 +597,38 @@
                             <button id="btn-tab-register" onclick="toggleAuth('register')" type="button" class="flex-1 py-2.5 text-sm font-bold rounded-lg text-slate-500 hover:text-slate-700 transition">Daftar</button>
                         </div>
 
+                        <!-- Login Form -->
+                        <form id="form-login" class="space-y-5" onsubmit="event.preventDefault(); processLogin();">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Email</label>
+                                <input type="email" id="login-email" required class="appearance-none rounded-xl block w-full px-4 py-3 border border-slate-300 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Password</label>
+                                <input type="password" required class="appearance-none rounded-xl block w-full px-4 py-3 border border-slate-300 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
+                            </div>
+                            <button type="submit" class="w-full flex justify-center py-3.5 px-4 text-sm font-bold rounded-xl text-white bg-primary hover:bg-secondary transition shadow-lg shadow-blue-500/30 mt-6">
+                                Masuk
+                            </button>
+                        </form>
+
                         <!-- Register Form -->
                         <form id="form-register" class="space-y-4 hidden" onsubmit="event.preventDefault(); processRegister();">
                             <div>
                                 <label class="block text-sm font-medium text-slate-700 mb-1">Nama Lengkap</label>
-                                <input type="text" id="reg-name" required class="appearance-none rounded-xl relative block w-full px-4 py-3 border border-slate-300 placeholder-slate-400 text-slate-900 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm transition">
+                                <input type="text" id="reg-name" required class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-primary focus:border-primary sm:text-sm">
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-slate-700 mb-1">Email</label>
-                                <input type="email" id="reg-email" required class="appearance-none rounded-xl relative block w-full px-4 py-3 border border-slate-300 placeholder-slate-400 text-slate-900 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm transition">
+                                <input type="email" id="reg-email" required class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-primary focus:border-primary sm:text-sm">
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-slate-700 mb-1">Nomor WhatsApp</label>
-                                <input type="tel" id="reg-phone" required class="appearance-none rounded-xl relative block w-full px-4 py-3 border border-slate-300 placeholder-slate-400 text-slate-900 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm transition">
+                                <input type="tel" id="reg-phone" required class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-primary focus:border-primary sm:text-sm">
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-slate-700 mb-1">Tipe Akun</label>
-                                <select id="reg-role" class="appearance-none rounded-xl relative block w-full px-4 py-3 border border-slate-300 bg-white text-slate-900 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm transition">
+                                <select id="reg-role" class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-white focus:ring-primary sm:text-sm">
                                     <option>Pencari Properti</option>
                                     <option>Pemilik Properti (Owner)</option>
                                     <option>Agen Properti Profesional</option>
@@ -708,34 +636,10 @@
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-slate-700 mb-1">Password</label>
-                                <input type="password" required class="appearance-none rounded-xl relative block w-full px-4 py-3 border border-slate-300 placeholder-slate-400 text-slate-900 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm transition">
+                                <input type="password" required class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-primary focus:border-primary sm:text-sm">
                             </div>
-                            <button type="submit" class="w-full flex justify-center py-3.5 px-4 border border-transparent text-sm font-bold rounded-xl text-white bg-primary hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition shadow-lg shadow-blue-500/30 mt-6">
+                            <button type="submit" class="w-full flex justify-center py-3.5 px-4 text-sm font-bold rounded-xl text-white bg-primary hover:bg-secondary transition shadow-lg shadow-blue-500/30 mt-6">
                                 Buat Akun RUMASA
-                            </button>
-                        </form>
-
-                        <!-- Login Form -->
-                        <form id="form-login" class="space-y-5" onsubmit="event.preventDefault(); processLogin();">
-                            <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-1">Email</label>
-                                <input type="email" id="login-email" required class="appearance-none rounded-xl relative block w-full px-4 py-3 border border-slate-300 placeholder-slate-400 text-slate-900 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm transition">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-1">Password</label>
-                                <input type="password" required class="appearance-none rounded-xl relative block w-full px-4 py-3 border border-slate-300 placeholder-slate-400 text-slate-900 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm transition">
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center">
-                                    <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 text-primary focus:ring-primary border-slate-300 rounded">
-                                    <label for="remember-me" class="ml-2 block text-sm text-slate-900">Ingat saya</label>
-                                </div>
-                                <div class="text-sm">
-                                    <a href="javascript:void(0)" onclick="showMessage('Link reset password dikirim ke email Anda.')" class="font-medium text-primary hover:text-secondary">Lupa password?</a>
-                                </div>
-                            </div>
-                            <button type="submit" class="w-full flex justify-center py-3.5 px-4 border border-transparent text-sm font-bold rounded-xl text-white bg-primary hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition shadow-lg shadow-blue-500/30 mt-6">
-                                Masuk
                             </button>
                         </form>
                     </div>
@@ -763,8 +667,8 @@
                                 <a href="javascript:void(0)" onclick="switchAdminTab('chat')" id="tab-btn-chat" class="admin-tab-btn flex items-center gap-3 text-slate-300 hover:bg-slate-800 px-4 py-3 rounded-xl transition"><i class="ph ph-chats text-xl"></i> Pesan Masuk <span id="admin-chat-badge" class="ml-auto bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full hidden">0</span></a>
                                 <a href="javascript:void(0)" onclick="switchAdminTab('iklan')" id="tab-btn-iklan" class="admin-tab-btn flex items-center gap-3 text-slate-300 hover:bg-slate-800 px-4 py-3 rounded-xl transition"><i class="ph ph-buildings text-xl"></i> Kelola Iklan</a>
                                 <a href="javascript:void(0)" onclick="switchAdminTab('carousel')" id="tab-btn-carousel" class="admin-tab-btn flex items-center gap-3 text-slate-300 hover:bg-slate-800 px-4 py-3 rounded-xl transition"><i class="ph ph-images text-xl"></i> Kelola Banner</a>
-                                <a href="javascript:void(0)" onclick="switchAdminTab('ulasan')" id="tab-btn-ulasan" class="admin-tab-btn flex items-center gap-3 text-slate-300 hover:bg-slate-800 px-4 py-3 rounded-xl transition"><i class="ph ph-star text-xl"></i> Kelola Ulasan</a>
                                 <a href="javascript:void(0)" onclick="switchAdminTab('pengguna')" id="tab-btn-pengguna" class="admin-tab-btn flex items-center gap-3 text-slate-300 hover:bg-slate-800 px-4 py-3 rounded-xl transition"><i class="ph ph-users text-xl"></i> Pengguna</a>
+                                <a href="javascript:void(0)" onclick="switchAdminTab('ulasan')" id="tab-btn-ulasan" class="admin-tab-btn flex items-center gap-3 text-slate-300 hover:bg-slate-800 px-4 py-3 rounded-xl transition"><i class="ph ph-star text-xl"></i> Kelola Ulasan</a>
                                 <a href="javascript:void(0)" onclick="navigate('home')" class="flex items-center gap-3 text-slate-300 hover:bg-slate-800 px-4 py-3 rounded-xl transition mt-8 text-red-400 hover:text-red-300"><i class="ph ph-sign-out text-xl"></i> Keluar</a>
                             </nav>
                         </div>
@@ -801,12 +705,10 @@
                                             <th class="p-4 font-bold">User / Keterangan</th>
                                             <th class="p-4 font-bold">Nominal</th>
                                             <th class="p-4 font-bold text-center">Status</th>
-                                            <th class="p-4 font-bold text-center">Aksi (Validasi)</th>
+                                            <th class="p-4 font-bold text-center">Aksi</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="admin-invoice-table" class="divide-y divide-slate-100">
-                                        <!-- Dirender via JS -->
-                                    </tbody>
+                                    <tbody id="admin-invoice-table" class="divide-y divide-slate-100"></tbody>
                                 </table>
                             </div>
                         </div>
@@ -831,8 +733,8 @@
                                     </div>
                                     <div id="admin-chat-body" class="flex-1 p-4 overflow-y-auto flex flex-col gap-3"></div>
                                     <form onsubmit="event.preventDefault(); sendAdminMessage();" class="p-4 bg-white border-t border-slate-200 flex gap-2">
-                                        <input type="text" id="admin-chat-input" placeholder="Balas pesan..." class="flex-1 px-4 py-3 bg-slate-100 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary" required>
-                                        <button type="submit" class="bg-primary hover:bg-secondary text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition shadow-sm">Kirim <i class="ph-fill ph-paper-plane-right"></i></button>
+                                        <input type="text" id="admin-chat-input" placeholder="Balas pesan..." class="flex-1 px-4 py-3 bg-slate-100 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-primary" required>
+                                        <button type="submit" class="bg-primary text-white px-6 py-3 rounded-xl font-bold transition shadow-sm">Kirim</button>
                                     </form>
                                 </div>
                             </div>
@@ -840,41 +742,34 @@
 
                         <!-- TAB: IKLAN -->
                         <div id="admin-tab-iklan" class="admin-tab-content hidden">
-                            <div class="flex items-center justify-between mb-6">
-                                <h2 class="text-2xl font-bold text-slate-800">Manajemen Iklan Properti</h2>
-                            </div>
+                            <h2 class="text-2xl font-bold text-slate-800 mb-6">Manajemen Iklan Properti</h2>
                             <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-x-auto">
                                 <table class="w-full text-left text-sm">
                                     <thead class="bg-slate-50 border-b border-slate-200">
                                         <tr>
-                                            <th class="p-4 font-medium text-slate-600">ID / Properti</th>
+                                            <th class="p-4 font-medium text-slate-600">Properti</th>
                                             <th class="p-4 font-medium text-slate-600">Pengiklan</th>
                                             <th class="p-4 font-medium text-slate-600">Harga</th>
                                             <th class="p-4 font-medium text-slate-600 text-center">Status</th>
                                             <th class="p-4 font-medium text-slate-600 text-center">Aksi Admin</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="admin-ads-table" class="divide-y divide-slate-100">
-                                        <!-- Data Iklan Dimuat oleh JS -->
-                                    </tbody>
+                                    <tbody id="admin-ads-table" class="divide-y divide-slate-100"></tbody>
                                 </table>
                             </div>
                         </div>
 
-                        <!-- TAB: CAROUSEL MANAGE -->
+                        <!-- TAB: CAROUSEL -->
                         <div id="admin-tab-carousel" class="admin-tab-content hidden">
-                            <h2 class="text-2xl font-bold text-slate-800 mb-6">Kelola Banner Depan (Carousel)</h2>
+                            <h2 class="text-2xl font-bold text-slate-800 mb-6">Kelola Banner Depan</h2>
                             <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
-                                <p class="text-sm text-slate-500 mb-6">Atur 5 foto properti/produk yang akan tampil bergantian di halaman beranda utama.</p>
                                 <form id="carousel-admin-form" onsubmit="event.preventDefault(); saveCarousel();" class="space-y-6"></form>
                             </div>
                         </div>
 
                         <!-- TAB: PENGGUNA -->
                         <div id="admin-tab-pengguna" class="admin-tab-content hidden">
-                            <div class="flex items-center justify-between mb-6">
-                                <h2 class="text-2xl font-bold text-slate-800">Manajemen Pengguna</h2>
-                            </div>
+                            <h2 class="text-2xl font-bold text-slate-800 mb-6">Manajemen Pengguna</h2>
                             <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-x-auto">
                                 <table class="w-full text-left text-sm">
                                     <thead class="bg-slate-50 border-b border-slate-200">
@@ -885,36 +780,31 @@
                                             <th class="p-4 font-medium text-slate-600 text-center">Total Iklan</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="admin-users-table" class="divide-y divide-slate-100">
-                                        <!-- Data Pengguna Dimuat oleh JS -->
-                                    </tbody>
+                                    <tbody id="admin-users-table" class="divide-y divide-slate-100"></tbody>
                                 </table>
                             </div>
                         </div>
 
-                        <!-- TAB: KELOLA ULASAN -->
+                        <!-- TAB: ULASAN -->
                         <div id="admin-tab-ulasan" class="admin-tab-content hidden">
-                            <h2 class="text-2xl font-bold text-slate-800 mb-6">Pengaturan Ulasan Unggulan</h2>
+                            <h2 class="text-2xl font-bold text-slate-800 mb-6">Pengaturan Ulasan Beranda</h2>
                             <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8">
-                                <div class="bg-blue-50 border-l-4 border-primary p-4 rounded-r-lg mb-6 flex items-start gap-3">
-                                    <i class="ph-fill ph-info text-primary text-xl mt-0.5"></i>
-                                    <p class="text-sm text-slate-600 m-0">Pengaturan ini akan mengubah konten <b>Boks Ulasan Daun (Kanan)</b> di Halaman Beranda.</p>
-                                </div>
                                 <form onsubmit="event.preventDefault(); showMessage('Pembaruan ulasan sedang disimpan...'); setTimeout(() => { showMessage('Ulasan berhasil diperbarui di halaman depan!'); }, 1500);" class="space-y-8">
-                                    <!-- Area Ketik (Content Editable) -->
                                     <div>
-                                        <h3 class="text-lg font-bold text-slate-800 mb-4 border-b border-slate-100 pb-2">Isi Artikel Ulasan</h3>
-                                        <div class="flex flex-wrap gap-2 mb-0 bg-slate-100 p-2 rounded-t-xl border border-slate-300 border-b-0">
-                                            <button type="button" onclick="formatDoc('bold')" class="w-8 h-8 flex items-center justify-center bg-white border border-slate-200 rounded hover:bg-blue-50 hover:text-primary transition font-bold" title="Tebal">B</button>
-                                            <button type="button" onclick="formatDoc('italic')" class="w-8 h-8 flex items-center justify-center bg-white border border-slate-200 rounded hover:bg-blue-50 hover:text-primary transition italic font-serif" title="Miring">I</button>
-                                            <button type="button" onclick="formatDoc('underline')" class="w-8 h-8 flex items-center justify-center bg-white border border-slate-200 rounded hover:bg-blue-50 hover:text-primary transition underline" title="Garis Bawah">U</button>
-                                        </div>
-                                        <div id="editor-review" contenteditable="true" class="w-full min-h-[150px] px-5 py-4 rounded-b-xl border border-slate-300 outline-none bg-white text-slate-700 leading-relaxed overflow-y-auto">
-                                            <p>Mencari hunian mewah di kawasan elit Pantai Indah Kapuk (PIK) 2?</p>
+                                        <h3 class="text-lg font-bold text-slate-800 mb-4 border-b border-slate-100 pb-2">Konten</h3>
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            <div class="md:col-span-2">
+                                                <label class="block text-sm font-medium text-slate-700 mb-2">Judul Ulasan</label>
+                                                <input type="text" value="Review: Smart Home Mansion PIK 2" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-primary outline-none" required>
+                                            </div>
+                                            <div class="md:col-span-2">
+                                                <label class="block text-sm font-medium text-slate-700 mb-2">URL Video (Youtube Embed)</label>
+                                                <input type="text" value="https://www.youtube.com/embed/dQw4w9WgXcQ" class="w-full px-4 py-3 rounded-xl border border-slate-300 outline-none" required>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="flex justify-end pt-4 border-t border-slate-200">
-                                        <button type="submit" class="bg-primary text-white px-8 py-4 rounded-xl font-bold shadow-lg flex items-center gap-2">Simpan Ulasan</button>
+                                        <button type="submit" class="bg-primary text-white px-8 py-4 rounded-xl font-bold shadow-lg">Simpan Ulasan</button>
                                     </div>
                                 </form>
                             </div>
@@ -928,18 +818,12 @@
         <!-- FOOTER -->
         <footer class="bg-white border-t border-slate-200 mt-12 py-8 text-center text-slate-500 pb-28 md:pb-8 w-full">
             <div class="container mx-auto px-4">
-                <img src="logo rumasa.jpg" alt="RUMASA Logo" class="h-12 w-12 rounded-xl shadow-sm mx-auto mb-3 opacity-90">
+                <img src="logo rumasa.jpg" alt="Logo RUMASA Jual Beli Properti" class="h-12 w-12 rounded-xl shadow-sm mx-auto mb-3 opacity-90">
                 <h3 class="font-bold text-slate-800 text-lg mb-1">RUMASA Marketplace</h3>
                 <p class="text-sm mb-4">Pusat Jual Beli Properti Terbaik & Terpercaya</p>
-                <div class="flex flex-col md:flex-row justify-center items-center gap-3 mb-6">
-                    <a href="https://wa.me/6285111033789" class="flex items-center bg-[#25D366]/10 text-[#25D366] px-5 py-2 rounded-full hover:bg-[#25D366] hover:text-white text-sm font-bold transition-colors shadow-sm">
-                        <i class="ph-fill ph-whatsapp-logo mr-2 text-lg"></i> Admin: 0851-1103-3789
-                    </a>
-                </div>
                 <p class="text-xs">&copy; 2026 RUMASA. Hak Cipta Dilindungi.</p>
             </div>
         </footer>
-
     </main>
 
     <!-- MODAL PEMBAYARAN -->
@@ -955,176 +839,130 @@
                     <div class="text-xs text-slate-500 font-bold uppercase tracking-wider mb-1">Total Pembayaran</div>
                     <div class="text-3xl font-extrabold text-primary" id="pay-amount">Rp 0</div>
                 </div>
-                <div class="mb-6">
-                    <div class="text-sm font-bold text-slate-800 mb-2">Transfer ke Bank:</div>
-                    <div class="flex items-center justify-between bg-blue-50 border border-blue-200 p-3 rounded-lg">
-                        <div>
-                            <div class="font-bold text-primary">BCA - 8765432100</div>
-                            <div class="text-xs text-slate-600">a.n PT RUMASA PROPERTI INDONESIA</div>
-                        </div>
-                        <i class="ph-fill ph-bank text-3xl text-blue-300"></i>
-                    </div>
-                </div>
                 <form onsubmit="event.preventDefault(); submitPaymentProof();">
                     <input type="hidden" id="pay-inv-id">
                     <label class="block text-sm font-bold text-slate-800 mb-2">Upload Bukti Transfer</label>
-                    <input type="file" accept="image/*" class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 mb-6" required>
-                    <button type="submit" class="w-full bg-primary hover:bg-secondary text-white py-3.5 rounded-xl font-bold transition shadow-lg shadow-blue-500/30">Kirim Bukti Pembayaran</button>
+                    <input type="file" accept="image/*" class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 mb-6" required>
+                    <button type="submit" class="w-full bg-primary text-white py-3.5 rounded-xl font-bold shadow-lg">Kirim Bukti Pembayaran</button>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- PWA Install Banner -->
-    <div id="pwa-install-banner" class="hidden fixed bottom-20 left-4 right-4 bg-slate-900 text-white p-4 rounded-2xl shadow-2xl z-[60] md:hidden"></div>
-    
+    <!-- PWA Banner & Mobile Nav -->
+    <div id="pwa-install-banner" class="hidden fixed bottom-20 left-4 right-4 bg-slate-900 text-white p-4 rounded-2xl shadow-2xl z-[60] md:hidden border border-slate-700"></div>
     <nav class="md:hidden fixed bottom-0 left-0 right-0 glass-nav z-50 app-ui pb-[env(safe-area-inset-bottom)]">
         <div class="flex justify-around items-center h-16">
             <a href="javascript:void(0)" onclick="navigate('home')" class="flex flex-col items-center justify-center w-full h-full text-primary">
-                <img src="logo rumasa.jpg" alt="RUMASA Home" class="h-6 w-6 mb-1 rounded-sm shadow-sm">
-                <span class="text-[10px] font-medium mt-1">Beranda</span>
+                <i class="ph-fill ph-house text-2xl mb-1"></i><span class="text-[10px] font-medium">Beranda</span>
             </a>
             <a href="javascript:void(0)" onclick="navigate('home'); document.querySelector('input').focus();" class="flex flex-col items-center justify-center w-full h-full text-slate-500 hover:text-primary transition">
-                <i class="ph ph-magnifying-glass text-2xl mb-1"></i>
-                <span class="text-[10px] font-medium">Cari</span>
+                <i class="ph ph-magnifying-glass text-2xl mb-1"></i><span class="text-[10px] font-medium">Cari</span>
             </a>
-            <a href="javascript:void(0)" onclick="navigate('sell')" class="flex flex-col items-center justify-center w-full h-full text-slate-500 hover:text-primary transition relative -top-3">
-                <div class="bg-primary text-white p-3 rounded-full shadow-lg shadow-blue-500/40">
-                    <i class="ph ph-plus text-xl"></i>
-                </div>
+            <a href="javascript:void(0)" onclick="handlePasangIklanClick()" class="flex flex-col items-center justify-center w-full h-full text-slate-500 hover:text-primary transition relative -top-3">
+                <div class="bg-primary text-white p-3 rounded-full shadow-lg shadow-blue-500/40"><i class="ph ph-plus text-xl"></i></div>
             </a>
             <a href="javascript:void(0)" onclick="showMessage('Fitur Favorit akan segera hadir!')" class="flex flex-col items-center justify-center w-full h-full text-slate-500 hover:text-primary transition">
-                <i class="ph ph-heart text-2xl mb-1"></i>
-                <span class="text-[10px] font-medium">Favorit</span>
+                <i class="ph ph-heart text-2xl mb-1"></i><span class="text-[10px] font-medium">Favorit</span>
             </a>
-            <a href="javascript:void(0)" onclick="navigate('auth'); toggleAuth('login');" class="flex flex-col items-center justify-center w-full h-full text-slate-500 hover:text-primary transition">
-                <i class="ph ph-user text-2xl mb-1"></i>
-                <span class="text-[10px] font-medium">Profil</span>
+            <a href="javascript:void(0)" onclick="handleProfileClick()" class="flex flex-col items-center justify-center w-full h-full text-slate-500 hover:text-primary transition">
+                <i class="ph ph-user text-2xl mb-1"></i><span class="text-[10px] font-medium">Profil</span>
             </a>
         </div>
     </nav>
 
-    <!-- Custom Message Box Container -->
-    <div id="message-box" class="fixed top-4 left-1/2 transform -translate-x-1/2 bg-slate-800 text-white px-6 py-3 rounded-full shadow-lg z-[100] opacity-0 pointer-events-none transition-opacity duration-300 flex items-center gap-2">
+    <!-- Custom Alert -->
+    <div id="message-box" class="fixed top-4 left-1/2 transform -translate-x-1/2 bg-slate-800 text-white px-6 py-3 rounded-full shadow-lg z-[100] opacity-0 transition-opacity flex items-center gap-2 pointer-events-none">
         <i class="ph-fill ph-check-circle text-green-400 text-xl"></i>
         <span id="message-text" class="text-sm font-medium"></span>
     </div>
 
-    <!-- Javascript Logic -->
+    <!-- MAIN JAVASCRIPT -->
     <script>
-        // ================= GLOBAL VARIABLES & DYNAMIC STATE =================
+        // === GLOBAL & STATE ===
         let adCounterId = 100;
         let invoiceCounter = 1;
         let invoiceDB = []; 
         let uploadedImages = [];
-        let activeCategory = 'all';
-        let activeStatus = 'all';
-        let currentPage = 1;
+        let activeCategory = 'all', activeStatus = 'all', currentPage = 1;
         const itemsPerPage = 20;
-        let currentSlide = 0;
-        let slideInterval;
-        let deferredPrompt;
+        let currentSlide = 0, slideInterval;
 
-        // Dynamic Users Database
         let currentUser = null;
         let usersDB = {
-            'budi@gmail.com': {
-                name: 'Budi Pengguna', email: 'budi@gmail.com', phone: '+62 812 3456 7890', role: 'Pencari Properti',
-                ads: [
-                    { id: 99, title: 'Rumah Minimalis Serpong', price: 1850000000, status: 'Aktif (Gratis)', statusColor: 'text-green-600', coverImage: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=200&q=80' }
-                ]
-            }
+            'budi@gmail.com': { name: 'Budi Pengguna', email: 'budi@gmail.com', phone: '+62 812 3456 7890', role: 'Pencari Properti', ads: [] }
         };
-
-        // Chat Database
         let chatDatabase = {
-            'budi_gmail_com': {
-                name: 'Budi Pengguna', avatar: 'B', unreadAdmin: 1,
-                messages: [
-                    { sender: 'admin', text: 'Halo Budi, ada yang bisa dibantu?', time: '09:00' },
-                    { sender: 'user', text: 'Min, cara upgrade tayang bagaimana ya?', time: '09:05' }
-                ]
-            }
+            'budi_gmail_com': { name: 'Budi Pengguna', avatar: 'B', unreadAdmin: 0, messages: [] }
         };
         let currentActiveUserChat = 'budi_gmail_com';
 
+        // --- Mock Data Properties & Carousel ---
         const carouselItems = [
-            { id: 1, img: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1600&q=80', title: 'Temukan Properti Impianmu', subtitle: 'Rumah, Apartemen, Gudang hingga Kantor terbaik di RUMASA.' },
-            { id: 2, img: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1600&q=80', title: 'Rumah Mewah Serpong', subtitle: 'Pilihan investasi terbaik untuk masa depan keluarga.' },
-            { id: 3, img: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1600&q=80', title: 'Apartemen Pusat Kota', subtitle: 'Akses mudah ke seluruh penjuru ibukota.' }
+            { img: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1600&q=80', title: 'Temukan Properti Impianmu', subtitle: 'Rumah, Apartemen, Gudang hingga Kantor terbaik di RUMASA.' },
+            { img: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1600&q=80', title: 'Rumah Mewah Serpong', subtitle: 'Pilihan investasi terbaik untuk masa depan keluarga.' },
+            { img: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1600&q=80', title: 'Apartemen Pusat Kota', subtitle: 'Akses mudah ke seluruh penjuru ibukota.' }
         ];
 
         const proyekBaru = [
-            { id: 101, name: 'Grand Batavia Cluster', developer: 'PT Jaya Real', priceStart: 'Rp 850 Jt', location: 'Tangerang', launch: 'Agt 2026', status: 'Pre-Launch', img: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=800&q=80', desc: 'Cluster premium klasik.' },
-            { id: 102, name: 'EcoHome Apartment', developer: 'Ciputra', priceStart: 'Rp 400 Jt', location: 'CitraRaya', launch: 'Okt 2026', status: 'Early Bird', img: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80', desc: 'Apartemen superblok hijau.' }
+            { name: 'Grand Batavia Cluster', developer: 'PT Jaya Real', priceStart: 'Rp 850 Jt', location: 'Tangerang', launch: 'Agt 2026', status: 'Pre-Launch', img: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=800&q=80', desc: 'Cluster premium klasik.' },
+            { name: 'EcoHome Apartment', developer: 'Ciputra', priceStart: 'Rp 400 Jt', location: 'CitraRaya', launch: 'Okt 2026', status: 'Early Bird', img: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80', desc: 'Apartemen superblok hijau.' }
         ];
 
-        const properties = []; // Generated logic kept simple
-        const baseProperties = [
-            { id: 1, title: 'Rumah Minimalis Modern Serpong', price: 'Rp 1.850.000.000', location: 'Gading Serpong', beds: 3, baths: 2, sqft: 120, type: 'Rumah', status: 'Dijual', img: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80', agent: { name: 'Budi Santoso', agency: 'PropNex Serpong', img: 'https://i.pravatar.cc/150?u=1' }, desc: 'Rumah siap huni lingkungan aman.' },
-            { id: 2, title: 'Apartemen Sudirman Suites 2BR', price: 'Rp 15.000.000 / bln', location: 'Sudirman', beds: 2, baths: 1, sqft: 65, type: 'Apartemen', status: 'Disewakan', img: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80', agent: { name: 'Siska', agency: 'Century21', img: 'https://i.pravatar.cc/150?u=2' }, desc: 'Premium di pusat bisnis.' }
+        let properties = [
+            { id: 1, title: 'Rumah Modern Minimalis', price: 'Rp 1.850.000.000', location: 'Gading Serpong', beds: 3, baths: 2, sqft: 120, type: 'Rumah', status: 'Dijual', img: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80', agent: { name: 'Budi Santoso', agency: 'PropNex', img: 'https://i.pravatar.cc/150?u=1' }, desc: 'Rumah siap huni lingkungan aman.' },
+            { id: 2, title: 'Apt Sudirman Suites', price: 'Rp 15.000.000/bln', location: 'Sudirman', beds: 2, baths: 1, sqft: 65, type: 'Apartemen', status: 'Disewakan', img: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80', agent: { name: 'Siska', agency: 'Century21', img: 'https://i.pravatar.cc/150?u=2' }, desc: 'Premium di pusat bisnis.' }
         ];
-        for(let i=0; i<45; i++) { properties.push({ ...baseProperties[i%baseProperties.length], id: i+1 }); }
+        for(let i=2; i<25; i++) { properties.push({ ...properties[i%2], id: i+1 }); }
 
-
-        // ================= UI FUNCTIONS =================
+        // === UI & UTILS ===
         function showMessage(msg) {
             const box = document.getElementById('message-box');
-            if(box) {
-                document.getElementById('message-text').innerText = msg;
-                box.classList.remove('opacity-0');
-                setTimeout(() => box.classList.add('opacity-0'), 3000);
-            }
+            if(!box) return;
+            document.getElementById('message-text').innerText = msg;
+            box.classList.remove('opacity-0');
+            setTimeout(() => box.classList.add('opacity-0'), 3000);
         }
-        window.showMessage = showMessage;
 
         function navigate(viewId) {
             document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
-            const targetView = document.getElementById(`view-${viewId}`);
-            if(targetView) {
-                targetView.classList.add('active');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
+            document.getElementById(`view-${viewId}`)?.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-        window.navigate = navigate;
 
-        function switchAdminTab(tabId) {
-            document.querySelectorAll('.admin-tab-content').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('.admin-tab-content').forEach(el => el.classList.remove('block'));
-            const tab = document.getElementById(`admin-tab-${tabId}`);
-            if(tab) { tab.classList.remove('hidden'); tab.classList.add('block'); }
+        function handleProfileClick() {
+            if(currentUser) navigate(currentUser.email.includes('admin') ? 'admin' : 'user');
+            else { navigate('auth'); toggleAuth('login'); }
+        }
+
+        function handlePasangIklanClick() {
+            if(!currentUser) { showMessage("Silakan masuk terlebih dahulu."); navigate('auth'); toggleAuth('login'); }
+            else navigate('sell');
+        }
+
+        // === AUTH & DASHBOARD ===
+        function toggleAuth(type) {
+            document.getElementById('form-login').classList.toggle('hidden', type !== 'login');
+            document.getElementById('form-register').classList.toggle('hidden', type === 'login');
+            document.getElementById('auth-title').innerText = type === 'login' ? 'Selamat Datang Kembali' : 'Daftar Akun Baru';
+            document.getElementById('auth-subtitle').innerText = type === 'login' ? 'Masuk ke akun RUMASA Anda.' : 'Bergabunglah dan temukan properti impianmu.';
             
-            document.querySelectorAll('.admin-tab-btn').forEach(btn => {
-                btn.classList.remove('bg-blue-600', 'text-white');
-                btn.classList.add('text-slate-300', 'hover:bg-slate-800');
-            });
-            const activeBtn = document.getElementById(`tab-btn-${tabId}`);
-            if(activeBtn) {
-                activeBtn.classList.remove('text-slate-300', 'hover:bg-slate-800');
-                activeBtn.classList.add('bg-blue-600', 'text-white');
-            }
+            document.getElementById('btn-tab-login').className = type === 'login' ? 'flex-1 py-2.5 text-sm font-bold rounded-lg bg-white text-primary shadow-sm' : 'flex-1 py-2.5 text-sm font-bold rounded-lg text-slate-500 hover:text-slate-700';
+            document.getElementById('btn-tab-register').className = type === 'register' ? 'flex-1 py-2.5 text-sm font-bold rounded-lg bg-white text-primary shadow-sm' : 'flex-1 py-2.5 text-sm font-bold rounded-lg text-slate-500 hover:text-slate-700';
         }
-        window.switchAdminTab = switchAdminTab;
 
-        // ================= DYNAMIC AUTHENTICATION (USER MULTI-AKUN) =================
         function processRegister() {
             const name = document.getElementById('reg-name').value;
             const email = document.getElementById('reg-email').value.toLowerCase();
             const phone = document.getElementById('reg-phone').value;
             const role = document.getElementById('reg-role').value;
 
-            if(usersDB[email]) {
-                showMessage('Email sudah terdaftar. Silakan masuk.');
-                toggleAuth('login');
-                return;
-            }
-
+            if(usersDB[email]) return showMessage('Email sudah terdaftar. Silakan masuk.');
             usersDB[email] = { name, email, phone, role, ads: [] };
-            showMessage('Pendaftaran berjaya! Sila log masuk.');
+            showMessage('Pendaftaran berhasil! Silakan masuk.');
             toggleAuth('login');
-            renderAdminUsers(); // Kemas kini jadual pengguna di Admin
+            renderAdminUsers();
         }
-        window.processRegister = processRegister;
 
         function processLogin() {
             const email = document.getElementById('login-email').value.toLowerCase();
@@ -1133,296 +971,197 @@
             if (email.includes('admin')) {
                 document.getElementById('menu-admin').classList.remove('hidden');
                 document.getElementById('menu-user').classList.add('hidden');
-                showMessage('Masuk sebagai Admin RUMASA.');
-                navigate('admin');
+                showMessage('Masuk sebagai Admin RUMASA.'); navigate('admin');
             } else {
-                // Auto create user jika login pake email baru (untuk kemudahan testing)
-                if(!usersDB[email]) {
-                    usersDB[email] = { name: email.split('@')[0], email: email, phone: '-', role: 'Pencari Properti', ads: [] };
-                }
-                
+                if(!usersDB[email]) usersDB[email] = { name: email.split('@')[0], email, phone: '-', role: 'Pencari Properti', ads: [] };
                 currentUser = usersDB[email];
                 
-                // Set UI Profil
                 document.getElementById('user-dashboard-name').innerText = currentUser.name;
                 document.getElementById('user-dashboard-contact').innerText = `${currentUser.email} | ${currentUser.phone}`;
                 document.getElementById('user-dashboard-initial').innerText = currentUser.name.charAt(0).toUpperCase();
 
                 document.getElementById('menu-user').classList.remove('hidden');
                 document.getElementById('menu-admin').classList.add('hidden');
-                showMessage(`Berjaya masuk! Selamat datang ${currentUser.name}.`);
+                showMessage(`Berhasil masuk! Selamat datang ${currentUser.name}.`);
                 
-                // Initialize Chat Database for new user
                 const chatKey = currentUser.email.replace(/[^a-zA-Z0-9]/g, '_');
-                if(!chatDatabase[chatKey]) {
-                    chatDatabase[chatKey] = { name: currentUser.name, avatar: currentUser.name.charAt(0).toUpperCase(), unreadAdmin: 0, messages: [] };
-                }
+                if(!chatDatabase[chatKey]) chatDatabase[chatKey] = { name: currentUser.name, avatar: currentUser.name.charAt(0).toUpperCase(), unreadAdmin: 0, messages: [] };
                 currentActiveUserChat = chatKey;
 
-                renderUserDashboard(); // Render iklan dan invois khusus user ini
-                navigate('user');
+                renderUserDashboard(); navigate('user');
             }
         }
-        window.processLogin = processLogin;
 
         function processLogout() {
             currentUser = null;
             document.getElementById('menu-guest').classList.remove('hidden');
             document.getElementById('menu-user').classList.add('hidden');
             document.getElementById('menu-admin').classList.add('hidden');
-            showMessage('Berjaya log keluar.');
-            navigate('home');
+            showMessage('Berhasil keluar akun.'); navigate('home');
         }
-        window.processLogout = processLogout;
 
-        function toggleAuth(type) {
-            const formLogin = document.getElementById('form-login');
-            const formRegister = document.getElementById('form-register');
-            const title = document.getElementById('auth-title');
-            if(type === 'login') {
-                formLogin.classList.remove('hidden'); formRegister.classList.add('hidden');
-                if(title) title.innerText = 'Selamat Datang Kembali';
-                document.getElementById('btn-tab-login').className = 'flex-1 py-2.5 text-sm font-bold rounded-lg bg-white text-primary shadow-sm transition';
-                document.getElementById('btn-tab-register').className = 'flex-1 py-2.5 text-sm font-bold rounded-lg text-slate-500 hover:text-slate-700 transition';
-            } else {
-                formRegister.classList.remove('hidden'); formLogin.classList.add('hidden');
-                if(title) title.innerText = 'Daftar Akun Baru';
-                document.getElementById('btn-tab-register').className = 'flex-1 py-2.5 text-sm font-bold rounded-lg bg-white text-primary shadow-sm transition';
-                document.getElementById('btn-tab-login').className = 'flex-1 py-2.5 text-sm font-bold rounded-lg text-slate-500 hover:text-slate-700 transition';
-            }
-        }
-        window.toggleAuth = toggleAuth;
-
-
-        // ================= DYNAMIC UPLOAD IKLAN =================
+        // === INTEGRASI GLOBAL UPLOAD IKLAN ===
         function submitAd() {
-            if(!currentUser) {
-                showMessage("Sila log masuk terlebih dahulu untuk memasang iklan.");
-                toggleAuth('login'); navigate('auth'); return;
-            }
             const title = document.getElementById('ad-input-title').value;
             const price = document.getElementById('ad-input-price').value;
+            const transaction = document.getElementById('ad-input-transaction').value;
+            const type = document.getElementById('ad-input-type').value;
+            const lt = document.getElementById('ad-input-lt').value;
+            const lb = document.getElementById('ad-input-lb').value;
+            const beds = document.getElementById('ad-input-beds').value || 0;
+            const baths = document.getElementById('ad-input-baths').value || 0;
+            const location = document.getElementById('ad-input-location').value;
+            const desc = document.getElementById('ad-input-desc').value;
             const coverImage = uploadedImages.length > 0 ? uploadedImages[0] : 'https://placehold.co/400x300/e2e8f0/64748b?text=Tanpa+Foto';
             
-            adCounterId++;
-            const currentAdId = adCounterId;
+            const newAd = { id: ++adCounterId, title, price, transaction, type, lt, lb, beds, baths, location, desc, coverImage };
 
-            // Jika belum ada iklan (0), maka PERCUMA. Jika dah ada, WAJIB UPGRADE.
             if (currentUser.ads.length === 0) {
-                currentUser.ads.push({ id: currentAdId, title, price, status: 'Aktif (Gratis)', statusColor: 'text-green-600', coverImage });
-                showMessage('Iklan pertama berjaya ditayangkan secara PERCUMA!');
+                newAd.status = 'Aktif (Gratis)'; newAd.statusColor = 'text-green-600';
+                currentUser.ads.push(newAd);
+                showMessage('Iklan pertama berhasil tayang secara GRATIS!');
+                makeAdLive(newAd, currentUser); // Add to Home immediately
             } else {
-                currentUser.ads.push({ id: currentAdId, title, price, status: 'Menunggu Upgrade', statusColor: 'text-accent', coverImage });
-                showMessage('Iklan disimpan! Sila UPGRADE LAYANAN agar iklan ditayangkan.');
+                newAd.status = 'Menunggu Upgrade'; newAd.statusColor = 'text-accent';
+                currentUser.ads.push(newAd);
+                showMessage('Iklan disimpan! Silakan UPGRADE LAYANAN agar tayang.');
             }
             
-            document.getElementById('form-pasang-iklan').reset();
-            uploadedImages = [];
-            renderImagePreviews();
-            
-            renderUserDashboard(); // Update dashboard HTML dengan iklan terkini User
-            renderAdminAds(); // Kemas kini jadual iklan di Admin
-            navigate('user');
+            document.getElementById('form-pasang-iklan').reset(); uploadedImages = []; renderImagePreviews();
+            renderUserDashboard(); renderAdminAds(); navigate('user');
         }
-        window.submitAd = submitAd;
+
+        // Fungsi memasukkan iklan baru ke Halaman Utama (Beranda)
+        function makeAdLive(ad, u) {
+            if (properties.find(p => p.id === ad.id)) return;
+            properties.unshift({
+                id: ad.id, title: ad.title, price: "Rp " + ad.price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'),
+                location: ad.location || 'Lokasi tidak spesifik',
+                beds: parseInt(ad.beds), baths: parseInt(ad.baths), sqft: parseInt(ad.lb) || parseInt(ad.lt) || 0,
+                type: ad.type, status: ad.transaction, img: ad.coverImage,
+                agent: { name: u.name, agency: 'Member RUMASA', img: 'https://ui-avatars.com/api/?name=' + u.name.replace(/\s+/g,'+') },
+                desc: ad.desc
+            });
+            renderPropertyCards(); // Segarkan Beranda
+        }
 
         function renderUserDashboard() {
             if(!currentUser) return;
             const list = document.getElementById('user-ads-list');
-            if(!list) return;
-
             if(currentUser.ads.length === 0) {
-                list.innerHTML = `<div class="p-6 text-center text-slate-500 bg-slate-100/50 border border-slate-200 border-dashed rounded-xl col-span-full font-medium">Anda belum memasang sebarang iklan.</div>`;
+                list.innerHTML = `<div class="p-6 text-center text-slate-500 bg-slate-100/50 rounded-xl col-span-full">Belum ada iklan.</div>`;
             } else {
-                list.innerHTML = currentUser.ads.map(ad => {
-                    const formatPrice = "Rp " + ad.price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
-                    const upgradeBtnHtml = ad.status === 'Menunggu Upgrade' 
-                        ? `<button id="btn-upg-${ad.id}" onclick="requestUpgrade(${ad.id}, '${ad.title}')" class="text-xs bg-accent text-white hover:bg-yellow-600 px-3 py-1.5 rounded transition font-medium shadow-sm">Upgrade Tayang</button>` : '';
-
-                    return `
-                        <div class="flex gap-4 bg-white p-4 rounded-xl shadow-sm border border-slate-100" id="ad-card-${ad.id}">
-                            <img src="${ad.coverImage}" class="w-24 h-24 rounded-lg object-cover border border-slate-200 bg-slate-100">
-                            <div class="flex-1">
-                                <h4 class="font-bold text-slate-800 line-clamp-1 text-sm">${ad.title}</h4>
-                                <div class="text-primary font-bold text-sm mb-1">${formatPrice}</div>
-                                <div class="text-xs text-slate-500 mb-3">Status: <span id="ad-status-${ad.id}" class="${ad.statusColor} font-medium">${ad.status}</span></div>
-                                <div class="flex gap-2" id="ad-action-${ad.id}">
-                                    ${upgradeBtnHtml}
-                                    <button class="text-xs bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded transition font-medium">Edit</button>
-                                </div>
+                list.innerHTML = currentUser.ads.map(ad => `
+                    <div class="flex gap-4 bg-white p-4 rounded-xl shadow-sm border border-slate-100">
+                        <img src="${ad.coverImage}" class="w-24 h-24 rounded-lg object-cover bg-slate-100">
+                        <div class="flex-1">
+                            <h4 class="font-bold text-slate-800 line-clamp-1 text-sm">${ad.title}</h4>
+                            <div class="text-primary font-bold text-sm mb-1">Rp ${ad.price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')}</div>
+                            <div class="text-xs text-slate-500 mb-3">Status: <span class="${ad.statusColor} font-medium">${ad.status}</span></div>
+                            <div class="flex gap-2">
+                                ${ad.status === 'Menunggu Upgrade' ? `<button onclick="requestUpgrade(${ad.id}, '${ad.title}')" class="text-xs bg-accent text-white px-3 py-1.5 rounded">Upgrade</button>` : ''}
                             </div>
                         </div>
-                    `;
-                }).join('');
+                    </div>
+                `).join('');
             }
-            renderUserInvoices(); // Memastikan bil pembayaran dipaparkan khusus untuk e-mel pengguna
-        }
-
-        // ================= DYNAMIC INVOICE & PAYMENT =================
-        function requestUpgrade(adId, adTitle) {
-            const invId = 'INV-100' + invoiceCounter;
-            invoiceCounter++;
-
-            // Tag tagihan pada emel yang sedang log masuk
-            invoiceDB.push({
-                id: invId, adId: adId, user: currentUser.name, userEmail: currentUser.email, desc: `Upgrade Premium: ${adTitle}`, amount: 50000, status: 'Belum Bayar'
-            });
-
-            const btn = document.getElementById(`btn-upg-${adId}`);
-            if(btn) btn.remove();
-
-            showMessage('Bil berjaya dibuat. Sila periksa menu Tagihan di bawah.');
             renderUserInvoices();
         }
-        window.requestUpgrade = requestUpgrade;
+
+        // === PEMBAYARAN & ADMIN TABS ===
+        function switchAdminTab(tabId) {
+            document.querySelectorAll('.admin-tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.admin-tab-content').forEach(el => el.classList.remove('block'));
+            document.getElementById(`admin-tab-${tabId}`)?.classList.remove('hidden');
+            document.getElementById(`admin-tab-${tabId}`)?.classList.add('block');
+            
+            document.querySelectorAll('.admin-tab-btn').forEach(btn => {
+                btn.classList.remove('bg-blue-600', 'text-white'); btn.classList.add('text-slate-300', 'hover:bg-slate-800');
+            });
+            document.getElementById(`tab-btn-${tabId}`)?.classList.remove('text-slate-300', 'hover:bg-slate-800');
+            document.getElementById(`tab-btn-${tabId}`)?.classList.add('bg-blue-600', 'text-white');
+        }
+
+        function requestUpgrade(adId, adTitle) {
+            invoiceDB.push({ id: 'INV-100'+invoiceCounter++, adId, user: currentUser.name, userEmail: currentUser.email, desc: `Premium: ${adTitle}`, amount: 50000, status: 'Belum Bayar' });
+            showMessage('Tagihan dibuat. Cek menu Tagihan.'); renderUserDashboard();
+        }
 
         function renderUserInvoices() {
-            const list = document.getElementById('user-invoice-list');
-            if(!list || !currentUser) return;
-            
-            // HANYA paparkan Invois milik currentUser
+            const list = document.getElementById('user-invoice-list'); if(!list || !currentUser) return;
             const myInvoices = invoiceDB.filter(inv => inv.userEmail === currentUser.email);
-
-            if (myInvoices.length === 0) {
-                list.innerHTML = `<div class="p-6 text-center text-slate-500 bg-slate-100/50 border border-slate-200 border-dashed rounded-xl text-sm font-medium">Tiada bil aktif untuk masa ini.</div>`;
-                return;
-            }
-
-            list.innerHTML = myInvoices.map(inv => {
-                let badgeClass, actionBtn;
-                if (inv.status === 'Belum Bayar') {
-                    badgeClass = 'bg-red-100 text-red-700'; actionBtn = `<button onclick="openPaymentModal('${inv.id}')" class="bg-primary hover:bg-secondary text-white px-4 py-2 rounded-lg text-xs font-bold transition">Bayar Sekarang</button>`;
-                } else if (inv.status === 'Menunggu Verifikasi') {
-                    badgeClass = 'bg-accent/20 text-accent'; actionBtn = `<button disabled class="bg-slate-200 text-slate-500 px-4 py-2 rounded-lg text-xs font-bold cursor-not-allowed">Sedang Diproses</button>`;
-                } else if (inv.status === 'Lunas') {
-                    badgeClass = 'bg-green-100 text-green-700'; actionBtn = `<div class="text-green-600 flex items-center gap-1 font-bold text-sm"><i class="ph-fill ph-check-circle"></i> Selesai</div>`;
-                } else {
-                    badgeClass = 'bg-slate-200 text-slate-700'; actionBtn = `<button onclick="openPaymentModal('${inv.id}')" class="bg-red-500 text-white px-4 py-2 rounded-lg text-xs font-bold">Muat Naik Semula</button>`;
-                }
-
-                const formatPrice = "Rp " + inv.amount.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
-                return `
-                    <div class="bg-white p-4 border border-slate-200 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-sm">
-                        <div>
-                            <div class="flex items-center gap-2 mb-1">
-                                <span class="text-xs font-bold text-slate-400">#${inv.id}</span>
-                                <span class="px-2 py-0.5 rounded text-[10px] font-bold ${badgeClass}">${inv.status}</span>
-                            </div>
-                            <div class="font-bold text-slate-800 text-sm">${inv.desc}</div>
-                            <div class="text-primary font-black mt-1">${formatPrice}</div>
-                        </div>
-                        <div class="shrink-0 text-right">${actionBtn}</div>
-                    </div>`;
-            }).reverse().join('');
+            if(myInvoices.length === 0) { list.innerHTML = `<div class="p-6 text-center text-slate-500 bg-slate-100/50 rounded-xl text-sm">Tidak ada tagihan.</div>`; return; }
             
-            renderAdminPayments(); // Update admin side in background
-        }
-
-        // ================= DYNAMIC ADMIN PAYMENT VERIFY =================
-        function verifyPayment(invId, isApproved) {
-            const inv = invoiceDB.find(i => i.id === invId);
-            if (!inv) return;
-
-            if (isApproved) {
-                inv.status = 'Lunas';
-                showMessage(`Pembayaran #${invId} Diterima.`);
-                
-                // Cari dan Aktifkan Iklan dalam Profil Pengguna Berkenaan
-                for(let key in usersDB) {
-                    let u = usersDB[key];
-                    let targetAd = u.ads.find(a => a.id === inv.adId);
-                    if(targetAd) {
-                        targetAd.status = 'Premium (Aktif)';
-                        targetAd.statusColor = 'text-green-600';
-                    }
-                }
-
-                // Kemas kini UI secara pantas jika kebetulan Admin tersebut adalah pengguna yang sama (Safe rendering)
-                const statusSpan = document.getElementById(`ad-status-${inv.adId}`);
-                if (statusSpan) {
-                    statusSpan.innerText = 'Premium (Aktif)';
-                    statusSpan.className = 'text-green-600 font-bold';
-                }
-            } else {
-                inv.status = 'Ditolak';
-                showMessage(`Pembayaran Ditolak.`);
-            }
-
+            list.innerHTML = myInvoices.map(inv => {
+                let badge = inv.status === 'Belum Bayar' ? 'bg-red-100 text-red-700' : (inv.status === 'Lunas' ? 'bg-green-100 text-green-700' : 'bg-slate-200 text-slate-700');
+                let btn = inv.status === 'Belum Bayar' || inv.status === 'Ditolak' ? `<button onclick="openPaymentModal('${inv.id}')" class="bg-primary text-white px-4 py-2 rounded-lg text-xs font-bold">Bayar</button>` : `<span class="text-xs font-bold text-slate-500">${inv.status}</span>`;
+                return `<div class="bg-white p-4 border border-slate-200 rounded-xl flex justify-between items-center shadow-sm"><div><span class="px-2 py-0.5 rounded text-[10px] font-bold ${badge}">${inv.status}</span><div class="font-bold text-sm">${inv.desc}</div></div>${btn}</div>`;
+            }).reverse().join('');
             renderAdminPayments();
-            renderUserInvoices(); 
-            renderAdminAds(); // Kemas kini status iklan di jadual Admin
         }
-        window.verifyPayment = verifyPayment;
 
-        // Modals & Chat & Carousel (Disimpan tanpa perubahan besar)
-        function openPaymentModal(invId) {
-            const inv = invoiceDB.find(i => i.id === invId);
-            if (!inv) return;
-            document.getElementById('pay-inv-id').value = inv.id; document.getElementById('pay-desc').innerText = inv.desc;
-            document.getElementById('pay-amount').innerText = "Rp " + inv.amount.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
-            const modal = document.getElementById('payment-modal'); const box = document.getElementById('payment-modal-box');
-            modal.classList.remove('hidden');
-            setTimeout(() => { modal.classList.remove('opacity-0'); box.classList.remove('scale-95'); box.classList.add('scale-100'); }, 10);
+        function verifyPayment(invId, isApproved) {
+            const inv = invoiceDB.find(i => i.id === invId); if(!inv) return;
+            if(isApproved) {
+                inv.status = 'Lunas'; showMessage(`Pembayaran #${invId} Diterima.`);
+                let u = usersDB[inv.userEmail];
+                if(u) {
+                    let ad = u.ads.find(a => a.id === inv.adId);
+                    if(ad) { ad.status = 'Premium (Aktif)'; ad.statusColor = 'text-green-600'; makeAdLive(ad, u); } // Publish to Home!
+                }
+            } else { inv.status = 'Ditolak'; showMessage(`Pembayaran Ditolak.`); }
+            renderAdminPayments(); renderUserInvoices(); renderAdminAds();
         }
-        window.openPaymentModal = openPaymentModal;
 
-        function closePaymentModal() {
-            const modal = document.getElementById('payment-modal'); const box = document.getElementById('payment-modal-box');
-            modal.classList.add('opacity-0'); box.classList.remove('scale-100'); box.classList.add('scale-95');
-            setTimeout(() => modal.classList.add('hidden'), 300);
+        function renderAdminPayments() {
+            const tbody = document.getElementById('admin-invoice-table'); if(!tbody) return;
+            tbody.innerHTML = invoiceDB.map(inv => {
+                let action = inv.status === 'Menunggu Verifikasi' ? `<button onclick="verifyPayment('${inv.id}', true)" class="bg-green-100 text-green-700 p-2 rounded mr-1"><i class="ph ph-check"></i></button><button onclick="verifyPayment('${inv.id}', false)" class="bg-red-100 text-red-700 p-2 rounded"><i class="ph ph-x"></i></button>` : `-`;
+                return `<tr class="border-b"><td class="p-4 text-xs">#${inv.id}</td><td class="p-4 text-sm">${inv.user}</td><td class="p-4 font-bold text-primary">Rp ${inv.amount}</td><td class="p-4">${inv.status}</td><td class="p-4 text-center">${action}</td></tr>`;
+            }).reverse().join('');
         }
-        window.closePaymentModal = closePaymentModal;
 
-        function submitPaymentProof() {
-            const invId = document.getElementById('pay-inv-id').value;
-            const inv = invoiceDB.find(i => i.id === invId);
-            if (inv) {
-                inv.status = 'Menunggu Verifikasi';
-                showMessage('Bukti pemindahan wang berjaya dihantar! Menunggu pengesahan Admin.');
-                closePaymentModal(); renderUserInvoices();
+        function renderAdminAds() {
+            const tbody = document.getElementById('admin-ads-table'); if(!tbody) return;
+            let html = '';
+            for (const email in usersDB) {
+                usersDB[email].ads.forEach(ad => {
+                    html += `<tr class="border-b"><td class="p-4 text-sm font-bold">${ad.title}</td><td class="p-4 text-sm">${usersDB[email].name}</td><td class="p-4 text-sm text-primary font-bold">Rp ${ad.price}</td><td class="p-4 text-xs font-bold ${ad.statusColor}">${ad.status}</td><td class="p-4"><button onclick="approveAdAdmin('${email}', ${ad.id})" class="bg-green-100 text-green-700 p-2 rounded" title="Bypass Aktif"><i class="ph ph-check"></i></button></td></tr>`;
+                });
+            } tbody.innerHTML = html;
+        }
+
+        function approveAdAdmin(email, adId) {
+            let u = usersDB[email];
+            if(u && u.ads.find(a => a.id === adId)) {
+                let ad = u.ads.find(a => a.id === adId);
+                ad.status = 'Aktif (Disetujui Admin)'; ad.statusColor = 'text-green-600';
+                makeAdLive(ad, u); // Langsung lempar ke Home
+                showMessage('Iklan diaktifkan & ditayangkan ke Beranda!');
+                renderAdminAds(); if(currentUser && currentUser.email === email) renderUserDashboard();
             }
         }
-        window.submitPaymentProof = submitPaymentProof;
 
-        function handleImageUpload(input) {
-            const files = Array.from(input.files);
-            const remainingSlots = 5 - uploadedImages.length;
-            if (files.length > remainingSlots) { showMessage(`Maksima 5 gambar sahaja dibenarkan.`); return; }
-            files.slice(0, remainingSlots).forEach(file => {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    const img = new Image();
-                    img.onload = () => {
-                        const canvas = document.createElement('canvas');
-                        let width = img.width, height = img.height;
-                        if (width > height) { if (width > 800) { height *= 800 / width; width = 800; } } else { if (height > 800) { width *= 800 / height; height = 800; } }
-                        canvas.width = width; canvas.height = height;
-                        canvas.getContext('2d').drawImage(img, 0, 0, width, height);
-                        uploadedImages.push(canvas.toDataURL('image/jpeg', 0.6));
-                        renderImagePreviews();
-                    }; img.src = e.target.result;
-                }; reader.readAsDataURL(file);
-            }); input.value = ''; 
-        }
-        window.handleImageUpload = handleImageUpload;
-
-        function removeImage(index) { uploadedImages.splice(index, 1); renderImagePreviews(); }
-        window.removeImage = removeImage;
-
-        function renderImagePreviews() {
-            const container = document.getElementById('image-preview-container');
-            const textEl = document.getElementById('upload-text');
-            if(container) container.innerHTML = uploadedImages.map((src, idx) => `<div class="relative rounded-xl overflow-hidden aspect-square group shadow-sm"><img src="${src}" class="w-full h-full object-cover"><button onclick="event.preventDefault(); removeImage(${idx})" class="absolute top-1 right-1 w-6 h-6 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition z-10"><i class="ph ph-x text-xs"></i></button></div>`).join('');
-            if(textEl) textEl.innerText = uploadedImages.length > 0 ? `${uploadedImages.length} dari 5 foto terpilih` : 'Klik atau drag foto ke sini (Maks 5 foto)';
+        function renderAdminUsers() {
+            const tbody = document.getElementById('admin-users-table'); if(!tbody) return;
+            let html = '';
+            for (const email in usersDB) {
+                html += `<tr class="border-b"><td class="p-4 font-bold">${usersDB[email].name}</td><td class="p-4 text-sm">${email}</td><td class="p-4 text-sm">${usersDB[email].role}</td><td class="p-4 text-center font-bold">${usersDB[email].ads.length}</td></tr>`;
+            } tbody.innerHTML = html;
         }
 
-        // --- Sistem Chat Dinamik ---
+        // --- SISTEM CHAT YANG DIKEMBALIKAN (RESTORED) ---
         function toggleUserChat() {
             const panel = document.getElementById('user-chat-panel');
-            panel.classList.toggle('hidden'); panel.style.display = panel.classList.contains('hidden') ? 'none' : 'flex';
-            if(!panel.classList.contains('hidden')) renderUserChat();
+            if (panel.classList.contains('hidden')) {
+                panel.classList.remove('hidden');
+                panel.style.display = 'flex';
+                renderUserChat();
+            } else {
+                panel.classList.add('hidden');
+                panel.style.display = 'none';
+            }
         }
-        window.toggleUserChat = toggleUserChat;
 
         function renderUserChat() {
             const body = document.getElementById('user-chat-body');
@@ -1431,7 +1170,7 @@
             const msgs = chatDatabase[chatKey] ? chatDatabase[chatKey].messages : [];
             body.innerHTML = msgs.map(msg => `
                 <div class="flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}">
-                    <div class="${msg.sender === 'user' ? 'bg-primary text-white rounded-tr-sm' : 'bg-white text-slate-700 rounded-tl-sm border'} rounded-2xl px-4 py-2 text-sm max-w-[85%] shadow-sm">
+                    <div class="${msg.sender === 'user' ? 'bg-primary text-white rounded-tr-sm' : 'bg-white border border-slate-200 text-slate-700 rounded-tl-sm'} rounded-2xl px-4 py-2 text-sm max-w-[85%] shadow-sm">
                         ${msg.text}
                         <div class="text-[9px] ${msg.sender === 'user' ? 'text-blue-200 text-right' : 'text-slate-400'} mt-1">${msg.time}</div>
                     </div>
@@ -1441,361 +1180,226 @@
         }
 
         function sendUserMessage() {
-            const input = document.getElementById('user-chat-input'); const text = input.value.trim();
+            const input = document.getElementById('user-chat-input');
+            const text = input.value.trim();
             if(!text || !currentUser) return;
             const chatKey = currentUser.email.replace(/[^a-zA-Z0-9]/g, '_');
             const timeStr = new Date().getHours().toString().padStart(2,'0') + ':' + new Date().getMinutes().toString().padStart(2,'0');
             if(!chatDatabase[chatKey]) chatDatabase[chatKey] = { name: currentUser.name, avatar: currentUser.name.charAt(0).toUpperCase(), unreadAdmin: 0, messages: [] };
             chatDatabase[chatKey].messages.push({ sender: 'user', text, time: timeStr });
-            chatDatabase[chatKey].unreadAdmin++; input.value = '';
-            renderUserChat(); renderAdminChatList(); updateAdminBadge();
+            chatDatabase[chatKey].unreadAdmin++;
+            input.value = '';
+            renderUserChat();
+            renderAdminChatList();
+            updateAdminBadge();
             if (currentActiveUserChat === chatKey) renderAdminChatMessages();
         }
-        window.sendUserMessage = sendUserMessage;
-
-        // Admin rendering functionality
-        function renderAdminPayments() {
-            const tbody = document.getElementById('admin-invoice-table');
-            const badge = document.getElementById('admin-pay-badge');
-            const summaryPending = document.getElementById('summary-pending-pay');
-            if(!tbody) return;
-            let pendingCount = 0;
-            tbody.innerHTML = invoiceDB.map(inv => {
-                if (inv.status === 'Menunggu Verifikasi') pendingCount++;
-                const formatPrice = "Rp " + inv.amount.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
-                let statusHtml = inv.status === 'Menunggu Verifikasi' ? `<span class="bg-accent/20 text-accent font-bold px-2 py-1 rounded text-xs">Review</span>` : (inv.status === 'Lunas' ? `<span class="bg-green-100 text-green-700 font-bold px-2 py-1 rounded text-xs">Lunas</span>` : `<span class="bg-slate-100 text-slate-500 font-bold px-2 py-1 rounded text-xs">${inv.status}</span>`);
-                let actionHtml = inv.status === 'Menunggu Verifikasi' ? `<div class="flex justify-center gap-2"><button onclick="verifyPayment('${inv.id}', true)" class="bg-green-100 text-green-700 hover:bg-green-500 hover:text-white p-2 rounded-lg transition"><i class="ph ph-check font-bold"></i></button><button onclick="verifyPayment('${inv.id}', false)" class="bg-red-100 text-red-700 hover:bg-red-500 hover:text-white p-2 rounded-lg transition"><i class="ph ph-x font-bold"></i></button></div>` : `<div class="text-center text-slate-400 text-xs">-</div>`;
-                return `<tr class="hover:bg-slate-50 transition"><td class="p-4 font-mono text-xs text-slate-500">#${inv.id}</td><td class="p-4"><div class="font-bold text-sm text-slate-800">${inv.user}</div><div class="text-xs text-slate-500">${inv.desc}</div></td><td class="p-4 font-bold text-primary text-sm">${formatPrice}</td><td class="p-4 text-center">${statusHtml}</td><td class="p-4">${actionHtml}</td></tr>`;
-            }).reverse().join('');
-            if(badge) { badge.innerText = pendingCount; badge.classList.toggle('hidden', pendingCount === 0); }
-            if(summaryPending) summaryPending.innerText = pendingCount;
-        }
-        window.renderAdminPayments = renderAdminPayments;
 
         function renderAdminChatList() {
-            const listEl = document.getElementById('admin-chat-list'); if(!listEl) return;
+            const listEl = document.getElementById('admin-chat-list');
+            if(!listEl) return;
             let html = '';
             for (const [userId, data] of Object.entries(chatDatabase)) {
                 const lastMsg = data.messages.length > 0 ? data.messages[data.messages.length - 1] : {text:'', time:''};
                 const unreadBadge = data.unreadAdmin > 0 ? `<div class="w-5 h-5 bg-red-500 text-white rounded-full flex items-center justify-center text-[10px] font-bold">${data.unreadAdmin}</div>` : '';
-                html += `<div onclick="selectAdminChat('${userId}')" class="p-3 border-b cursor-pointer ${currentActiveUserChat === userId ? 'bg-blue-50 border-l-4 border-l-primary' : 'hover:bg-slate-100'} flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center font-bold">${data.avatar}</div><div class="flex-1 min-w-0"><div class="flex justify-between items-baseline"><div class="font-bold text-sm text-slate-800 line-clamp-1">${data.name}</div><div class="text-[10px] text-slate-400">${lastMsg.time}</div></div><div class="flex justify-between items-center gap-2"><div class="text-xs ${data.unreadAdmin > 0 ? 'text-slate-800 font-bold' : 'text-slate-500'} line-clamp-1">${lastMsg.text}</div>${unreadBadge}</div></div></div>`;
-            } listEl.innerHTML = html;
+                html += `
+                    <div onclick="selectAdminChat('${userId}')" class="p-3 border-b border-slate-100 cursor-pointer transition ${currentActiveUserChat === userId ? 'bg-blue-50 border-l-4 border-l-primary' : 'hover:bg-slate-100 border-l-4 border-l-transparent'} flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center font-bold shrink-0">${data.avatar}</div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex justify-between items-baseline mb-0.5">
+                                <div class="font-bold text-sm text-slate-800 line-clamp-1">${data.name}</div>
+                                <div class="text-[10px] text-slate-400 shrink-0">${lastMsg.time}</div>
+                            </div>
+                            <div class="flex justify-between items-center gap-2">
+                                <div class="text-xs ${data.unreadAdmin > 0 ? 'text-slate-800 font-bold' : 'text-slate-500'} line-clamp-1">${lastMsg.text}</div>
+                                ${unreadBadge}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            listEl.innerHTML = html;
         }
 
         function renderAdminChatMessages() {
-            const body = document.getElementById('admin-chat-body'); if(!body || !chatDatabase[currentActiveUserChat]) return;
-            body.innerHTML = chatDatabase[currentActiveUserChat].messages.map(msg => `<div class="flex ${msg.sender === 'admin' ? 'justify-end' : 'justify-start'}"><div class="${msg.sender === 'admin' ? 'bg-primary text-white rounded-tr-sm' : 'bg-white border text-slate-700 rounded-tl-sm'} rounded-2xl px-4 py-2 text-sm max-w-[70%] shadow-sm">${msg.text}<div class="text-[9px] ${msg.sender === 'admin' ? 'text-blue-200 text-right' : 'text-slate-400'} mt-1">${msg.time}</div></div></div>`).join('');
+            const body = document.getElementById('admin-chat-body');
+            if(!body || !chatDatabase[currentActiveUserChat]) return;
+            body.innerHTML = chatDatabase[currentActiveUserChat].messages.map(msg => `
+                <div class="flex ${msg.sender === 'admin' ? 'justify-end' : 'justify-start'}">
+                    <div class="${msg.sender === 'admin' ? 'bg-primary text-white rounded-tr-sm' : 'bg-white border border-slate-200 text-slate-700 rounded-tl-sm'} rounded-2xl px-4 py-2 text-sm max-w-[70%] shadow-sm">
+                        ${msg.text}
+                        <div class="text-[9px] ${msg.sender === 'admin' ? 'text-blue-200 text-right' : 'text-slate-400'} mt-1">${msg.time}</div>
+                    </div>
+                </div>
+            `).join('');
             body.scrollTop = body.scrollHeight;
         }
 
         function selectAdminChat(userId) {
-            currentActiveUserChat = userId; chatDatabase[userId].unreadAdmin = 0; 
-            const avatarEl = document.getElementById('admin-active-chat-avatar'); const nameEl = document.getElementById('admin-active-chat-name');
-            if(avatarEl) avatarEl.innerText = chatDatabase[userId].avatar; if(nameEl) nameEl.innerText = chatDatabase[userId].name;
-            renderAdminChatList(); renderAdminChatMessages(); updateAdminBadge();
+            currentActiveUserChat = userId;
+            if(chatDatabase[userId]) chatDatabase[userId].unreadAdmin = 0;
+            const avatarEl = document.getElementById('admin-active-chat-avatar');
+            const nameEl = document.getElementById('admin-active-chat-name');
+            const inputEl = document.getElementById('admin-chat-input');
+            if(avatarEl && chatDatabase[userId]) avatarEl.innerText = chatDatabase[userId].avatar;
+            if(nameEl && chatDatabase[userId]) nameEl.innerText = chatDatabase[userId].name;
+            if(inputEl && chatDatabase[userId]) inputEl.placeholder = `Balas pesan ${chatDatabase[userId].name}...`;
+            renderAdminChatList();
+            renderAdminChatMessages();
+            updateAdminBadge();
         }
-        window.selectAdminChat = selectAdminChat;
 
         function sendAdminMessage() {
-            const input = document.getElementById('admin-chat-input'); const text = input.value.trim();
+            const input = document.getElementById('admin-chat-input');
+            const text = input.value.trim();
             if(!text || !chatDatabase[currentActiveUserChat]) return;
             const timeStr = new Date().getHours().toString().padStart(2,'0') + ':' + new Date().getMinutes().toString().padStart(2,'0');
             chatDatabase[currentActiveUserChat].messages.push({ sender: 'admin', text, time: timeStr });
-            input.value = ''; renderAdminChatMessages(); renderAdminChatList();
-            if (currentUser && currentActiveUserChat === currentUser.email.replace(/[^a-zA-Z0-9]/g, '_')) renderUserChat();
+            input.value = '';
+            renderAdminChatMessages();
+            renderAdminChatList();
+            if (currentUser && currentActiveUserChat === currentUser.email.replace(/[^a-zA-Z0-9]/g, '_')) {
+                renderUserChat();
+            }
         }
-        window.sendAdminMessage = sendAdminMessage;
 
         function updateAdminBadge() {
-            const badge = document.getElementById('admin-chat-badge'); if(!badge) return;
-            let unread = 0; for (const k in chatDatabase) unread += chatDatabase[k].unreadAdmin;
-            if(unread > 0) { badge.innerText = unread; badge.classList.remove('hidden'); } else { badge.classList.add('hidden'); }
-        }
-
-        // ================= DYNAMIC ADMIN MANAGE USERS & ADS =================
-        function renderAdminUsers() {
-            const tbody = document.getElementById('admin-users-table');
-            if(!tbody) return;
-            
-            let html = '';
-            for (const email in usersDB) {
-                const u = usersDB[email];
-                html += `
-                    <tr class="hover:bg-slate-50 transition border-b border-slate-100">
-                        <td class="p-4">
-                            <div class="font-bold text-slate-800">${u.name}</div>
-                        </td>
-                        <td class="p-4">
-                            <div class="text-sm text-slate-800">${u.email}</div>
-                            <div class="text-xs text-slate-500">${u.phone}</div>
-                        </td>
-                        <td class="p-4 text-sm text-slate-600">
-                            <span class="bg-blue-50 text-primary px-2 py-1 rounded-md text-xs font-bold">${u.role}</span>
-                        </td>
-                        <td class="p-4 text-center font-bold text-slate-700">
-                            ${u.ads.length}
-                        </td>
-                    </tr>
-                `;
-            }
-            tbody.innerHTML = html;
-        }
-        window.renderAdminUsers = renderAdminUsers;
-
-        function renderAdminAds() {
-            const tbody = document.getElementById('admin-ads-table');
-            if(!tbody) return;
-            
-            let html = '';
-            for (const email in usersDB) {
-                const u = usersDB[email];
-                u.ads.forEach(ad => {
-                    const formatPrice = "Rp " + ad.price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
-                    let actionHtml = `
-                        <div class="flex justify-center gap-2">
-                            <button onclick="approveAdAdmin('${email}', ${ad.id})" class="bg-green-100 text-green-700 hover:bg-green-500 hover:text-white p-2 rounded-lg transition" title="Setujui (Bypass)"><i class="ph ph-check font-bold"></i></button>
-                            <button onclick="deleteAdAdmin('${email}', ${ad.id})" class="bg-red-100 text-red-700 hover:bg-red-500 hover:text-white p-2 rounded-lg transition" title="Hapus"><i class="ph ph-trash font-bold"></i></button>
-                        </div>
-                    `;
-                    
-                    html += `
-                        <tr class="hover:bg-slate-50 transition border-b border-slate-100">
-                            <td class="p-4">
-                                <div class="font-bold text-sm text-slate-800 line-clamp-1">${ad.title}</div>
-                                <div class="text-xs text-slate-500 font-mono">ID: #${ad.id}</div>
-                            </td>
-                            <td class="p-4 text-sm text-slate-600">${u.name}</td>
-                            <td class="p-4 text-sm font-bold text-primary">${formatPrice}</td>
-                            <td class="p-4 text-center">
-                                <span class="${ad.statusColor} font-bold text-[10px] uppercase tracking-wider bg-slate-50 px-2 py-1 rounded border border-slate-200">${ad.status}</span>
-                            </td>
-                            <td class="p-4">${actionHtml}</td>
-                        </tr>
-                    `;
-                });
-            }
-            tbody.innerHTML = html;
-        }
-        window.renderAdminAds = renderAdminAds;
-
-        function approveAdAdmin(email, adId) {
-            let u = usersDB[email];
-            if(u) {
-                let ad = u.ads.find(a => a.id === adId);
-                if(ad) {
-                    ad.status = 'Aktif (Disetujui Admin)';
-                    ad.statusColor = 'text-green-600';
-                    showMessage('Iklan berhasil disetujui secara manual.');
-                    renderAdminAds();
-                    if(currentUser && currentUser.email === email) renderUserDashboard();
-                }
+            const badge = document.getElementById('admin-chat-badge');
+            if(!badge) return;
+            let unread = 0;
+            for (const k in chatDatabase) unread += chatDatabase[k].unreadAdmin;
+            if(unread > 0) {
+                badge.innerText = unread;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
             }
         }
-        window.approveAdAdmin = approveAdAdmin;
 
-        function deleteAdAdmin(email, adId) {
-            let u = usersDB[email];
-            if(u) {
-                u.ads = u.ads.filter(a => a.id !== adId);
-                showMessage('Iklan berhasil dihapus dari sistem.');
-                renderAdminAds();
-                if(currentUser && currentUser.email === email) renderUserDashboard();
-            }
+        function saveCarousel() { showMessage('Banner disimpan!'); }
+
+        // Modals & Image Upload 
+        function openPaymentModal(invId) {
+            const inv = invoiceDB.find(i => i.id === invId); if(!inv) return;
+            document.getElementById('pay-inv-id').value = inv.id;
+            document.getElementById('pay-amount').innerText = "Rp " + inv.amount.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+            document.getElementById('payment-modal').classList.remove('hidden');
+            setTimeout(() => document.getElementById('payment-modal').classList.remove('opacity-0'), 10);
         }
-        window.deleteAdAdmin = deleteAdAdmin;
-
-        // Init Carousel Functions
-        function initCarousel() { renderCarousel(); startSlideShow(); }
-        function renderCarousel() {
-            const container = document.getElementById('hero-carousel'); const ind = document.getElementById('carousel-indicators');
-            if(container) container.innerHTML = carouselItems.map((c, i) => `<div class="carousel-slide w-full h-full ${i === 0 ? 'active' : ''}" id="slide-${i}"><img src="${c.img}" alt="Banner Properti RUMASA ${i+1}" class="w-full h-full object-cover"></div>`).join('');
-            if(ind) ind.innerHTML = carouselItems.map((_, i) => `<button onclick="goToSlide(${i})" class="carousel-indicator w-3 h-3 rounded-full bg-white/50 hover:bg-white/80 ${i === 0 ? 'active' : ''}" aria-label="Slide ${i+1}"></button>`).join('');
-            if(document.getElementById('hero-title')) document.getElementById('hero-title').innerText = carouselItems[0].title;
-            if(document.getElementById('hero-subtitle')) document.getElementById('hero-subtitle').innerText = carouselItems[0].subtitle;
+        function closePaymentModal() {
+            document.getElementById('payment-modal').classList.add('opacity-0');
+            setTimeout(() => document.getElementById('payment-modal').classList.add('hidden'), 300);
         }
-        function goToSlide(i) {
-            document.querySelectorAll('.carousel-slide').forEach(e => e.classList.remove('active')); document.querySelectorAll('.carousel-indicator').forEach(e => e.classList.remove('active'));
-            if(document.getElementById(`slide-${i}`)) document.getElementById(`slide-${i}`).classList.add('active');
-            if(document.querySelectorAll('.carousel-indicator')[i]) document.querySelectorAll('.carousel-indicator')[i].classList.add('active');
-            if(document.getElementById('hero-title')) document.getElementById('hero-title').innerText = carouselItems[i].title;
-            if(document.getElementById('hero-subtitle')) document.getElementById('hero-subtitle').innerText = carouselItems[i].subtitle;
-            currentSlide = i; clearInterval(slideInterval); startSlideShow();
-        } window.goToSlide = goToSlide;
-        function startSlideShow() { slideInterval = setInterval(() => goToSlide((currentSlide + 1) % carouselItems.length), 4000); }
-
-        function renderProyekCards() {
-            const grid = document.getElementById('proyek-grid'); if(!grid) return;
-            grid.innerHTML = proyekBaru.map(p => `<div class="bg-white rounded-2xl shadow-md border overflow-hidden hover:shadow-xl transition-all cursor-pointer"><div class="relative h-56 overflow-hidden"><img src="${p.img}" alt="Proyek Baru ${p.name} - ${p.location}" class="w-full h-full object-cover hover:scale-105 transition-transform"><div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-transparent"></div><div class="absolute top-4 left-4 bg-accent text-white px-3 py-1 rounded-full text-xs font-bold shadow-md">${p.status}</div><div class="absolute bottom-4 left-4 right-4 z-10"><div class="text-xs text-blue-200 font-medium mb-1">${p.developer}</div><h3 class="text-xl font-bold text-white line-clamp-1">${p.name}</h3></div></div><div class="p-6"><div class="text-slate-500 text-sm mb-4 line-clamp-2">${p.desc}</div><div class="flex items-center text-slate-600 text-xs mb-3 font-medium">${p.location}</div><div class="pt-4 border-t flex justify-between items-end"><div><div class="text-xs text-slate-500 mb-1">Mulai dari</div><div class="text-lg font-bold text-primary">${p.priceStart}</div></div><button class="bg-blue-50 text-primary w-10 h-10 rounded-full flex items-center justify-center" aria-label="Lihat Detail"><i class="ph ph-arrow-right text-lg font-bold"></i></button></div></div></div>`).join('');
+        function submitPaymentProof() {
+            const inv = invoiceDB.find(i => i.id === document.getElementById('pay-inv-id').value);
+            if(inv) { inv.status = 'Menunggu Verifikasi'; showMessage('Bukti berhasil diunggah.'); closePaymentModal(); renderUserInvoices(); }
         }
 
-        // --- SISTEM FILTER & PAGINASI (DIKEMBALIKAN) ---
+        function handleImageUpload(input) {
+            Array.from(input.files).slice(0, 5 - uploadedImages.length).forEach(file => {
+                const reader = new FileReader(); reader.onload = e => {
+                    const img = new Image(); img.onload = () => {
+                        const canvas = document.createElement('canvas'); canvas.width = img.width > 800 ? 800 : img.width; canvas.height = img.height > 800 ? 800 : img.height;
+                        canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+                        uploadedImages.push(canvas.toDataURL('image/jpeg', 0.6)); renderImagePreviews();
+                    }; img.src = e.target.result;
+                }; reader.readAsDataURL(file);
+            }); input.value = ''; 
+        }
+        function removeImage(index) { uploadedImages.splice(index, 1); renderImagePreviews(); }
+        function renderImagePreviews() {
+            document.getElementById('image-preview-container').innerHTML = uploadedImages.map((src, idx) => `<div class="relative rounded-xl overflow-hidden aspect-square"><img src="${src}" class="w-full h-full object-cover"><button onclick="event.preventDefault(); removeImage(${idx})" class="absolute top-1 right-1 w-6 h-6 bg-red-500 text-white rounded-full"><i class="ph ph-x text-xs"></i></button></div>`).join('');
+        }
+
+        // --- Sistem Tampilan Beranda ---
         function filterData(category, status) {
-            activeCategory = category;
-            activeStatus = status;
-            currentPage = 1;
-            renderPropertyCards();
-            
-            let msg = 'Menampilkan ';
-            if(status !== 'all') msg += `Properti ${status} `;
-            if(category !== 'all') msg += `kategori ${category}`;
-            if(status === 'all' && category === 'all') msg = 'Menampilkan semua properti';
-            
-            showMessage(msg);
-            updateNav(status.toLowerCase() === 'dijual' ? 'dijual' : (status.toLowerCase() === 'disewakan' ? 'disewakan' : 'home'));
+            activeCategory = category; activeStatus = status; currentPage = 1;
+            renderPropertyCards(); showMessage('Memuat properti...');
+            const gridEl = document.getElementById('property-grid'); if(gridEl) window.scrollTo({top: gridEl.getBoundingClientRect().top + window.scrollY - 100, behavior: 'smooth'});
         }
-        window.filterData = filterData;
 
         function updateNav(activeId) {
-            document.querySelectorAll('.nav-link').forEach(el => {
-                el.classList.remove('text-primary');
-                el.classList.add('text-slate-500');
-            });
-            const activeEl = document.getElementById(`nav-${activeId}`);
-            if(activeEl) {
-                activeEl.classList.remove('text-slate-500');
-                activeEl.classList.add('text-primary');
-            }
+            document.querySelectorAll('.nav-link').forEach(el => { el.classList.remove('text-primary'); el.classList.add('text-slate-500'); });
+            document.getElementById(`nav-${activeId}`)?.classList.remove('text-slate-500'); document.getElementById(`nav-${activeId}`)?.classList.add('text-primary');
         }
-        window.updateNav = updateNav;
-
-        function renderPagination(totalPages) {
-            const container = document.getElementById('pagination-container');
-            if (!container) return;
-            if (totalPages <= 1) { container.innerHTML = ''; return; }
-
-            let html = `<button onclick="changePage(${currentPage - 1})" class="w-10 h-10 rounded-xl flex items-center justify-center border border-slate-200 ${currentPage === 1 ? 'text-slate-300 cursor-not-allowed bg-slate-50' : 'text-slate-600 hover:bg-slate-100 hover:text-primary transition shadow-sm bg-white'}"><i class="ph ph-caret-left font-bold"></i></button>`;
-            
-            for(let i = 1; i <= totalPages; i++) {
-                if (i === currentPage) {
-                    html += `<button class="w-10 h-10 rounded-xl flex items-center justify-center font-bold bg-primary text-white shadow-md shadow-blue-500/30">${i}</button>`;
-                } else {
-                    html += `<button onclick="changePage(${i})" class="w-10 h-10 rounded-xl flex items-center justify-center font-medium text-slate-600 hover:bg-slate-100 hover:text-primary transition border border-slate-200 bg-white shadow-sm">${i}</button>`;
-                }
-            }
-
-            html += `<button onclick="changePage(${currentPage + 1})" class="w-10 h-10 rounded-xl flex items-center justify-center border border-slate-200 ${currentPage === totalPages ? 'text-slate-300 cursor-not-allowed bg-slate-50' : 'text-slate-600 hover:bg-slate-100 hover:text-primary transition shadow-sm bg-white'}"><i class="ph ph-caret-right font-bold"></i></button>`;
-            container.innerHTML = html;
-        }
-        window.renderPagination = renderPagination;
-
-        function changePage(page) {
-            let filteredProps = properties.filter(prop => {
-                let matchCategory = activeCategory === 'all' || prop.type.toLowerCase() === activeCategory.toLowerCase();
-                let matchStatus = activeStatus === 'all' || prop.status.toLowerCase() === activeStatus.toLowerCase();
-                return matchCategory && matchStatus;
-            });
-            const totalPages = Math.ceil(filteredProps.length / itemsPerPage);
-            if (page < 1 || page > totalPages) return;
-            currentPage = page;
-            renderPropertyCards();
-            
-            const gridEl = document.getElementById('property-grid');
-            if(gridEl) window.scrollTo({top: gridEl.getBoundingClientRect().top + window.scrollY - 100, behavior: 'smooth'});
-        }
-        window.changePage = changePage;
-
-        function showDetails(id) {
-            const prop = properties.find(p => p.id === id);
-            if(!prop) return;
-
-            const detailHtml = `
-                <button onclick="navigate('home')" class="fixed top-4 left-4 z-50 w-10 h-10 rounded-full bg-white/90 backdrop-blur shadow-md flex items-center justify-center text-slate-800 md:hidden">
-                    <i class="ph ph-arrow-left text-xl"></i>
-                </button>
-                <div class="w-full h-[40vh] md:h-[60vh] relative bg-slate-900">
-                    <img src="${prop.img}" class="w-full h-full object-cover opacity-90">
-                </div>
-                <div class="container mx-auto px-4 -mt-10 relative z-10 max-w-5xl">
-                    <div class="bg-white rounded-t-3xl md:rounded-3xl shadow-xl p-6 md:p-10 flex flex-col lg:flex-row gap-8">
-                        <div class="flex-1">
-                            <div class="inline-block px-4 py-1.5 bg-blue-50 text-primary font-bold rounded-full text-sm mb-4 border border-blue-100">${prop.status}</div>
-                            <h1 class="text-3xl md:text-4xl font-bold text-slate-800 mb-2">${prop.title}</h1>
-                            <div class="flex items-center text-slate-500 mb-6 text-lg"><i class="ph ph-map-pin mr-2 text-primary"></i> ${prop.location}</div>
-                            <div class="text-3xl font-bold text-primary mb-8">${prop.price}</div>
-                            <div class="flex flex-wrap gap-4 md:gap-8 mb-8 pb-8 border-b border-slate-200">
-                                <div class="flex items-center gap-3"><div class="w-12 h-12 rounded-full bg-slate-50 flex items-center justify-center border border-slate-100"><i class="ph ph-bed text-2xl text-slate-600"></i></div><div><div class="text-sm text-slate-500">Kamar Tidur</div><div class="font-bold text-lg">${prop.beds}</div></div></div>
-                                <div class="flex items-center gap-3"><div class="w-12 h-12 rounded-full bg-slate-50 flex items-center justify-center border border-slate-100"><i class="ph ph-shower text-2xl text-slate-600"></i></div><div><div class="text-sm text-slate-500">Kamar Mandi</div><div class="font-bold text-lg">${prop.baths}</div></div></div>
-                                <div class="flex items-center gap-3"><div class="w-12 h-12 rounded-full bg-slate-50 flex items-center justify-center border border-slate-100"><i class="ph ph-arrows-out text-2xl text-slate-600"></i></div><div><div class="text-sm text-slate-500">Luas Bangunan</div><div class="font-bold text-lg">${prop.sqft} m²</div></div></div>
-                            </div>
-                            <h3 class="text-xl font-bold mb-4">Deskripsi</h3>
-                            <p class="text-slate-600 leading-relaxed">${prop.desc}</p>
-                        </div>
-                        <div class="w-full lg:w-80">
-                            <div class="bg-slate-50 border border-slate-200 rounded-2xl p-6 sticky top-24">
-                                <h3 class="font-bold text-lg mb-4">Hubungi Agen</h3>
-                                <div class="flex items-center gap-4 mb-6">
-                                    <img src="${prop.agent.img}" class="w-16 h-16 rounded-full object-cover border-2 border-white shadow-sm">
-                                    <div><div class="font-bold text-slate-800">${prop.agent.name}</div><div class="text-sm text-slate-500">${prop.agent.agency}</div></div>
-                                </div>
-                                <div class="space-y-3">
-                                    <button onclick="showMessage('Membuka WhatsApp agen...')" class="w-full flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20bd5a] text-white py-3 rounded-xl font-bold transition shadow-md shadow-green-500/20"><i class="ph-fill ph-whatsapp-logo text-xl"></i> WhatsApp</button>
-                                    <button onclick="showMessage('Menelepon agen...')" class="w-full flex items-center justify-center gap-2 bg-white border border-primary text-primary hover:bg-blue-50 py-3 rounded-xl font-bold transition"><i class="ph ph-phone text-xl"></i> Telepon</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-            const content = document.getElementById('details-content');
-            if(content) content.innerHTML = detailHtml;
-            navigate('details');
-        }
-        window.showDetails = showDetails;
 
         function renderPropertyCards() {
-            const grid = document.getElementById('property-grid');
-            const paginationContainer = document.getElementById('pagination-container');
+            const grid = document.getElementById('property-grid'); const pag = document.getElementById('pagination-container'); if(!grid) return;
+            let f = properties.filter(p => (activeCategory === 'all' || p.type.toLowerCase() === activeCategory.toLowerCase()) && (activeStatus === 'all' || p.status.toLowerCase() === activeStatus.toLowerCase()));
+            const total = Math.ceil(f.length / itemsPerPage); if(currentPage > total) currentPage = total; if(currentPage === 0) currentPage = 1;
+            const current = f.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+            if(f.length === 0) { grid.innerHTML = `<div class="col-span-full text-center py-12 text-slate-500">Tidak ada properti.</div>`; if(pag) pag.innerHTML = ''; return; }
+            grid.innerHTML = current.map(p => `
+                <div class="bg-white rounded-2xl shadow-sm border overflow-hidden hover:shadow-xl cursor-pointer" onclick="showDetails(${p.id})">
+                    <div class="relative h-48 overflow-hidden"><img src="${p.img}" class="w-full h-full object-cover hover:scale-105 transition"><div class="absolute top-3 left-3 bg-white/90 px-3 py-1 rounded-full text-xs font-bold text-primary">${p.status}</div></div>
+                    <div class="p-5"><div class="text-xl font-bold text-slate-800 mb-1">${p.price}</div><h3 class="text-sm font-medium text-slate-600 mb-3 h-10">${p.title}</h3><div class="text-xs text-slate-500"><i class="ph ph-map-pin text-primary"></i> ${p.location}</div></div>
+                </div>`).join('');
+            if(pag) pag.innerHTML = `<button onclick="changePage(${currentPage - 1})" class="w-10 h-10 border rounded bg-white shadow-sm">&lt;</button><button class="w-10 h-10 bg-primary text-white font-bold rounded shadow-md">${currentPage}</button><button onclick="changePage(${currentPage + 1})" class="w-10 h-10 border rounded bg-white shadow-sm">&gt;</button>`;
+        }
+        function changePage(p) { currentPage = p; renderPropertyCards(); window.scrollTo({top: document.getElementById('property-grid').getBoundingClientRect().top + window.scrollY - 100, behavior: 'smooth'}); }
+        
+        function showDetails(id) {
+            const p = properties.find(x => x.id === id); if(!p) return;
+            document.getElementById('details-content').innerHTML = `<button onclick="navigate('home')" class="fixed top-4 left-4 z-50 w-10 h-10 rounded-full bg-white shadow flex items-center justify-center"><i class="ph ph-arrow-left text-xl"></i></button><div class="w-full h-[50vh] relative"><img src="${p.img}" class="w-full h-full object-cover"></div><div class="container mx-auto px-4 -mt-10 relative z-10 max-w-5xl"><div class="bg-white rounded-t-3xl shadow-xl p-8 flex flex-col md:flex-row gap-8"><div class="flex-1"><h1 class="text-3xl font-bold mb-2">${p.title}</h1><div class="text-3xl font-bold text-primary mb-8">${p.price}</div><p>${p.desc}</p></div><div class="w-full md:w-80"><div class="bg-slate-50 p-6 rounded-2xl sticky top-24"><h3 class="font-bold mb-4">Hubungi Agen</h3><div class="flex items-center gap-4 mb-6"><img src="${p.agent.img}" class="w-16 h-16 rounded-full"><div class="font-bold">${p.agent.name}</div></div></div></div></div></div>`;
+            navigate('details');
+        }
+
+        // --- SISTEM CAROUSEL & PROYEK BARU YANG DIKEMBALIKAN (RESTORED) ---
+        function initCarousel() { renderCarousel(); slideInterval = setInterval(() => goToSlide((currentSlide + 1) % carouselItems.length), 4000); }
+        function renderCarousel() {
+            document.getElementById('hero-carousel').innerHTML = carouselItems.map((c, i) => `<div class="carousel-slide w-full h-full ${i===0?'active':''}" id="slide-${i}"><img src="${c.img}" class="w-full h-full object-cover"></div>`).join('');
+            document.getElementById('carousel-indicators').innerHTML = carouselItems.map((_, i) => `<button onclick="goToSlide(${i})" class="carousel-indicator w-3 h-3 rounded-full bg-white/50 ${i===0?'active':''}"></button>`).join('');
+            document.getElementById('hero-title').innerText = carouselItems[0].title; document.getElementById('hero-subtitle').innerText = carouselItems[0].subtitle;
+        }
+        function goToSlide(i) {
+            document.querySelectorAll('.carousel-slide, .carousel-indicator').forEach(e => e.classList.remove('active'));
+            document.getElementById(`slide-${i}`).classList.add('active'); document.querySelectorAll('.carousel-indicator')[i].classList.add('active');
+            document.getElementById('hero-title').innerText = carouselItems[i].title; document.getElementById('hero-subtitle').innerText = carouselItems[i].subtitle;
+            currentSlide = i; clearInterval(slideInterval); slideInterval = setInterval(() => goToSlide((currentSlide + 1) % carouselItems.length), 4000);
+        }
+
+        function renderProyekCards() {
+            const grid = document.getElementById('proyek-grid');
             if(!grid) return;
-            
-            let filteredProps = properties.filter(prop => {
-                let matchCategory = activeCategory === 'all' || prop.type.toLowerCase() === activeCategory.toLowerCase();
-                let matchStatus = activeStatus === 'all' || prop.status.toLowerCase() === activeStatus.toLowerCase();
-                return matchCategory && matchStatus;
-            });
-
-            const totalPages = Math.ceil(filteredProps.length / itemsPerPage);
-            if (currentPage > totalPages && totalPages > 0) currentPage = totalPages;
-            if (currentPage === 0) currentPage = 1;
-
-            const startIndex = (currentPage - 1) * itemsPerPage;
-            const currentProps = filteredProps.slice(startIndex, startIndex + itemsPerPage);
-
-            if(filteredProps.length === 0) {
-                grid.innerHTML = `<div class="col-span-full text-center py-12 bg-slate-50 rounded-2xl border border-slate-200 mt-4"><i class="ph ph-magnifying-glass text-5xl text-slate-300 mb-3 block"></i><p class="text-slate-500 font-medium">Maaf, belum ada properti yang sesuai dengan filter ini.</p></div>`;
-                if(paginationContainer) paginationContainer.innerHTML = '';
-                return;
-            }
-
-            grid.innerHTML = currentProps.map(p => `
-                <div class="bg-white rounded-2xl shadow-sm border overflow-hidden hover:shadow-xl transition-shadow cursor-pointer" onclick="showDetails(${p.id})">
-                    <div class="relative h-48 overflow-hidden"><img src="${p.img}" alt="${p.status} ${p.type} - ${p.title} di ${p.location}" class="w-full h-full object-cover hover:scale-105 transition-transform"><div class="absolute top-3 left-3 bg-white/90 px-3 py-1 rounded-full text-xs font-bold text-primary">${p.status}</div></div>
-                    <div class="p-5">
-                        <div class="text-xl font-bold text-slate-800 mb-1">${p.price}</div>
-                        <h3 class="text-sm font-medium text-slate-600 mb-3 h-10 line-clamp-2">${p.title}</h3>
-                        <div class="flex items-center text-slate-500 text-xs mb-4"><i class="ph ph-map-pin mr-1 text-primary"></i> ${p.location}</div>
-                        <div class="flex items-center justify-between pt-4 border-t text-xs font-medium text-slate-600">
-                            <div><i class="ph ph-bed text-lg mr-1 align-middle"></i> ${p.beds} KT</div>
-                            <div><i class="ph ph-shower text-lg mr-1 align-middle"></i> ${p.baths} KM</div>
-                            <div><i class="ph ph-arrows-out text-lg mr-1 align-middle"></i> ${p.sqft} m²</div>
+            grid.innerHTML = proyekBaru.map(p => `
+                <div class="bg-white rounded-2xl shadow-md border overflow-hidden hover:shadow-xl transition-all cursor-pointer">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover hover:scale-105 transition-transform">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-transparent"></div>
+                        <div class="absolute top-4 left-4 bg-accent text-white px-3 py-1 rounded-full text-xs font-bold shadow-md">${p.status}</div>
+                        <div class="absolute bottom-4 left-4 right-4 z-10">
+                            <div class="text-xs text-blue-200 font-medium mb-1">${p.developer}</div>
+                            <h3 class="text-xl font-bold text-white line-clamp-1">${p.name}</h3>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="text-slate-500 text-sm mb-4 line-clamp-2">${p.desc}</div>
+                        <div class="flex items-center text-slate-600 text-xs mb-3 font-medium">${p.location}</div>
+                        <div class="pt-4 border-t flex justify-between items-end">
+                            <div>
+                                <div class="text-xs text-slate-500 mb-1">Mulai dari</div>
+                                <div class="text-lg font-bold text-primary">${p.priceStart}</div>
+                            </div>
+                            <button class="bg-blue-50 text-primary w-10 h-10 rounded-full flex items-center justify-center"><i class="ph ph-arrow-right text-lg font-bold"></i></button>
                         </div>
                     </div>
                 </div>
             `).join('');
-
-            renderPagination(totalPages);
         }
-        window.renderPropertyCards = renderPropertyCards;
 
+        // --- INIT ALL ---
         document.addEventListener('DOMContentLoaded', () => {
-            initCarousel(); renderPropertyCards(); renderProyekCards();
-            renderUserInvoices(); renderAdminPayments();
-            renderAdminChatList(); updateAdminBadge();
-            
-            // Render Jadual Pengguna & Iklan Admin Pertama Kali
-            renderAdminUsers();
-            renderAdminAds();
-
-            const authContainer = document.getElementById('auth-toggle-container'); if (authContainer) authContainer.classList.remove('hidden');
+            initCarousel(); 
+            renderPropertyCards(); 
+            renderProyekCards();
+            renderAdminUsers(); 
+            renderAdminAds(); 
+            renderUserInvoices(); 
+            renderAdminPayments();
+            renderAdminChatList(); 
+            updateAdminBadge();
+            const authContainer = document.getElementById('auth-toggle-container');
+            if (authContainer) authContainer.classList.remove('hidden');
         });
     </script>
 </body>
