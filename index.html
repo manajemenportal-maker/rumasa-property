@@ -363,8 +363,9 @@
                         <input type="email" id="reg-email" required class="w-full px-4 py-3 border border-slate-300 rounded-xl outline-none focus:border-primary" placeholder="Email Baru">
                         <input type="text" id="reg-phone" required class="w-full px-4 py-3 border border-slate-300 rounded-xl outline-none focus:border-primary" placeholder="No WhatsApp">
                         <select id="reg-role" class="w-full px-4 py-3 border border-slate-300 rounded-xl outline-none focus:border-primary bg-white">
-                            <option>Pencari Properti</option>
-                            <option>Pemilik Properti (Owner)</option>
+                            <option>Pembeli</option>
+                            <option>Penjual</option>
+                            <option>Agen Properti</option>
                         </select>
                         <input type="password" required class="w-full px-4 py-3 border border-slate-300 rounded-xl outline-none focus:border-primary" placeholder="Buat Password">
                         <button type="submit" class="w-full py-3 bg-primary text-white font-bold rounded-xl hover:bg-secondary transition shadow-lg shadow-blue-500/30 mt-6">
@@ -608,7 +609,7 @@
                                         <div><label class="block text-xs font-bold text-slate-500 mb-1 uppercase">Nama</label><input type="text" id="add-user-name" class="border border-slate-300 rounded-2xl p-3 w-full outline-none focus:border-primary" required></div>
                                         <div><label class="block text-xs font-bold text-slate-500 mb-1 uppercase">Email</label><input type="email" id="add-user-email" class="border border-slate-300 rounded-2xl p-3 w-full outline-none focus:border-primary" required></div>
                                         <div><label class="block text-xs font-bold text-slate-500 mb-1 uppercase">WhatsApp</label><input type="text" id="add-user-phone" class="border border-slate-300 rounded-2xl p-3 w-full outline-none focus:border-primary" placeholder="08xxx"></div>
-                                        <div><label class="block text-xs font-bold text-slate-500 mb-1 uppercase">Role</label><select id="add-user-role" class="border border-slate-300 rounded-2xl p-3 w-full outline-none focus:border-primary bg-white"><option>Pencari Properti</option><option>Pemilik Properti</option><option>Admin</option></select></div>
+                                        <div><label class="block text-xs font-bold text-slate-500 mb-1 uppercase">Role</label><select id="add-user-role" class="border border-slate-300 rounded-2xl p-3 w-full outline-none focus:border-primary bg-white"><option>Pembeli</option><option>Penjual</option><option>Agen Properti</option><option>Admin</option></select></div>
                                     </div>
                                     <div class="flex justify-end pt-4"><button type="submit" class="bg-primary text-white px-8 py-3 rounded-2xl font-bold shadow-md hover:bg-secondary transition">Simpan User</button></div>
                                 </form>
@@ -826,7 +827,7 @@
         
         let usersDB = {
             'budi@gmail.com': { 
-                name: 'Budi Pengguna', email: 'budi@gmail.com', phone: '081234567890', role: 'Pemilik Properti', 
+                name: 'Budi Pengguna', email: 'budi@gmail.com', phone: '081234567890', role: 'Penjual', 
                 ads: [
                     { id: 99, title: 'Rumah Mewah Serpong', price: 1850000000, transaction: 'Dijual', type: 'Rumah', status: 'Premium (Aktif)', statusColor: 'text-green-600', coverImage: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=400&q=80', location: 'Gading Serpong', desc: 'Siap huni', beds: 3, baths: 2, sqft: 120 }
                 ]
@@ -1269,7 +1270,7 @@
                 status: ad.transaction,
                 img: ad.coverImage || ad.img || 'https://placehold.co/800x600/e2e8f0/64748b?text=Properti',
                 videoUrl: ad.videoUrl || '',
-                agent: { name: user.name, img: 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.name || 'User') },
+                agent: { name: user.name, phone: user.phone || '', img: 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.name || 'User') },
                 desc: ad.desc || ''
             };
             const existingIndex = properties.findIndex(p => p.id === ad.id);
@@ -1358,6 +1359,49 @@
             saveAppState();
             showMessage('Tagihan berhasil dibuat. Silakan bayar tagihan Anda.');
             renderUserDashboard(); updateAdminRingkasan();
+        }
+
+        function normalizeWaNumber(phone) {
+            let number = String(phone || '').replace(/[^0-9]/g, '');
+            if (!number) return '6285111033789';
+            if (number.startsWith('0')) number = '62' + number.slice(1);
+            if (!number.startsWith('62')) number = '62' + number;
+            return number;
+        }
+
+        function getPropertyContactPhone(p) {
+            return p?.agent?.phone || '085111033789';
+        }
+
+        function isContactUnlocked(adId) {
+            if (currentUser && currentUser.role === 'Admin') return true;
+            if (!currentUser) return false;
+            return invoiceDB.some(inv => Number(inv.adId) === Number(adId) && inv.userEmail === currentUser.email && inv.status === 'Lunas' && String(inv.package || inv.desc || '').toLowerCase().includes('akses kontak'));
+        }
+
+        function requestContactAccess(adId, title) {
+            if (!currentUser) { showMessage('Silakan masuk dulu untuk mengajukan akses kontak.'); navigate('auth'); toggleAuth('login'); return; }
+            const duplicate = invoiceDB.find(inv => Number(inv.adId) === Number(adId) && inv.userEmail === currentUser.email && String(inv.package || inv.desc || '').toLowerCase().includes('akses kontak') && ['Belum Bayar', 'Menunggu Verifikasi', 'Lunas'].includes(inv.status));
+            if (duplicate) {
+                if (duplicate.status === 'Lunas') showMessage('Akses kontak untuk properti ini sudah aktif.');
+                else showMessage('Tagihan akses kontak untuk properti ini sudah ada. Silakan cek menu tagihan.');
+                if (currentUser) { renderUserDashboard(); navigate('user'); }
+                return;
+            }
+            const invId = 'INV-' + invoiceCounter++;
+            const due = new Date(); due.setDate(due.getDate() + 3);
+            invoiceDB.push({ id: invId, adId: adId, user: currentUser.name, userEmail: currentUser.email, desc: `Akses Kontak Properti: ${title}`, package: 'Akses Kontak Properti', amount: 25000, status: 'Belum Bayar', method: '-', dueDate: due.toLocaleDateString('id-ID'), proofImage: '', submittedAt: '', paidAt: '', adminNote: '' });
+            saveAppState(); renderUserDashboard(); renderAdminPayments(); updateAdminRingkasan();
+            showMessage('Tagihan akses kontak dibuat. Setelah lunas, tombol WhatsApp akan aktif.');
+            navigate('user');
+        }
+
+        function openPaidContact(adId, title) {
+            const p = properties.find(item => Number(item.id) === Number(adId));
+            if (!p || !isContactUnlocked(adId)) { requestContactAccess(adId, title); return; }
+            const phone = normalizeWaNumber(getPropertyContactPhone(p));
+            const text = encodeURIComponent(`Halo, saya tertarik dengan properti: ${title}. Mohon info detailnya.`);
+            window.open(`https://wa.me/${phone}?text=${text}`, '_blank');
         }
 
         function renderUserInvoices() {
@@ -1593,11 +1637,16 @@
         function verifyPayment(invId, isApproved) {
             const inv = invoiceDB.find(i => i.id === invId); if (!inv) return;
             if (isApproved) {
-                inv.status = 'Lunas'; inv.paidAt = new Date().toLocaleString('id-ID'); inv.adminNote = 'Pembayaran diterima admin.'; showMessage('Pembayaran dikonfirmasi. Iklan diaktifkan.');
-                const user = usersDB[inv.userEmail];
-                if (user) {
-                    const ad = (user.ads || []).find(a => a.id === inv.adId);
-                    if (ad) { ad.status = 'Premium (Aktif)'; ad.statusColor = 'text-green-600'; makeAdLive(ad, user); }
+                inv.status = 'Lunas'; inv.paidAt = new Date().toLocaleString('id-ID'); inv.adminNote = 'Pembayaran diterima admin.';
+                const packageName = String(inv.package || inv.desc || '').toLowerCase();
+                const isContactAccess = packageName.includes('akses kontak');
+                showMessage(isContactAccess ? 'Pembayaran dikonfirmasi. Akses kontak WhatsApp user aktif.' : 'Pembayaran dikonfirmasi. Iklan diaktifkan.');
+                if (!isContactAccess) {
+                    const user = usersDB[inv.userEmail];
+                    if (user) {
+                        const ad = (user.ads || []).find(a => a.id === inv.adId);
+                        if (ad) { ad.status = 'Premium (Aktif)'; ad.statusColor = 'text-green-600'; makeAdLive(ad, user); }
+                    }
                 }
             } else {
                 const note = prompt('Catatan penolakan untuk user:', 'Bukti transfer belum jelas / nominal belum sesuai.') || 'Pembayaran ditolak admin.';
@@ -1781,7 +1830,7 @@
             const name = document.getElementById('add-user-name').value.trim();
             const email = document.getElementById('add-user-email').value.trim().toLowerCase();
             const phone = (document.getElementById('add-user-phone')?.value || '-').trim() || '-';
-            const role = document.getElementById('add-user-role')?.value || 'Pemilik Properti';
+            const role = document.getElementById('add-user-role')?.value || 'Pembeli';
             if (usersDB[email]) { showMessage('Email ini sudah terdaftar.'); return; }
             usersDB[email] = { name, email, phone, role, ads: [] };
             document.getElementById('form-add-user').reset(); toggleAdminForm('form-add-user');
@@ -2331,6 +2380,10 @@
                     ? `<video src="${escapeHtml(videoUrl)}" poster="${escapeHtml(p.img)}" class="w-full h-full object-cover" controls playsinline></video>`
                     : `<iframe class="w-full h-full" src="${escapeHtml(videoUrl)}" title="Video properti" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`)
                 : `<img src="${escapeHtml(p.img)}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/1200x700/e2e8f0/64748b?text=Properti'">`;
+            const contactUnlocked = isContactUnlocked(p.id);
+            const contactBlock = contactUnlocked
+                ? `<button onclick="openPaidContact(${Number(p.id)}, '${escapeHtml(p.title)}')" class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-2xl font-black flex items-center justify-center gap-2"><i class="ph-fill ph-whatsapp-logo text-xl"></i> Hubungi via WhatsApp</button><p class="text-[11px] text-green-700 bg-green-50 border border-green-100 rounded-2xl p-3 mt-3">Akses kontak sudah aktif karena layanan berbayar berstatus lunas.</p>`
+                : `<button onclick="requestContactAccess(${Number(p.id)}, '${escapeHtml(p.title)}')" class="w-full bg-slate-900 hover:bg-primary text-white py-3 rounded-2xl font-black flex items-center justify-center gap-2"><i class="ph ph-lock-key text-xl"></i> Aktifkan Akses Kontak</button><p class="text-[11px] text-slate-500 bg-slate-50 border border-slate-200 rounded-2xl p-3 mt-3">Nomor WhatsApp pengiklan dikunci untuk Pembeli, Penjual, dan Agen Properti. Setelah layanan akses kontak berbayar lunas, tombol WhatsApp akan terbuka.</p>`;
             content.innerHTML = `
                 <div class="bg-slate-900 text-white py-8 md:py-12">
                     <div class="container mx-auto px-4 max-w-6xl">
@@ -2360,7 +2413,7 @@
                         <div class="bg-white rounded-3xl border border-slate-200 p-6 md:p-8 shadow-sm h-fit">
                             <h3 class="font-black text-lg mb-4">Agen / Pengiklan</h3>
                             <div class="flex items-center gap-3 mb-6"><img src="${escapeHtml(p.agent?.img || 'https://ui-avatars.com/api/?name=RUMASA')}" class="w-12 h-12 rounded-full"><div><div class="font-bold">${escapeHtml(p.agent?.name || 'RUMASA')}</div><div class="text-xs text-slate-500">Marketing Properti</div></div></div>
-                            <button onclick="showMessage('Fitur kontak agen siap disambungkan ke WhatsApp.')" class="w-full bg-primary hover:bg-secondary text-white py-3 rounded-2xl font-bold">Hubungi Agen</button>
+                            ${contactBlock}
                         </div>
                     </div>
                 </div>`;
