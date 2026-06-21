@@ -158,6 +158,7 @@
                 <a href="javascript:void(0)" onclick="navigate('home'); filterData('all', 'Dijual'); updateNav('dijual')" id="nav-dijual" class="nav-link text-slate-500 hover:text-primary transition">Dijual</a>
                 <a href="javascript:void(0)" onclick="navigate('home'); filterData('all', 'Disewakan'); updateNav('disewakan')" id="nav-disewakan" class="nav-link text-slate-500 hover:text-primary transition">Disewakan</a>
                 <a href="javascript:void(0)" onclick="navigate('proyek'); updateNav('proyek')" id="nav-proyek" class="nav-link text-slate-500 hover:text-primary transition">Proyek Baru</a>
+                <a href="javascript:void(0)" onclick="navigate('articles'); updateNav('articles')" id="nav-articles" class="nav-link text-slate-500 hover:text-primary transition">Artikel & Ulasan</a>
             </nav>
 
             <div class="flex items-center gap-4">
@@ -340,6 +341,24 @@
         <!-- VIEW: PROPERTY DETAILS -->
         <section id="view-details" class="view-section pb-12">
             <div id="details-content"></div>
+        </section>
+
+        <!-- VIEW: DAFTAR ARTIKEL & ULASAN -->
+        <section id="view-articles" class="view-section pb-12 bg-slate-50 min-h-screen">
+            <div class="bg-primary pt-16 pb-20 text-white relative overflow-hidden text-center">
+                <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1600&q=80')] bg-cover bg-center opacity-10 blur-sm"></div>
+                <div class="container mx-auto px-4 relative z-10">
+                    <span class="inline-block px-4 py-1.5 bg-white/20 text-white font-bold rounded-full text-sm mb-4 border border-white/30 shadow-sm backdrop-blur">Blog & Tips</span>
+                    <h1 class="text-3xl md:text-5xl font-bold mb-4 drop-shadow-lg">Artikel & Ulasan Properti</h1>
+                    <p class="text-lg text-blue-100 max-w-2xl mx-auto drop-shadow-md">Kupas tuntas properti pilihan, tips investasi cerdas, dan berita terbaru seputar dunia real estate.</p>
+                </div>
+            </div>
+            
+            <div class="container mx-auto px-4 -mt-10 relative z-20">
+                <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Artikel akan dirender JS -->
+                </div>
+            </div>
         </section>
 
         <!-- VIEW: REVIEW / DETAIL ULASAN EKSKLUSIF -->
@@ -601,7 +620,7 @@
                         <form id="form-login" class="space-y-5" onsubmit="event.preventDefault(); processLogin();">
                             <div>
                                 <label class="block text-sm font-medium text-slate-700 mb-1">Email</label>
-                                <input type="email" id="login-email" required class="appearance-none rounded-xl block w-full px-4 py-3 border border-slate-300 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
+                                <input type="email" id="login-email" required class="appearance-none rounded-xl block w-full px-4 py-3 border border-slate-300 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm" placeholder="user@gmail.com / admin@rumasa.com">
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-slate-700 mb-1">Password</label>
@@ -681,15 +700,15 @@
                             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
                                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
                                     <div class="text-slate-500 text-sm mb-2 font-medium">Total Iklan Aktif</div>
-                                    <div class="text-3xl font-bold text-slate-800">1,245</div>
+                                    <div class="text-3xl font-bold text-slate-800" id="stat-total-ads">0</div>
                                 </div>
                                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
                                     <div class="text-slate-500 text-sm mb-2 font-medium">Tagihan Pending</div>
-                                    <div class="text-3xl font-bold text-accent" id="summary-pending-pay">0</div>
+                                    <div class="text-3xl font-bold text-accent" id="stat-pending-pay">0</div>
                                 </div>
                                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-                                    <div class="text-slate-500 text-sm mb-2 font-medium">Total Pendapatan</div>
-                                    <div class="text-3xl font-bold text-green-600">Rp 4.5M</div>
+                                    <div class="text-slate-500 text-sm mb-2 font-medium">Total Pengguna</div>
+                                    <div class="text-3xl font-bold text-primary" id="stat-total-users">0</div>
                                 </div>
                             </div>
                         </div>
@@ -734,7 +753,7 @@
                                     <div id="admin-chat-body" class="flex-1 p-4 overflow-y-auto flex flex-col gap-3"></div>
                                     <form onsubmit="event.preventDefault(); sendAdminMessage();" class="p-4 bg-white border-t border-slate-200 flex gap-2">
                                         <input type="text" id="admin-chat-input" placeholder="Balas pesan..." class="flex-1 px-4 py-3 bg-slate-100 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-primary" required>
-                                        <button type="submit" class="bg-primary text-white px-6 py-3 rounded-xl font-bold transition shadow-sm">Kirim</button>
+                                        <button type="submit" class="bg-primary hover:bg-secondary text-white px-6 py-3 rounded-xl font-bold transition shadow-sm">Kirim</button>
                                     </form>
                                 </div>
                             </div>
@@ -787,11 +806,13 @@
 
                         <!-- TAB: ULASAN -->
                         <div id="admin-tab-ulasan" class="admin-tab-content hidden">
-                            <h2 class="text-2xl font-bold text-slate-800 mb-6">Pengaturan Ulasan Beranda</h2>
-                            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8">
+                            <h2 class="text-2xl font-bold text-slate-800 mb-6">Pengaturan & Kelola Ulasan</h2>
+                            
+                            <!-- Ulasan Unggulan Beranda -->
+                            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 mb-8">
+                                <h3 class="text-lg font-bold text-slate-800 mb-4 border-b border-slate-100 pb-2">Ulasan Unggulan (Beranda)</h3>
                                 <form onsubmit="event.preventDefault(); showMessage('Pembaruan ulasan sedang disimpan...'); setTimeout(() => { showMessage('Ulasan berhasil diperbarui di halaman depan!'); }, 1500);" class="space-y-8">
                                     <div>
-                                        <h3 class="text-lg font-bold text-slate-800 mb-4 border-b border-slate-100 pb-2">Konten</h3>
                                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                             <div class="md:col-span-2">
                                                 <label class="block text-sm font-medium text-slate-700 mb-2">Judul Ulasan</label>
@@ -804,9 +825,30 @@
                                         </div>
                                     </div>
                                     <div class="flex justify-end pt-4 border-t border-slate-200">
-                                        <button type="submit" class="bg-primary text-white px-8 py-4 rounded-xl font-bold shadow-lg">Simpan Ulasan</button>
+                                        <button type="submit" class="bg-primary hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-bold shadow-lg transition">Simpan Ulasan</button>
                                     </div>
                                 </form>
+                            </div>
+
+                            <!-- Daftar Ulasan Pengguna -->
+                            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-x-auto">
+                                <div class="p-6 border-b border-slate-200 flex justify-between items-center">
+                                    <h3 class="text-lg font-bold text-slate-800">Daftar Ulasan Pengguna</h3>
+                                </div>
+                                <table class="w-full text-left text-sm">
+                                    <thead class="bg-slate-50 border-b border-slate-200">
+                                        <tr>
+                                            <th class="p-4 font-medium text-slate-600">Pengguna</th>
+                                            <th class="p-4 font-medium text-slate-600">Properti</th>
+                                            <th class="p-4 font-medium text-slate-600">Komentar</th>
+                                            <th class="p-4 font-medium text-slate-600 text-center">Rating</th>
+                                            <th class="p-4 font-medium text-slate-600 text-center">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="admin-reviews-table" class="divide-y divide-slate-100">
+                                        <!-- Data Dimuat via JS -->
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
 
@@ -843,7 +885,7 @@
                     <input type="hidden" id="pay-inv-id">
                     <label class="block text-sm font-bold text-slate-800 mb-2">Upload Bukti Transfer</label>
                     <input type="file" accept="image/*" class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 mb-6" required>
-                    <button type="submit" class="w-full bg-primary text-white py-3.5 rounded-xl font-bold shadow-lg">Kirim Bukti Pembayaran</button>
+                    <button type="submit" class="w-full bg-primary hover:bg-secondary text-white py-3.5 rounded-xl font-bold shadow-lg">Kirim Bukti Pembayaran</button>
                 </form>
             </div>
         </div>
@@ -862,8 +904,8 @@
             <a href="javascript:void(0)" onclick="handlePasangIklanClick()" class="flex flex-col items-center justify-center w-full h-full text-slate-500 hover:text-primary transition relative -top-3">
                 <div class="bg-primary text-white p-3 rounded-full shadow-lg shadow-blue-500/40"><i class="ph ph-plus text-xl"></i></div>
             </a>
-            <a href="javascript:void(0)" onclick="showMessage('Fitur Favorit akan segera hadir!')" class="flex flex-col items-center justify-center w-full h-full text-slate-500 hover:text-primary transition">
-                <i class="ph ph-heart text-2xl mb-1"></i><span class="text-[10px] font-medium">Favorit</span>
+            <a href="javascript:void(0)" onclick="navigate('articles'); updateNav('articles')" class="flex flex-col items-center justify-center w-full h-full text-slate-500 hover:text-primary transition">
+                <i class="ph ph-article text-2xl mb-1"></i><span class="text-[10px] font-medium">Artikel</span>
             </a>
             <a href="javascript:void(0)" onclick="handleProfileClick()" class="flex flex-col items-center justify-center w-full h-full text-slate-500 hover:text-primary transition">
                 <i class="ph ph-user text-2xl mb-1"></i><span class="text-[10px] font-medium">Profil</span>
@@ -879,22 +921,53 @@
 
     <!-- MAIN JAVASCRIPT -->
     <script>
-        // === GLOBAL & STATE ===
-        let adCounterId = 100;
-        let invoiceCounter = 1;
-        let invoiceDB = []; 
+        // === MOCK DATABASE INJECTIONS (Biar Admin Dashboard Langsung Hidup!) ===
+        let adCounterId = 101;
+        let invoiceCounter = 1001;
+        
+        let usersDB = {
+            'budi@gmail.com': { 
+                name: 'Budi Pengguna', email: 'budi@gmail.com', phone: '+62 812 3456 7890', role: 'Pemilik Properti (Owner)', 
+                ads: [
+                    { id: 99, title: 'Rumah Minimalis Serpong', price: 1850000000, transaction: 'Dijual', type: 'Rumah', status: 'Premium (Aktif)', statusColor: 'text-green-600', coverImage: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=200&q=80' },
+                    { id: 100, title: 'Ruko Strategis Kelapa Gading', price: 3200000000, transaction: 'Dijual', type: 'Ruko', status: 'Menunggu Upgrade', statusColor: 'text-accent', coverImage: 'https://images.unsplash.com/photo-1577995166023-ebc96924ab02?auto=format&fit=crop&w=200&q=80' }
+                ] 
+            },
+            'siti@agen.com': {
+                name: 'Siti Agen Properti', email: 'siti@agen.com', phone: '+62 899 1111 2222', role: 'Agen Properti Profesional',
+                ads: [
+                    { id: 101, title: 'Apartemen Pusat Kota', price: 15000000, transaction: 'Disewakan', type: 'Apartemen', status: 'Aktif (Gratis)', statusColor: 'text-green-600', coverImage: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=200&q=80' }
+                ]
+            }
+        };
+
+        let invoiceDB = [
+            { id: 'INV-1000', adId: 100, user: 'Budi Pengguna', userEmail: 'budi@gmail.com', desc: 'Premium: Ruko Strategis Kelapa Gading', amount: 50000, status: 'Menunggu Verifikasi' }
+        ];
+
+        let chatDatabase = {
+            'budi_gmail_com': { name: 'Budi Pengguna', avatar: 'B', unreadAdmin: 1, messages: [
+                { sender: 'admin', text: 'Halo Budi, ada yang bisa dibantu?', time: '09:00' },
+                { sender: 'user', text: 'Min, saya sudah transfer bukti untuk Ruko saya, tolong di cek ya.', time: '09:05' }
+            ]},
+            'siti_agen_com': { name: 'Siti Agen Properti', avatar: 'S', unreadAdmin: 0, messages: [
+                { sender: 'user', text: 'Admin, bagaimana cara topup kuota iklan gratis?', time: 'Kemarin' },
+                { sender: 'admin', text: 'Halo Ibu Siti. Saat ini fitur topup sedang dalam pengembangan tim IT.', time: 'Kemarin' }
+            ]}
+        };
+
+        let reviewsDB = [
+            { id: 1, user: 'Ahmad M.', property: 'Rumah Minimalis Serpong', text: 'Rumahnya bagus, fasilitas lengkap. Puas beli disini.', rating: 5 },
+            { id: 2, user: 'Siti K.', property: 'Apartemen Pusat Kota', text: 'Lokasi sangat strategis, proses dibantu admin cepat.', rating: 5 },
+            { id: 3, user: 'Budi W.', property: 'Ruko Strategis Gading', text: 'Harganya sesuai harga pasar, tapi parkiran agak sempit.', rating: 4 }
+        ];
+
+        // State variables
         let uploadedImages = [];
         let activeCategory = 'all', activeStatus = 'all', currentPage = 1;
         const itemsPerPage = 20;
         let currentSlide = 0, slideInterval;
-
         let currentUser = null;
-        let usersDB = {
-            'budi@gmail.com': { name: 'Budi Pengguna', email: 'budi@gmail.com', phone: '+62 812 3456 7890', role: 'Pencari Properti', ads: [] }
-        };
-        let chatDatabase = {
-            'budi_gmail_com': { name: 'Budi Pengguna', avatar: 'B', unreadAdmin: 0, messages: [] }
-        };
         let currentActiveUserChat = 'budi_gmail_com';
 
         // --- Mock Data Properties & Carousel ---
@@ -907,6 +980,14 @@
         const proyekBaru = [
             { name: 'Grand Batavia Cluster', developer: 'PT Jaya Real', priceStart: 'Rp 850 Jt', location: 'Tangerang', launch: 'Agt 2026', status: 'Pre-Launch', img: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=800&q=80', desc: 'Cluster premium klasik.' },
             { name: 'EcoHome Apartment', developer: 'Ciputra', priceStart: 'Rp 400 Jt', location: 'CitraRaya', launch: 'Okt 2026', status: 'Early Bird', img: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80', desc: 'Apartemen superblok hijau.' }
+        ];
+
+        // --- Mock Data Artikel & Ulasan ---
+        const articlesDB = [
+            { id: 1, title: "Review Mendalam: Smart Home Mansion di PIK 2", category: "Ulasan Eksklusif", date: "Hari Ini", img: "https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=800&q=80", desc: "Kupas tuntas material bangunan mewah, potensi ROI yang tinggi, dan kecanggihan teknologi smart home terintegrasi pada unit premium ini." },
+            { id: 2, title: "5 Tips Jitu Investasi Tanah di Pinggiran Kota", category: "Tips Investasi", date: "Kemarin", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80", desc: "Jangan asal beli! Perhatikan 5 hal krusial ini sebelum Anda memutuskan untuk memborong tanah kapling sebagai aset jangka panjang." },
+            { id: 3, title: "Inspirasi Desain Interior Minimalis Ala Skandinavia", category: "Inspirasi Desain", date: "3 Hari Lalu", img: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=800&q=80", desc: "Ubah ruang tamu Anda menjadi lebih estetik, hangat, dan sangat fungsional dengan sentuhan gaya minimalis modern khas Eropa Utara." },
+            { id: 4, title: "Prediksi Harga Properti di Tahun Pemilu", category: "Berita Properti", date: "1 Minggu Lalu", img: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80", desc: "Apakah ini saat yang tepat untuk membeli properti? Pakar real estate RUMASA memberikan analisis lengkap tren pasar menjelang pemilu." }
         ];
 
         let properties = [
@@ -922,6 +1003,24 @@
             document.getElementById('message-text').innerText = msg;
             box.classList.remove('opacity-0');
             setTimeout(() => box.classList.add('opacity-0'), 3000);
+        }
+
+        function formatNumber(num) {
+            if (num === undefined || num === null) return '0';
+            return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+        }
+
+        function updateAdminRingkasan() {
+            let totalAds = 0;
+            for(let email in usersDB) totalAds += usersDB[email].ads.length;
+            
+            let pendingPay = invoiceDB.filter(i => i.status === 'Menunggu Verifikasi').length;
+            let revenue = 0;
+            invoiceDB.filter(i => i.status === 'Lunas').forEach(i => revenue += i.amount);
+
+            if(document.getElementById('stat-total-ads')) document.getElementById('stat-total-ads').innerText = formatNumber(totalAds + 45);
+            if(document.getElementById('stat-pending-pay')) document.getElementById('stat-pending-pay').innerText = formatNumber(pendingPay);
+            if(document.getElementById('stat-total-users')) document.getElementById('stat-total-users').innerText = formatNumber(Object.keys(usersDB).length + 8900);
         }
 
         function navigate(viewId) {
@@ -962,6 +1061,7 @@
             showMessage('Pendaftaran berhasil! Silakan masuk.');
             toggleAuth('login');
             renderAdminUsers();
+            updateAdminRingkasan();
         }
 
         function processLogin() {
@@ -1028,7 +1128,7 @@
             }
             
             document.getElementById('form-pasang-iklan').reset(); uploadedImages = []; renderImagePreviews();
-            renderUserDashboard(); renderAdminAds(); navigate('user');
+            renderUserDashboard(); renderAdminAds(); updateAdminRingkasan(); navigate('user');
         }
 
         // Fungsi memasukkan iklan baru ke Halaman Utama (Beranda)
@@ -1042,7 +1142,7 @@
                 agent: { name: u.name, agency: 'Member RUMASA', img: 'https://ui-avatars.com/api/?name=' + u.name.replace(/\s+/g,'+') },
                 desc: ad.desc
             });
-            renderPropertyCards(); // Segarkan Beranda
+            renderPropertyCards(); 
         }
 
         function renderUserDashboard() {
@@ -1059,7 +1159,7 @@
                             <div class="text-primary font-bold text-sm mb-1">Rp ${ad.price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')}</div>
                             <div class="text-xs text-slate-500 mb-3">Status: <span class="${ad.statusColor} font-medium">${ad.status}</span></div>
                             <div class="flex gap-2">
-                                ${ad.status === 'Menunggu Upgrade' ? `<button onclick="requestUpgrade(${ad.id}, '${ad.title}')" class="text-xs bg-accent text-white px-3 py-1.5 rounded">Upgrade</button>` : ''}
+                                ${ad.status === 'Menunggu Upgrade' ? `<button onclick="requestUpgrade(${ad.id}, '${ad.title}')" class="text-xs bg-accent text-white px-3 py-1.5 rounded hover:bg-yellow-600 transition">Upgrade</button>` : ''}
                             </div>
                         </div>
                     </div>
@@ -1083,8 +1183,8 @@
         }
 
         function requestUpgrade(adId, adTitle) {
-            invoiceDB.push({ id: 'INV-100'+invoiceCounter++, adId, user: currentUser.name, userEmail: currentUser.email, desc: `Premium: ${adTitle}`, amount: 50000, status: 'Belum Bayar' });
-            showMessage('Tagihan dibuat. Cek menu Tagihan.'); renderUserDashboard();
+            invoiceDB.push({ id: 'INV-'+invoiceCounter++, adId, user: currentUser.name, userEmail: currentUser.email, desc: `Premium: ${adTitle}`, amount: 50000, status: 'Belum Bayar' });
+            showMessage('Tagihan dibuat. Cek menu Tagihan.'); renderUserDashboard(); updateAdminRingkasan();
         }
 
         function renderUserInvoices() {
@@ -1094,7 +1194,7 @@
             
             list.innerHTML = myInvoices.map(inv => {
                 let badge = inv.status === 'Belum Bayar' ? 'bg-red-100 text-red-700' : (inv.status === 'Lunas' ? 'bg-green-100 text-green-700' : 'bg-slate-200 text-slate-700');
-                let btn = inv.status === 'Belum Bayar' || inv.status === 'Ditolak' ? `<button onclick="openPaymentModal('${inv.id}')" class="bg-primary text-white px-4 py-2 rounded-lg text-xs font-bold">Bayar</button>` : `<span class="text-xs font-bold text-slate-500">${inv.status}</span>`;
+                let btn = inv.status === 'Belum Bayar' || inv.status === 'Ditolak' ? `<button onclick="openPaymentModal('${inv.id}')" class="bg-primary text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-secondary transition">Bayar</button>` : `<span class="text-xs font-bold text-slate-500">${inv.status}</span>`;
                 return `<div class="bg-white p-4 border border-slate-200 rounded-xl flex justify-between items-center shadow-sm"><div><span class="px-2 py-0.5 rounded text-[10px] font-bold ${badge}">${inv.status}</span><div class="font-bold text-sm">${inv.desc}</div></div>${btn}</div>`;
             }).reverse().join('');
             renderAdminPayments();
@@ -1107,18 +1207,24 @@
                 let u = usersDB[inv.userEmail];
                 if(u) {
                     let ad = u.ads.find(a => a.id === inv.adId);
-                    if(ad) { ad.status = 'Premium (Aktif)'; ad.statusColor = 'text-green-600'; makeAdLive(ad, u); } // Publish to Home!
+                    if(ad) { ad.status = 'Premium (Aktif)'; ad.statusColor = 'text-green-600'; makeAdLive(ad, u); }
                 }
             } else { inv.status = 'Ditolak'; showMessage(`Pembayaran Ditolak.`); }
-            renderAdminPayments(); renderUserInvoices(); renderAdminAds();
+            renderAdminPayments(); renderUserInvoices(); renderAdminAds(); updateAdminRingkasan();
         }
 
         function renderAdminPayments() {
             const tbody = document.getElementById('admin-invoice-table'); if(!tbody) return;
+            let pendingCount = 0;
             tbody.innerHTML = invoiceDB.map(inv => {
-                let action = inv.status === 'Menunggu Verifikasi' ? `<button onclick="verifyPayment('${inv.id}', true)" class="bg-green-100 text-green-700 p-2 rounded mr-1"><i class="ph ph-check"></i></button><button onclick="verifyPayment('${inv.id}', false)" class="bg-red-100 text-red-700 p-2 rounded"><i class="ph ph-x"></i></button>` : `-`;
-                return `<tr class="border-b"><td class="p-4 text-xs">#${inv.id}</td><td class="p-4 text-sm">${inv.user}</td><td class="p-4 font-bold text-primary">Rp ${inv.amount}</td><td class="p-4">${inv.status}</td><td class="p-4 text-center">${action}</td></tr>`;
+                if(inv.status === 'Menunggu Verifikasi') pendingCount++;
+                let action = inv.status === 'Menunggu Verifikasi' ? `<button onclick="verifyPayment('${inv.id}', true)" class="bg-green-100 text-green-700 hover:bg-green-600 hover:text-white p-2 rounded mr-1 transition"><i class="ph ph-check font-bold"></i></button><button onclick="verifyPayment('${inv.id}', false)" class="bg-red-100 text-red-700 hover:bg-red-600 hover:text-white p-2 rounded transition"><i class="ph ph-x font-bold"></i></button>` : `<span class="text-xs text-slate-400">-</span>`;
+                return `<tr class="border-b border-slate-100"><td class="p-4 text-xs font-mono text-slate-500">#${inv.id}</td><td class="p-4 text-sm font-bold">${inv.user}<div class="font-normal text-xs text-slate-500">${inv.desc}</div></td><td class="p-4 font-bold text-primary">Rp ${formatNumber(inv.amount)}</td><td class="p-4 text-center"><span class="text-[10px] font-bold px-2 py-1 rounded bg-slate-100">${inv.status}</span></td><td class="p-4 text-center">${action}</td></tr>`;
             }).reverse().join('');
+            
+            const badge = document.getElementById('admin-pay-badge');
+            if(badge) { badge.innerText = pendingCount; badge.classList.toggle('hidden', pendingCount === 0); }
+            updateAdminRingkasan();
         }
 
         function renderAdminAds() {
@@ -1126,17 +1232,36 @@
             let html = '';
             for (const email in usersDB) {
                 usersDB[email].ads.forEach(ad => {
-                    html += `<tr class="border-b"><td class="p-4 text-sm font-bold">${ad.title}</td><td class="p-4 text-sm">${usersDB[email].name}</td><td class="p-4 text-sm text-primary font-bold">Rp ${ad.price}</td><td class="p-4 text-xs font-bold ${ad.statusColor}">${ad.status}</td><td class="p-4"><button onclick="approveAdAdmin('${email}', ${ad.id})" class="bg-green-100 text-green-700 p-2 rounded" title="Bypass Aktif"><i class="ph ph-check"></i></button></td></tr>`;
+                    html += `<tr class="border-b border-slate-100"><td class="p-4 text-sm font-bold text-slate-800">${ad.title}</td><td class="p-4 text-sm text-slate-600">${usersDB[email].name}</td><td class="p-4 text-sm text-primary font-bold">Rp ${formatNumber(ad.price)}</td><td class="p-4 text-center"><span class="text-[10px] font-bold px-2 py-1 rounded bg-slate-50 border border-slate-200 ${ad.statusColor}">${ad.status}</span></td><td class="p-4 text-center flex justify-center gap-2"><button onclick="approveAdAdmin('${email}', ${ad.id})" class="bg-green-100 text-green-700 hover:bg-green-600 hover:text-white p-2 rounded transition" title="Bypass Aktif"><i class="ph ph-check font-bold"></i></button><button onclick="deleteAdAdmin('${email}', ${ad.id})" class="bg-red-100 text-red-700 hover:bg-red-600 hover:text-white p-2 rounded transition" title="Hapus Iklan"><i class="ph ph-trash font-bold"></i></button></td></tr>`;
                 });
             } tbody.innerHTML = html;
         }
+
+        function deleteAdAdmin(email, adId) {
+            if(confirm('Apakah Anda yakin ingin menghapus iklan ini? (Tindakan ini tidak bisa dibatalkan)')) {
+                let u = usersDB[email];
+                if(u) {
+                    u.ads = u.ads.filter(a => a.id !== adId);
+                    
+                    // Menghapus juga dari Array Halaman Beranda Publik (jika ada)
+                    properties = properties.filter(p => p.id !== adId);
+                    
+                    showMessage('Iklan berhasil dihapus dari sistem.');
+                    renderAdminAds();
+                    renderPropertyCards(); // Perbarui halaman beranda
+                    updateAdminRingkasan();
+                    if(currentUser && currentUser.email === email) renderUserDashboard(); // Perbarui jika sedang login
+                }
+            }
+        }
+        window.deleteAdAdmin = deleteAdAdmin;
 
         function approveAdAdmin(email, adId) {
             let u = usersDB[email];
             if(u && u.ads.find(a => a.id === adId)) {
                 let ad = u.ads.find(a => a.id === adId);
                 ad.status = 'Aktif (Disetujui Admin)'; ad.statusColor = 'text-green-600';
-                makeAdLive(ad, u); // Langsung lempar ke Home
+                makeAdLive(ad, u); 
                 showMessage('Iklan diaktifkan & ditayangkan ke Beranda!');
                 renderAdminAds(); if(currentUser && currentUser.email === email) renderUserDashboard();
             }
@@ -1146,11 +1271,36 @@
             const tbody = document.getElementById('admin-users-table'); if(!tbody) return;
             let html = '';
             for (const email in usersDB) {
-                html += `<tr class="border-b"><td class="p-4 font-bold">${usersDB[email].name}</td><td class="p-4 text-sm">${email}</td><td class="p-4 text-sm">${usersDB[email].role}</td><td class="p-4 text-center font-bold">${usersDB[email].ads.length}</td></tr>`;
+                html += `<tr class="border-b border-slate-100"><td class="p-4 font-bold text-slate-800">${usersDB[email].name}</td><td class="p-4 text-sm text-slate-600">${email}</td><td class="p-4 text-sm"><span class="bg-blue-50 text-blue-600 px-2 py-1 rounded text-xs font-bold">${usersDB[email].role}</span></td><td class="p-4 text-center font-bold text-slate-700">${usersDB[email].ads.length}</td></tr>`;
             } tbody.innerHTML = html;
         }
 
-        // --- SISTEM CHAT YANG DIKEMBALIKAN (RESTORED) ---
+        function renderAdminReviews() {
+            const tbody = document.getElementById('admin-reviews-table'); if(!tbody) return;
+            tbody.innerHTML = reviewsDB.map(r => `
+                <tr class="border-b border-slate-100">
+                    <td class="p-4 font-bold text-slate-800">${r.user}</td>
+                    <td class="p-4 text-sm text-slate-600">${r.property}</td>
+                    <td class="p-4 text-sm text-slate-500 italic">"${r.text}"</td>
+                    <td class="p-4 text-center text-accent font-bold"><i class="ph-fill ph-star"></i> ${r.rating}</td>
+                    <td class="p-4 text-center">
+                        <button onclick="deleteReviewAdmin(${r.id})" class="bg-red-100 text-red-700 hover:bg-red-600 hover:text-white p-2 rounded transition" title="Hapus Ulasan"><i class="ph ph-trash font-bold"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+        window.renderAdminReviews = renderAdminReviews;
+
+        function deleteReviewAdmin(id) {
+            if(confirm('Hapus ulasan dari pengguna ini?')) {
+                reviewsDB = reviewsDB.filter(r => r.id !== id);
+                renderAdminReviews();
+                showMessage('Ulasan berhasil dihapus.');
+            }
+        }
+        window.deleteReviewAdmin = deleteReviewAdmin;
+
+        // --- Sistem Chat ---
         function toggleUserChat() {
             const panel = document.getElementById('user-chat-panel');
             if (panel.classList.contains('hidden')) {
@@ -1189,9 +1339,7 @@
             chatDatabase[chatKey].messages.push({ sender: 'user', text, time: timeStr });
             chatDatabase[chatKey].unreadAdmin++;
             input.value = '';
-            renderUserChat();
-            renderAdminChatList();
-            updateAdminBadge();
+            renderUserChat(); renderAdminChatList(); updateAdminBadge();
             if (currentActiveUserChat === chatKey) renderAdminChatMessages();
         }
 
@@ -1240,13 +1388,9 @@
             if(chatDatabase[userId]) chatDatabase[userId].unreadAdmin = 0;
             const avatarEl = document.getElementById('admin-active-chat-avatar');
             const nameEl = document.getElementById('admin-active-chat-name');
-            const inputEl = document.getElementById('admin-chat-input');
             if(avatarEl && chatDatabase[userId]) avatarEl.innerText = chatDatabase[userId].avatar;
             if(nameEl && chatDatabase[userId]) nameEl.innerText = chatDatabase[userId].name;
-            if(inputEl && chatDatabase[userId]) inputEl.placeholder = `Balas pesan ${chatDatabase[userId].name}...`;
-            renderAdminChatList();
-            renderAdminChatMessages();
-            updateAdminBadge();
+            renderAdminChatList(); renderAdminChatMessages(); updateAdminBadge();
         }
 
         function sendAdminMessage() {
@@ -1256,33 +1400,22 @@
             const timeStr = new Date().getHours().toString().padStart(2,'0') + ':' + new Date().getMinutes().toString().padStart(2,'0');
             chatDatabase[currentActiveUserChat].messages.push({ sender: 'admin', text, time: timeStr });
             input.value = '';
-            renderAdminChatMessages();
-            renderAdminChatList();
-            if (currentUser && currentActiveUserChat === currentUser.email.replace(/[^a-zA-Z0-9]/g, '_')) {
-                renderUserChat();
-            }
+            renderAdminChatMessages(); renderAdminChatList();
+            if (currentUser && currentActiveUserChat === currentUser.email.replace(/[^a-zA-Z0-9]/g, '_')) { renderUserChat(); }
         }
 
         function updateAdminBadge() {
             const badge = document.getElementById('admin-chat-badge');
             if(!badge) return;
-            let unread = 0;
-            for (const k in chatDatabase) unread += chatDatabase[k].unreadAdmin;
-            if(unread > 0) {
-                badge.innerText = unread;
-                badge.classList.remove('hidden');
-            } else {
-                badge.classList.add('hidden');
-            }
+            let unread = 0; for (const k in chatDatabase) unread += chatDatabase[k].unreadAdmin;
+            if(unread > 0) { badge.innerText = unread; badge.classList.remove('hidden'); } else { badge.classList.add('hidden'); }
         }
-
-        function saveCarousel() { showMessage('Banner disimpan!'); }
 
         // Modals & Image Upload 
         function openPaymentModal(invId) {
             const inv = invoiceDB.find(i => i.id === invId); if(!inv) return;
             document.getElementById('pay-inv-id').value = inv.id;
-            document.getElementById('pay-amount').innerText = "Rp " + inv.amount.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+            document.getElementById('pay-amount').innerText = "Rp " + formatNumber(inv.amount);
             document.getElementById('payment-modal').classList.remove('hidden');
             setTimeout(() => document.getElementById('payment-modal').classList.remove('opacity-0'), 10);
         }
@@ -1321,6 +1454,15 @@
         function updateNav(activeId) {
             document.querySelectorAll('.nav-link').forEach(el => { el.classList.remove('text-primary'); el.classList.add('text-slate-500'); });
             document.getElementById(`nav-${activeId}`)?.classList.remove('text-slate-500'); document.getElementById(`nav-${activeId}`)?.classList.add('text-primary');
+            
+            // Mobile Nav update
+            document.querySelectorAll('nav.md\\:hidden a').forEach(el => {
+                el.classList.remove('text-primary'); el.classList.add('text-slate-500');
+                if(el.querySelector('i')) el.querySelector('i').classList.remove('ph-fill');
+            });
+            // Sedikit trik visual untuk mobile nav
+            if(activeId === 'home') { document.querySelectorAll('nav.md\\:hidden a')[0].classList.add('text-primary'); document.querySelectorAll('nav.md\\:hidden a')[0].querySelector('i').classList.add('ph-fill'); }
+            if(activeId === 'articles') { document.querySelectorAll('nav.md\\:hidden a')[3].classList.add('text-primary'); document.querySelectorAll('nav.md\\:hidden a')[3].querySelector('i').classList.add('ph-fill'); }
         }
 
         function renderPropertyCards() {
@@ -1330,32 +1472,123 @@
             const current = f.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
             if(f.length === 0) { grid.innerHTML = `<div class="col-span-full text-center py-12 text-slate-500">Tidak ada properti.</div>`; if(pag) pag.innerHTML = ''; return; }
             grid.innerHTML = current.map(p => `
-                <div class="bg-white rounded-2xl shadow-sm border overflow-hidden hover:shadow-xl cursor-pointer" onclick="showDetails(${p.id})">
-                    <div class="relative h-48 overflow-hidden"><img src="${p.img}" class="w-full h-full object-cover hover:scale-105 transition"><div class="absolute top-3 left-3 bg-white/90 px-3 py-1 rounded-full text-xs font-bold text-primary">${p.status}</div></div>
-                    <div class="p-5"><div class="text-xl font-bold text-slate-800 mb-1">${p.price}</div><h3 class="text-sm font-medium text-slate-600 mb-3 h-10">${p.title}</h3><div class="text-xs text-slate-500"><i class="ph ph-map-pin text-primary"></i> ${p.location}</div></div>
+                <div class="bg-white rounded-2xl shadow-sm border overflow-hidden hover:shadow-xl cursor-pointer transition" onclick="showDetails(${p.id})">
+                    <div class="relative h-48 overflow-hidden"><img src="${p.img}" class="w-full h-full object-cover hover:scale-105 transition duration-500"><div class="absolute top-3 left-3 bg-white/90 px-3 py-1 rounded-full text-xs font-bold text-primary">${p.status}</div></div>
+                    <div class="p-5">
+                        <div class="text-xl font-bold text-slate-800 mb-1">${p.price}</div>
+                        <h3 class="text-sm font-medium text-slate-600 mb-3 h-10 line-clamp-2">${p.title}</h3>
+                        <div class="flex items-center text-slate-500 text-xs mb-4"><i class="ph ph-map-pin mr-1 text-primary"></i> ${p.location}</div>
+                        <div class="flex items-center justify-between pt-4 border-t text-xs font-medium text-slate-600">
+                            <div><i class="ph ph-bed text-lg mr-1 align-middle"></i> ${p.beds} KT</div>
+                            <div><i class="ph ph-shower text-lg mr-1 align-middle"></i> ${p.baths} KM</div>
+                            <div><i class="ph ph-arrows-out text-lg mr-1 align-middle"></i> ${p.sqft} m²</div>
+                        </div>
+                    </div>
                 </div>`).join('');
             if(pag) pag.innerHTML = `<button onclick="changePage(${currentPage - 1})" class="w-10 h-10 border rounded bg-white shadow-sm">&lt;</button><button class="w-10 h-10 bg-primary text-white font-bold rounded shadow-md">${currentPage}</button><button onclick="changePage(${currentPage + 1})" class="w-10 h-10 border rounded bg-white shadow-sm">&gt;</button>`;
         }
-        function changePage(p) { currentPage = p; renderPropertyCards(); window.scrollTo({top: document.getElementById('property-grid').getBoundingClientRect().top + window.scrollY - 100, behavior: 'smooth'}); }
+        function changePage(p) { currentPage = p; renderPropertyCards(); window.scrollTo({top: document.getElementById('property-grid').getBoundingClientRect().top - 100, behavior: 'smooth'}); }
+        
+        function showReview(id = null) {
+            navigate('review'); 
+        }
         
         function showDetails(id) {
             const p = properties.find(x => x.id === id); if(!p) return;
-            document.getElementById('details-content').innerHTML = `<button onclick="navigate('home')" class="fixed top-4 left-4 z-50 w-10 h-10 rounded-full bg-white shadow flex items-center justify-center"><i class="ph ph-arrow-left text-xl"></i></button><div class="w-full h-[50vh] relative"><img src="${p.img}" class="w-full h-full object-cover"></div><div class="container mx-auto px-4 -mt-10 relative z-10 max-w-5xl"><div class="bg-white rounded-t-3xl shadow-xl p-8 flex flex-col md:flex-row gap-8"><div class="flex-1"><h1 class="text-3xl font-bold mb-2">${p.title}</h1><div class="text-3xl font-bold text-primary mb-8">${p.price}</div><p>${p.desc}</p></div><div class="w-full md:w-80"><div class="bg-slate-50 p-6 rounded-2xl sticky top-24"><h3 class="font-bold mb-4">Hubungi Agen</h3><div class="flex items-center gap-4 mb-6"><img src="${p.agent.img}" class="w-16 h-16 rounded-full"><div class="font-bold">${p.agent.name}</div></div></div></div></div></div>`;
+            document.getElementById('details-content').innerHTML = `<button onclick="navigate('home')" class="fixed top-4 left-4 z-50 w-10 h-10 rounded-full bg-white shadow flex items-center justify-center"><i class="ph ph-arrow-left text-xl"></i></button><div class="w-full h-[50vh] relative"><img src="${p.img}" class="w-full h-full object-cover"></div><div class="container mx-auto px-4 -mt-10 relative z-10 max-w-5xl"><div class="bg-white rounded-t-3xl shadow-xl p-8 flex flex-col md:flex-row gap-8"><div class="flex-1"><div class="inline-block px-4 py-1.5 bg-blue-50 text-primary font-bold rounded-full text-sm mb-4 border border-blue-100">${p.status}</div><h1 class="text-3xl font-bold mb-2">${p.title}</h1><div class="text-3xl font-bold text-primary mb-8">${p.price}</div><p>${p.desc}</p></div><div class="w-full md:w-80"><div class="bg-slate-50 p-6 rounded-2xl sticky top-24"><h3 class="font-bold mb-4">Hubungi Agen</h3><div class="flex items-center gap-4 mb-6"><img src="${p.agent.img}" class="w-16 h-16 rounded-full"><div class="font-bold">${p.agent.name}</div></div><button class="w-full bg-[#25D366] text-white py-3 rounded-xl font-bold shadow-md">WhatsApp</button></div></div></div></div>`;
             navigate('details');
         }
 
-        // --- SISTEM CAROUSEL & PROYEK BARU YANG DIKEMBALIKAN (RESTORED) ---
-        function initCarousel() { renderCarousel(); slideInterval = setInterval(() => goToSlide((currentSlide + 1) % carouselItems.length), 4000); }
-        function renderCarousel() {
-            document.getElementById('hero-carousel').innerHTML = carouselItems.map((c, i) => `<div class="carousel-slide w-full h-full ${i===0?'active':''}" id="slide-${i}"><img src="${c.img}" class="w-full h-full object-cover"></div>`).join('');
-            document.getElementById('carousel-indicators').innerHTML = carouselItems.map((_, i) => `<button onclick="goToSlide(${i})" class="carousel-indicator w-3 h-3 rounded-full bg-white/50 ${i===0?'active':''}"></button>`).join('');
-            document.getElementById('hero-title').innerText = carouselItems[0].title; document.getElementById('hero-subtitle').innerText = carouselItems[0].subtitle;
+        function renderArticlesList() {
+            const grid = document.getElementById('articles-grid');
+            if(!grid) return;
+            
+            grid.innerHTML = articlesDB.map(a => `
+                <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-xl transition-all cursor-pointer group flex flex-col h-full" onclick="showReview(${a.id})">
+                    <div class="relative h-56 overflow-hidden shrink-0">
+                        <img src="${a.img}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out">
+                        <div class="absolute top-4 left-4 bg-primary text-white px-3 py-1 rounded-full text-[10px] uppercase tracking-wider font-bold shadow-md">${a.category}</div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-1">
+                        <div class="text-xs text-slate-400 mb-3 flex items-center gap-1"><i class="ph ph-calendar-blank"></i> ${a.date}</div>
+                        <h3 class="text-xl font-bold text-slate-800 mb-3 group-hover:text-primary transition leading-tight">${a.title}</h3>
+                        <p class="text-slate-600 text-sm line-clamp-3 mb-6 flex-1">${a.desc}</p>
+                        <div class="pt-4 border-t border-slate-100 mt-auto">
+                            <span class="text-primary font-bold text-sm flex items-center gap-1 group-hover:gap-2 transition-all">Baca Selengkapnya <i class="ph ph-arrow-right"></i></span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
         }
-        function goToSlide(i) {
-            document.querySelectorAll('.carousel-slide, .carousel-indicator').forEach(e => e.classList.remove('active'));
-            document.getElementById(`slide-${i}`).classList.add('active'); document.querySelectorAll('.carousel-indicator')[i].classList.add('active');
-            document.getElementById('hero-title').innerText = carouselItems[i].title; document.getElementById('hero-subtitle').innerText = carouselItems[i].subtitle;
-            currentSlide = i; clearInterval(slideInterval); slideInterval = setInterval(() => goToSlide((currentSlide + 1) % carouselItems.length), 4000);
+
+        // --- SISTEM CAROUSEL (DIPERBAIKI) ---
+        function initCarousel() { 
+            renderCarousel(); 
+            renderAdminCarouselForm(); 
+            slideInterval = setInterval(() => goToSlide((currentSlide + 1) % carouselItems.length), 5000); // Diperlambat sedikit agar nyaman dibaca
+        }
+        
+        function renderCarousel() {
+            const container = document.getElementById('hero-carousel');
+            const indicators = document.getElementById('carousel-indicators');
+            
+            // Menggunakan CSS transition bawaan Tailwind untuk fade yang mulus
+            container.innerHTML = carouselItems.map((c, i) => `
+                <div class="absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${i === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'}" id="slide-${i}">
+                    <img src="${c.img}" class="w-full h-full object-cover">
+                </div>
+            `).join('');
+            
+            indicators.innerHTML = carouselItems.map((_, i) => `
+                <button onclick="goToSlide(${i})" class="carousel-indicator w-3 h-3 rounded-full transition-all duration-300 ${i === 0 ? 'bg-primary w-8' : 'bg-white/50 hover:bg-white/80'}"></button>
+            `).join('');
+            
+            if(document.getElementById('hero-title')) document.getElementById('hero-title').innerText = carouselItems[0].title;
+            if(document.getElementById('hero-subtitle')) document.getElementById('hero-subtitle').innerText = carouselItems[0].subtitle;
+        }
+
+        function goToSlide(targetIndex) {
+            if (targetIndex === currentSlide) return;
+            
+            // Fade out current slide
+            const currentEl = document.getElementById(`slide-${currentSlide}`);
+            if(currentEl) { currentEl.classList.remove('opacity-100', 'z-10'); currentEl.classList.add('opacity-0', 'z-0'); }
+            
+            // Fade in target slide
+            const targetEl = document.getElementById(`slide-${targetIndex}`);
+            if(targetEl) { targetEl.classList.remove('opacity-0', 'z-0'); targetEl.classList.add('opacity-100', 'z-10'); }
+            
+            // Update Indicators
+            const indicators = document.querySelectorAll('.carousel-indicator');
+            indicators.forEach((ind, i) => {
+                ind.className = `carousel-indicator w-3 h-3 rounded-full transition-all duration-300 ${i === targetIndex ? 'bg-primary w-8' : 'bg-white/50 hover:bg-white/80'}`;
+            });
+            
+            // Update Text
+            if(document.getElementById('hero-title')) document.getElementById('hero-title').innerText = carouselItems[targetIndex].title;
+            if(document.getElementById('hero-subtitle')) document.getElementById('hero-subtitle').innerText = carouselItems[targetIndex].subtitle;
+            
+            currentSlide = targetIndex;
+            
+            // Reset Interval
+            clearInterval(slideInterval);
+            slideInterval = setInterval(() => goToSlide((currentSlide + 1) % carouselItems.length), 5000);
+        }
+
+        function renderAdminCarouselForm() {
+            const form = document.getElementById('carousel-admin-form');
+            form.innerHTML = carouselItems.map((item, index) => `<div class="border border-slate-200 rounded-xl p-4 bg-slate-50"><label class="block text-xs font-medium mb-1">Slide ${index + 1} Image URL</label><input type="text" id="car-img-${index}" value="${item.img}" class="w-full px-3 py-2 text-sm rounded-lg border outline-none mb-2"><div class="grid grid-cols-2 gap-2"><input type="text" id="car-title-${index}" value="${item.title}" class="w-full px-3 py-2 text-sm rounded-lg border outline-none"><input type="text" id="car-sub-${index}" value="${item.subtitle}" class="w-full px-3 py-2 text-sm rounded-lg border outline-none"></div></div>`).join('') + `<button type="submit" class="bg-primary text-white px-8 py-3 rounded-xl font-bold w-full">Simpan Banner</button>`;
+        }
+
+        function saveCarousel() { 
+            for(let i = 0; i < 5; i++) {
+                if(document.getElementById(`car-img-${i}`)) {
+                    carouselItems[i].img = document.getElementById(`car-img-${i}`).value;
+                    carouselItems[i].title = document.getElementById(`car-title-${i}`).value;
+                    carouselItems[i].subtitle = document.getElementById(`car-sub-${i}`).value;
+                }
+            }
+            renderCarousel(); showMessage('Banner disimpan dan diperbarui!'); 
         }
 
         function renderProyekCards() {
@@ -1392,12 +1625,18 @@
             initCarousel(); 
             renderPropertyCards(); 
             renderProyekCards();
+            renderArticlesList(); // Load daftar artikel
+            
+            // Populasikan Dashboard Admin dari Mock Data awal
             renderAdminUsers(); 
             renderAdminAds(); 
             renderUserInvoices(); 
             renderAdminPayments();
             renderAdminChatList(); 
+            renderAdminReviews(); // Load tabel ulasan admin
             updateAdminBadge();
+            updateAdminRingkasan();
+
             const authContainer = document.getElementById('auth-toggle-container');
             if (authContainer) authContainer.classList.remove('hidden');
         });
