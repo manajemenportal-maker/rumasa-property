@@ -209,7 +209,7 @@
         </section>
 
         <!-- =================== VIEW: PASANG IKLAN =================== -->
-        <section id="view-sell" class="view-section container mx-auto px-4 py-8 max-w-2xl">
+        <section id="view-sell" class="view-section container mx-auto px-4 py-8 max-w-5xl">
             <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8">
                 <h2 class="text-2xl font-bold mb-6">Pasang Iklan Properti</h2>
                 <form id="form-pasang-iklan" onsubmit="event.preventDefault(); submitAd();" class="space-y-6">
@@ -244,18 +244,124 @@
                         <label class="block text-sm font-medium mb-2">Harga (Rp)</label>
                         <input type="number" id="ad-input-price" required class="w-full px-4 py-3 rounded-xl border border-slate-300">
                     </div>
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-slate-50 border border-slate-200 rounded-3xl p-5 md:p-6 space-y-5">
                         <div>
-                            <label class="block text-sm font-medium mb-2">Luas Bangunan (m²)</label>
-                            <input type="number" id="ad-input-lb" class="w-full px-4 py-3 rounded-xl border border-slate-300">
+                            <h3 class="text-lg font-black text-slate-900">Spesifikasi Properti</h3>
+                            <p class="text-sm text-slate-500 mt-1">Lengkapi detail teknis supaya pembeli/penyewa lebih percaya dan admin mudah memverifikasi iklan.</p>
                         </div>
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Kamar Tidur</label>
-                            <input type="number" id="ad-input-beds" class="w-full px-4 py-3 rounded-xl border border-slate-300">
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Luas Tanah / LT (m²)</label>
+                                <input type="number" id="ad-input-lt" min="0" class="w-full px-4 py-3 rounded-xl border border-slate-300" placeholder="120">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Luas Bangunan / LB (m²)</label>
+                                <input type="number" id="ad-input-lb" min="0" class="w-full px-4 py-3 rounded-xl border border-slate-300" placeholder="90">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Lebar Muka (m)</label>
+                                <input type="number" id="ad-input-land-width" min="0" step="0.1" class="w-full px-4 py-3 rounded-xl border border-slate-300" placeholder="6">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Lebar Jalan (m)</label>
+                                <input type="number" id="ad-input-road-width" min="0" step="0.1" class="w-full px-4 py-3 rounded-xl border border-slate-300" placeholder="5">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Jumlah Lantai</label>
+                                <input type="number" id="ad-input-floors" min="0" class="w-full px-4 py-3 rounded-xl border border-slate-300" placeholder="2">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Lantai Unit</label>
+                                <input type="number" id="ad-input-unit-floor" min="0" class="w-full px-4 py-3 rounded-xl border border-slate-300" placeholder="Khusus apartemen/kantor">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Tahun Bangun</label>
+                                <input type="number" id="ad-input-year" min="1900" max="2100" class="w-full px-4 py-3 rounded-xl border border-slate-300" placeholder="2022">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Kondisi Unit</label>
+                                <select id="ad-input-condition" class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-white">
+                                    <option value="">Pilih kondisi</option>
+                                    <option>Baru</option><option>Bekas Siap Huni</option><option>Renovasi Ringan</option><option>Butuh Renovasi</option><option>Indent / Dalam Pembangunan</option>
+                                </select>
+                            </div>
                         </div>
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Kamar Mandi</label>
-                            <input type="number" id="ad-input-baths" class="w-full px-4 py-3 rounded-xl border border-slate-300">
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Kamar Tidur</label>
+                                <input type="number" id="ad-input-beds" min="0" class="w-full px-4 py-3 rounded-xl border border-slate-300">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Kamar Mandi</label>
+                                <input type="number" id="ad-input-baths" min="0" class="w-full px-4 py-3 rounded-xl border border-slate-300">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Kamar ART</label>
+                                <input type="number" id="ad-input-maid-room" min="0" class="w-full px-4 py-3 rounded-xl border border-slate-300">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">KM ART</label>
+                                <input type="number" id="ad-input-maid-bath" min="0" class="w-full px-4 py-3 rounded-xl border border-slate-300">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Garasi</label>
+                                <input type="number" id="ad-input-garage" min="0" class="w-full px-4 py-3 rounded-xl border border-slate-300">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Carport</label>
+                                <input type="number" id="ad-input-carport" min="0" class="w-full px-4 py-3 rounded-xl border border-slate-300">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Sertifikat</label>
+                                <select id="ad-input-certificate" class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-white">
+                                    <option value="">Pilih sertifikat</option>
+                                    <option>SHM</option><option>HGB</option><option>SHGB</option><option>AJB</option><option>Girik</option><option>PPJB</option><option>Strata Title</option><option>Lainnya</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Hadap</label>
+                                <select id="ad-input-facing" class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-white">
+                                    <option value="">Pilih hadap</option>
+                                    <option>Utara</option><option>Timur</option><option>Selatan</option><option>Barat</option><option>Timur Laut</option><option>Tenggara</option><option>Barat Daya</option><option>Barat Laut</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Daya Listrik</label>
+                                <select id="ad-input-electricity" class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-white">
+                                    <option value="">Pilih daya listrik</option>
+                                    <option>900 VA</option><option>1.300 VA</option><option>2.200 VA</option><option>3.500 VA</option><option>4.400 VA</option><option>5.500 VA</option><option>7.700 VA</option><option>10.600 VA ke atas</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Sumber Air</label>
+                                <select id="ad-input-water" class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-white">
+                                    <option value="">Pilih sumber air</option>
+                                    <option>PDAM</option><option>Sumur Bor</option><option>Jet Pump</option><option>Air PAM + Sumur</option><option>Lainnya</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Furnishing</label>
+                                <select id="ad-input-furnishing" class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-white">
+                                    <option value="">Pilih furnishing</option>
+                                    <option>Unfurnished</option><option>Semi Furnished</option><option>Full Furnished</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Akses Jalan</label>
+                                <input type="text" id="ad-input-access" class="w-full px-4 py-3 rounded-xl border border-slate-300" placeholder="Contoh: 2 mobil, dekat gerbang tol">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Fasilitas / Lingkungan</label>
+                                <input type="text" id="ad-input-facilities" class="w-full px-4 py-3 rounded-xl border border-slate-300" placeholder="Contoh: keamanan 24 jam, kolam, taman">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium mb-2">Akses Sekitar / Landmark</label>
+                                <input type="text" id="ad-input-nearby" class="w-full px-4 py-3 rounded-xl border border-slate-300" placeholder="Contoh: 5 menit ke stasiun, sekolah, mall, RS">
+                            </div>
                         </div>
                     </div>
                     <div>
@@ -655,30 +761,109 @@
                             <!-- TAB: ULASAN EKSKLUSIF BERANDA -->
                             <div id="admin-tab-featured" class="admin-tab-content hidden">
                                 <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6">
-                                    <div><h2 class="text-2xl font-extrabold text-slate-900">Ulasan Eksklusif Beranda</h2><p class="text-sm text-slate-500 mt-1">Ganti materi kartu ulasan eksklusif yang tampil di sisi kanan hero beranda.</p></div>
-                                    <button onclick="switchAdminTab('ulasan')" class="bg-primary hover:bg-secondary transition text-white px-4 py-3 rounded-2xl text-sm font-bold shadow-sm"><i class="ph ph-note-pencil mr-1"></i> Kelola Artikel</button>
+                                    <div>
+                                        <h2 class="text-2xl font-extrabold text-slate-900">Setup Ulasan Eksklusif Beranda</h2>
+                                        <p class="text-sm text-slate-500 mt-1">Panel ini khusus untuk mengganti materi video/gambar yang tampil di kartu kanan hero beranda.</p>
+                                    </div>
+                                    <div class="flex flex-wrap gap-2">
+                                        <button onclick="switchAdminTab('ulasan')" class="bg-white border border-slate-200 hover:border-primary hover:text-primary transition text-slate-700 px-4 py-3 rounded-2xl text-sm font-bold shadow-sm"><i class="ph ph-newspaper mr-1"></i> Lihat Semua Artikel</button>
+                                        <button onclick="saveFeaturedEditorAsActive()" class="bg-primary hover:bg-secondary transition text-white px-4 py-3 rounded-2xl text-sm font-bold shadow-sm"><i class="ph ph-check-circle mr-1"></i> Simpan & Tampilkan</button>
+                                    </div>
                                 </div>
-                                <div class="grid grid-cols-1 lg:grid-cols-[1fr_0.9fr] gap-6">
-                                    <div class="bg-white rounded-3xl border border-slate-200 shadow-sm p-5 md:p-6">
-                                        <h3 class="font-black text-lg mb-4">Pilih Artikel/Ulasan Untuk Ditampilkan</h3>
-                                        <div class="space-y-4">
-                                            <div>
-                                                <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Materi Ulasan Eksklusif</label>
-                                                <select id="featured-article-select" class="w-full p-3 border border-slate-300 rounded-2xl bg-white outline-none focus:border-primary"></select>
+
+                                <div class="grid grid-cols-1 xl:grid-cols-[0.95fr_1.05fr] gap-6">
+                                    <div class="space-y-5">
+                                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                            <div class="bg-white border border-slate-200 rounded-3xl p-4 shadow-sm">
+                                                <div class="w-10 h-10 rounded-2xl bg-blue-50 text-primary flex items-center justify-center mb-3"><i class="ph ph-number-one text-xl font-bold"></i></div>
+                                                <div class="font-black text-slate-900">Pilih materi</div>
+                                                <p class="text-xs text-slate-500 mt-1 leading-relaxed">Ambil dari artikel lama atau buat materi ulasan baru.</p>
                                             </div>
-                                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                                                <button onclick="saveFeaturedArticleSelection()" class="bg-primary text-white px-4 py-3 rounded-2xl font-bold hover:bg-secondary transition">Tampilkan di Beranda</button>
-                                                <button onclick="editSelectedFeaturedArticle()" class="bg-slate-900 text-white px-4 py-3 rounded-2xl font-bold hover:bg-slate-700 transition">Edit Materi</button>
-                                                <button onclick="duplicateSelectedFeaturedArticle()" class="bg-green-100 text-green-700 px-4 py-3 rounded-2xl font-bold hover:bg-green-600 hover:text-white transition">Duplikat</button>
+                                            <div class="bg-white border border-slate-200 rounded-3xl p-4 shadow-sm">
+                                                <div class="w-10 h-10 rounded-2xl bg-red-50 text-red-600 flex items-center justify-center mb-3"><i class="ph ph-video-camera text-xl"></i></div>
+                                                <div class="font-black text-slate-900">Upload video</div>
+                                                <p class="text-xs text-slate-500 mt-1 leading-relaxed">Bisa upload MP4/WebM atau tempel link YouTube.</p>
                                             </div>
-                                            <p class="text-xs text-slate-500 leading-relaxed bg-slate-50 border border-slate-200 rounded-2xl p-3">Metodenya mengikuti sistem yang sudah ada: materi ulasan berasal dari data Artikel & Ulasan, lalu admin memilih salah satunya sebagai unggulan beranda.</p>
+                                            <div class="bg-white border border-slate-200 rounded-3xl p-4 shadow-sm">
+                                                <div class="w-10 h-10 rounded-2xl bg-green-50 text-green-600 flex items-center justify-center mb-3"><i class="ph ph-eye text-xl"></i></div>
+                                                <div class="font-black text-slate-900">Cek preview</div>
+                                                <p class="text-xs text-slate-500 mt-1 leading-relaxed">Preview kanan akan sama seperti tampilan depan.</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="bg-white rounded-3xl border border-slate-200 shadow-sm p-5 md:p-6">
+                                            <h3 class="font-black text-lg mb-4 flex items-center gap-2"><i class="ph ph-star-four text-yellow-600"></i> Materi Aktif</h3>
+                                            <div class="space-y-4">
+                                                <div>
+                                                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Pilih dari Artikel/Ulasan yang Sudah Ada</label>
+                                                    <div class="grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-2">
+                                                        <select id="featured-article-select" onchange="loadFeaturedArticleToEditor(Number(this.value))" class="w-full p-3 border border-slate-300 rounded-2xl bg-white outline-none focus:border-primary"></select>
+                                                        <button type="button" onclick="loadFeaturedArticleToEditor()" class="bg-slate-900 text-white px-4 py-3 rounded-2xl font-bold hover:bg-slate-700 transition whitespace-nowrap">Muat ke Form</button>
+                                                    </div>
+                                                    <p class="text-[11px] text-slate-500 mt-2">Kalau mau mengubah ulasan yang sedang tampil di depan, pilih materi lalu klik <b>Muat ke Form</b>.</p>
+                                                </div>
+
+                                                <input type="hidden" id="featured-edit-id">
+                                                <div>
+                                                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Judul Ulasan Eksklusif</label>
+                                                    <input id="featured-title-input" oninput="renderFeaturedAdminLivePreview()" class="w-full p-3 border border-slate-300 rounded-2xl outline-none focus:border-primary" placeholder="Contoh: Review Smart Home PIK 2">
+                                                </div>
+                                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                    <div>
+                                                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Kategori/Label</label>
+                                                        <input id="featured-category-input" oninput="renderFeaturedAdminLivePreview()" class="w-full p-3 border border-slate-300 rounded-2xl outline-none focus:border-primary" placeholder="Ulasan Eksklusif">
+                                                    </div>
+                                                    <div>
+                                                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Status Media</label>
+                                                        <div id="featured-media-status" class="w-full p-3 border border-slate-200 rounded-2xl bg-slate-50 text-sm font-bold text-slate-600">Belum dicek</div>
+                                                    </div>
+                                                </div>
+
+                                                <div>
+                                                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Cover/Gambar Thumbnail</label>
+                                                    <div class="grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-2">
+                                                        <input id="featured-img-input" oninput="renderFeaturedAdminLivePreview()" class="w-full p-3 border border-slate-300 rounded-2xl outline-none focus:border-primary" placeholder="URL gambar atau upload file">
+                                                        <label class="bg-slate-900 text-white px-4 py-3 rounded-2xl font-bold text-sm cursor-pointer hover:bg-slate-700 transition text-center whitespace-nowrap">Upload Cover<input type="file" accept="image/*" class="hidden" onchange="handleFeaturedCoverUpload(this)"></label>
+                                                    </div>
+                                                </div>
+
+                                                <div>
+                                                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Video Ulasan Eksklusif</label>
+                                                    <div class="grid grid-cols-1 sm:grid-cols-[1fr_auto_auto] gap-2">
+                                                        <input id="featured-video-input" oninput="renderFeaturedAdminLivePreview()" class="w-full p-3 border border-slate-300 rounded-2xl outline-none focus:border-primary" placeholder="Tempel YouTube / URL mp4 / atau upload video">
+                                                        <label class="bg-red-600 text-white px-4 py-3 rounded-2xl font-bold text-sm cursor-pointer hover:bg-red-700 transition text-center whitespace-nowrap">Upload Video<input type="file" accept="video/mp4,video/webm,video/ogg" class="hidden" onchange="handleFeaturedVideoUpload(this)"></label>
+                                                        <button type="button" onclick="clearFeaturedVideoInput()" class="bg-slate-100 text-slate-700 px-4 py-3 rounded-2xl font-bold text-sm hover:bg-slate-200 transition whitespace-nowrap">Hapus Video</button>
+                                                    </div>
+                                                    <p class="text-[11px] text-slate-500 mt-2">Untuk video lokal demo HTML, pakai file ringan. Untuk produksi, video sebaiknya masuk Firebase Storage.</p>
+                                                </div>
+
+                                                <div>
+                                                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Deskripsi Singkat / Materi Ulasan</label>
+                                                    <textarea id="featured-desc-input" rows="5" oninput="renderFeaturedAdminLivePreview()" class="w-full p-3 border border-slate-300 rounded-2xl outline-none focus:border-primary" placeholder="Tulis ringkasan ulasan properti..."></textarea>
+                                                </div>
+
+                                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-2 border-t border-slate-100">
+                                                    <button type="button" onclick="saveFeaturedEditorAsActive()" class="bg-primary text-white px-4 py-3 rounded-2xl font-bold hover:bg-secondary transition"><i class="ph ph-check-circle mr-1"></i> Simpan & Tampilkan</button>
+                                                    <button type="button" onclick="createNewFeaturedArticleFromForm()" class="bg-green-100 text-green-700 px-4 py-3 rounded-2xl font-bold hover:bg-green-600 hover:text-white transition"><i class="ph ph-plus-circle mr-1"></i> Buat Baru</button>
+                                                    <button type="button" onclick="duplicateSelectedFeaturedArticle()" class="bg-slate-100 text-slate-700 px-4 py-3 rounded-2xl font-bold hover:bg-slate-200 transition"><i class="ph ph-copy mr-1"></i> Duplikat Aktif</button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+
                                     <div class="bg-slate-900 text-white rounded-3xl p-5 md:p-6 shadow-xl relative overflow-hidden">
                                         <div class="absolute -right-16 -top-16 w-48 h-48 bg-primary rounded-full blur-3xl opacity-50"></div>
-                                        <div class="relative z-10">
-                                            <div class="text-xs uppercase tracking-widest text-blue-200 font-bold mb-2">Preview Materi Aktif</div>
+                                        <div class="absolute -left-20 -bottom-20 w-56 h-56 bg-red-600 rounded-full blur-3xl opacity-30"></div>
+                                        <div class="relative z-10 space-y-5">
+                                            <div>
+                                                <div class="text-xs uppercase tracking-widest text-blue-200 font-bold mb-2">Preview Ulasan Eksklusif</div>
+                                                <h3 class="text-xl font-black">Yang akan tampil di beranda</h3>
+                                                <p class="text-xs text-slate-300 mt-1">Kalau preview kanan sudah benar, klik <b>Simpan & Tampilkan</b>.</p>
+                                            </div>
                                             <div id="featured-admin-preview"></div>
+                                            <div class="bg-white/10 border border-white/10 rounded-3xl p-4 text-xs text-slate-200 leading-relaxed">
+                                                <b>Catatan admin:</b> tombol ini tidak lagi bergantung ke menu Artikel. Admin bisa langsung upload video/cover, edit judul, lalu publish dari sini.
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -829,7 +1014,7 @@
             'budi@gmail.com': { 
                 name: 'Budi Pengguna', email: 'budi@gmail.com', phone: '081234567890', role: 'Penjual', 
                 ads: [
-                    { id: 99, title: 'Rumah Mewah Serpong', price: 1850000000, transaction: 'Dijual', type: 'Rumah', status: 'Premium (Aktif)', statusColor: 'text-green-600', coverImage: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=400&q=80', location: 'Gading Serpong', desc: 'Siap huni', beds: 3, baths: 2, sqft: 120 }
+                    { id: 99, title: 'Rumah Mewah Serpong', price: 1850000000, transaction: 'Dijual', type: 'Rumah', status: 'Premium (Aktif)', statusColor: 'text-green-600', coverImage: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=400&q=80', location: 'Gading Serpong', desc: 'Siap huni', beds: 3, baths: 2, sqft: 120, landSize: 150, landWidth: 8, roadWidth: 6, floors: 2, buildYear: 2021, garage: 1, carport: 2, certificate: 'SHM', electricity: '2.200 VA', water: 'PDAM', facing: 'Timur', condition: 'Bekas Siap Huni', furnishing: 'Semi Furnished', access: 'Jalan 2 mobil', facilities: 'Keamanan 24 jam, taman', nearby: 'Dekat mall, sekolah, gerbang tol' }
                 ]
             },
             'admin@rumasa.com': { name: 'Super Admin', email: 'admin@rumasa.com', phone: '-', role: 'Admin', ads: [] }
@@ -860,10 +1045,10 @@
         ];
 
         const baseProperties = [
-            { title: 'Rumah Modern Asri', price: 1850000000, location: 'Gading Serpong', beds: 3, baths: 2, sqft: 120, type: 'Rumah', status: 'Dijual', img: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80', agent: { name: 'Siska', img: 'https://i.pravatar.cc/150?u=1' }, desc: 'Rumah siap huni, keamanan 24 jam.' },
-            { title: 'Apt Sudirman Suites', price: 15000000, location: 'Sudirman, Jakarta', beds: 2, baths: 1, sqft: 65, type: 'Apartemen', status: 'Disewakan', img: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80', agent: { name: 'Andi', img: 'https://i.pravatar.cc/150?u=2' }, desc: 'Fasilitas premium di pusat bisnis.' },
-            { title: 'Kavling Siap Bangun', price: 800000000, location: 'Cibubur', beds: 0, baths: 0, sqft: 200, type: 'Tanah', status: 'Dijual', img: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80', agent: { name: 'Rudi', img: 'https://i.pravatar.cc/150?u=3' }, desc: 'Tanah darat rata, bebas banjir.' },
-            { title: 'Ruko Strategis Jalan Raya', price: 3500000000, location: 'Kelapa Gading', beds: 0, baths: 2, sqft: 150, type: 'Ruko', status: 'Dijual', img: 'https://images.unsplash.com/photo-1577995166023-ebc96924ab02?auto=format&fit=crop&w=800&q=80', agent: { name: 'Tia', img: 'https://i.pravatar.cc/150?u=4' }, desc: 'Cocok untuk usaha dan kantor.' }
+            { title: 'Rumah Modern Asri', price: 1850000000, location: 'Gading Serpong', beds: 3, baths: 2, sqft: 120, landSize: 150, landWidth: 8, roadWidth: 6, floors: 2, buildYear: 2022, garage: 1, carport: 1, certificate: 'SHM', electricity: '2.200 VA', water: 'PDAM', facing: 'Timur', condition: 'Bekas Siap Huni', furnishing: 'Semi Furnished', access: 'Jalan 2 mobil', facilities: 'Keamanan 24 jam, taman', nearby: 'Dekat sekolah dan pusat belanja', type: 'Rumah', status: 'Dijual', img: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80', agent: { name: 'Siska', phone: '085111033789', img: 'https://i.pravatar.cc/150?u=1' }, desc: 'Rumah siap huni, keamanan 24 jam.' },
+            { title: 'Apt Sudirman Suites', price: 15000000, location: 'Sudirman, Jakarta', beds: 2, baths: 1, sqft: 65, unitFloor: 18, buildYear: 2020, certificate: 'Strata Title', electricity: '3.500 VA', water: 'PDAM', facing: 'Selatan', condition: 'Bekas Siap Huni', furnishing: 'Full Furnished', access: 'Lobby utama, akses lift', facilities: 'Kolam renang, gym, security', nearby: 'CBD Sudirman, MRT, mall', type: 'Apartemen', status: 'Disewakan', img: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80', agent: { name: 'Andi', phone: '085111033789', img: 'https://i.pravatar.cc/150?u=2' }, desc: 'Fasilitas premium di pusat bisnis.' },
+            { title: 'Kavling Siap Bangun', price: 800000000, location: 'Cibubur', beds: 0, baths: 0, sqft: 0, landSize: 200, landWidth: 10, roadWidth: 5, certificate: 'SHM', facing: 'Utara', condition: 'Siap Bangun', access: 'Jalan lingkungan 2 mobil', facilities: 'Bebas banjir', nearby: 'Dekat perumahan dan akses tol', type: 'Tanah', status: 'Dijual', img: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80', agent: { name: 'Rudi', phone: '085111033789', img: 'https://i.pravatar.cc/150?u=3' }, desc: 'Tanah darat rata, bebas banjir.' },
+            { title: 'Ruko Strategis Jalan Raya', price: 3500000000, location: 'Kelapa Gading', beds: 0, baths: 2, sqft: 150, landSize: 75, landWidth: 5, roadWidth: 12, floors: 3, buildYear: 2019, carport: 2, certificate: 'HGB', electricity: '5.500 VA', water: 'PDAM', facing: 'Barat', condition: 'Bekas Siap Pakai', furnishing: 'Unfurnished', access: 'Jalan raya utama', facilities: 'Area parkir, lokasi komersial', nearby: 'Dekat pusat kuliner dan perkantoran', type: 'Ruko', status: 'Dijual', img: 'https://images.unsplash.com/photo-1577995166023-ebc96924ab02?auto=format&fit=crop&w=800&q=80', agent: { name: 'Tia', phone: '085111033789', img: 'https://i.pravatar.cc/150?u=4' }, desc: 'Cocok untuk usaha dan kantor.' }
         ];
 
         let properties = [];
@@ -1231,14 +1416,33 @@
             const type = document.getElementById('ad-input-type').value;
             const location = document.getElementById('ad-input-location').value;
             const desc = document.getElementById('ad-input-desc').value;
-            const beds = document.getElementById('ad-input-beds').value || 0;
-            const baths = document.getElementById('ad-input-baths').value || 0;
-            const sqft = document.getElementById('ad-input-lb').value || 0;
+            const beds = Number(document.getElementById('ad-input-beds').value) || 0;
+            const baths = Number(document.getElementById('ad-input-baths').value) || 0;
+            const sqft = Number(document.getElementById('ad-input-lb').value) || 0;
+            const landSize = Number(document.getElementById('ad-input-lt')?.value) || 0;
+            const landWidth = Number(document.getElementById('ad-input-land-width')?.value) || 0;
+            const roadWidth = Number(document.getElementById('ad-input-road-width')?.value) || 0;
+            const floors = Number(document.getElementById('ad-input-floors')?.value) || 0;
+            const unitFloor = Number(document.getElementById('ad-input-unit-floor')?.value) || 0;
+            const buildYear = Number(document.getElementById('ad-input-year')?.value) || 0;
+            const garage = Number(document.getElementById('ad-input-garage')?.value) || 0;
+            const carport = Number(document.getElementById('ad-input-carport')?.value) || 0;
+            const maidRoom = Number(document.getElementById('ad-input-maid-room')?.value) || 0;
+            const maidBath = Number(document.getElementById('ad-input-maid-bath')?.value) || 0;
+            const certificate = document.getElementById('ad-input-certificate')?.value || '';
+            const electricity = document.getElementById('ad-input-electricity')?.value || '';
+            const water = document.getElementById('ad-input-water')?.value || '';
+            const facing = document.getElementById('ad-input-facing')?.value || '';
+            const condition = document.getElementById('ad-input-condition')?.value || '';
+            const furnishing = document.getElementById('ad-input-furnishing')?.value || '';
+            const access = document.getElementById('ad-input-access')?.value || '';
+            const facilities = document.getElementById('ad-input-facilities')?.value || '';
+            const nearby = document.getElementById('ad-input-nearby')?.value || '';
             const coverImage = uploadedImages.length > 0 ? uploadedImages[0] : 'https://placehold.co/800x600/e2e8f0/64748b?text=Properti';
             const videoUrl = normalizeYoutubeEmbed(document.getElementById('ad-input-video')?.value || uploadedAdVideo || '');
             
             adCounterId++;
-            const newAd = { id: adCounterId, title: title, price: price, transaction: transaction, type: type, location: location, desc: desc, coverImage: coverImage, videoUrl: videoUrl, beds: beds, baths: baths, sqft: sqft };
+            const newAd = { id: adCounterId, title: title, price: price, transaction: transaction, type: type, location: location, desc: desc, coverImage: coverImage, videoUrl: videoUrl, beds: beds, baths: baths, sqft: sqft, landSize, landWidth, roadWidth, floors, unitFloor, buildYear, garage, carport, maidRoom, maidBath, certificate, electricity, water, facing, condition, furnishing, access, facilities, nearby };
 
             if (currentUser.role === 'Admin' || currentUser.ads.length === 0) {
                 newAd.status = 'Premium (Aktif)'; newAd.statusColor = 'text-green-600';
@@ -1271,7 +1475,26 @@
                 img: ad.coverImage || ad.img || 'https://placehold.co/800x600/e2e8f0/64748b?text=Properti',
                 videoUrl: ad.videoUrl || '',
                 agent: { name: user.name, phone: user.phone || '', img: 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.name || 'User') },
-                desc: ad.desc || ''
+                desc: ad.desc || '',
+                landSize: ad.landSize || 0,
+                landWidth: ad.landWidth || 0,
+                roadWidth: ad.roadWidth || 0,
+                floors: ad.floors || 0,
+                unitFloor: ad.unitFloor || 0,
+                buildYear: ad.buildYear || 0,
+                garage: ad.garage || 0,
+                carport: ad.carport || 0,
+                maidRoom: ad.maidRoom || 0,
+                maidBath: ad.maidBath || 0,
+                certificate: ad.certificate || '',
+                electricity: ad.electricity || '',
+                water: ad.water || '',
+                facing: ad.facing || '',
+                condition: ad.condition || '',
+                furnishing: ad.furnishing || '',
+                access: ad.access || '',
+                facilities: ad.facilities || '',
+                nearby: ad.nearby || ''
             };
             const existingIndex = properties.findIndex(p => p.id === ad.id);
             if (existingIndex >= 0) properties[existingIndex] = { ...properties[existingIndex], ...livePayload };
@@ -1385,7 +1608,7 @@
             if (duplicate) {
                 if (duplicate.status === 'Lunas') showMessage('Akses kontak untuk properti ini sudah aktif.');
                 else showMessage('Tagihan akses kontak untuk properti ini sudah ada. Silakan cek menu tagihan.');
-                if (currentUser) { renderUserDashboard(); navigate('user'); }
+                renderUserDashboard(); navigate('user');
                 return;
             }
             const invId = 'INV-' + invoiceCounter++;
@@ -1403,6 +1626,7 @@
             const text = encodeURIComponent(`Halo, saya tertarik dengan properti: ${title}. Mohon info detailnya.`);
             window.open(`https://wa.me/${phone}?text=${text}`, '_blank');
         }
+
 
         function renderUserInvoices() {
             if (!currentUser) return;
@@ -1773,13 +1997,44 @@
             const modal = document.getElementById('admin-editor-modal'); const content = document.getElementById('admin-editor-modal-content');
             if (!modal || !content) return;
             const img = ad.coverImage || ad.img || 'https://placehold.co/800x600/e2e8f0/64748b?text=Properti';
+            const optionList = (items, current, placeholder) => '<option value="">' + placeholder + '</option>' + items.map(item => '<option ' + (String(current || '') === item ? 'selected' : '') + '>' + item + '</option>').join('');
             content.innerHTML = `
                 <div class="p-5 md:p-8">
                     <div class="mb-6"><div class="text-xs font-bold text-primary uppercase tracking-widest mb-1">Edit Iklan Properti</div><h2 class="text-2xl font-black text-slate-900">${escapeHtml(ad.title)}</h2><p class="text-sm text-slate-500 mt-1">Ubah data iklan, harga, status, dan upload foto cover baru.</p></div>
                     <form onsubmit="event.preventDefault(); saveAdminAdEdit('${escapeHtml(email)}', ${Number(ad.id)});" class="space-y-4">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Judul Iklan</label><input id="edit-ad-title" value="${escapeHtml(ad.title)}" class="w-full p-3 border border-slate-300 rounded-2xl outline-none focus:border-primary" required></div><div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Harga</label><input id="edit-ad-price" type="number" value="${Number(ad.price) || 0}" class="w-full p-3 border border-slate-300 rounded-2xl outline-none focus:border-primary" required></div></div>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4"><div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Transaksi</label><select id="edit-ad-transaction" class="w-full p-3 border border-slate-300 rounded-2xl outline-none focus:border-primary bg-white"><option ${ad.transaction === 'Dijual' ? 'selected' : ''}>Dijual</option><option ${ad.transaction === 'Disewakan' ? 'selected' : ''}>Disewakan</option></select></div><div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Tipe</label><select id="edit-ad-type" class="w-full p-3 border border-slate-300 rounded-2xl outline-none focus:border-primary bg-white">${['Rumah','Apartemen','Tanah','Ruko','Gudang','Ruang Kantor','Kost','Villa','Pabrik'].map(t => `<option ${ad.type === t ? 'selected' : ''}>${t}</option>`).join('')}</select></div><div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Status</label><select id="edit-ad-status" class="w-full p-3 border border-slate-300 rounded-2xl outline-none focus:border-primary bg-white"><option ${isAdLiveStatus(ad.status) ? 'selected' : ''}>Aktif (Disetujui Admin)</option><option ${ad.status === 'Menunggu Upgrade' ? 'selected' : ''}>Menunggu Upgrade</option><option ${ad.status === 'Nonaktif' ? 'selected' : ''}>Nonaktif</option></select></div></div>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4"><div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Luas Bangunan</label><input id="edit-ad-sqft" type="number" value="${Number(ad.sqft) || 0}" class="w-full p-3 border border-slate-300 rounded-2xl outline-none focus:border-primary"></div><div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Kamar Tidur</label><input id="edit-ad-beds" type="number" value="${Number(ad.beds) || 0}" class="w-full p-3 border border-slate-300 rounded-2xl outline-none focus:border-primary"></div><div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Kamar Mandi</label><input id="edit-ad-baths" type="number" value="${Number(ad.baths) || 0}" class="w-full p-3 border border-slate-300 rounded-2xl outline-none focus:border-primary"></div></div>
+                        <div class="bg-slate-50 border border-slate-200 rounded-3xl p-4 space-y-4">
+                            <div class="flex items-center justify-between gap-3"><div><div class="text-xs font-black text-primary uppercase tracking-widest">Spesifikasi Properti</div><p class="text-xs text-slate-500 mt-1">Admin bisa melengkapi data teknis agar iklan tampil lebih profesional.</p></div></div>
+                            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                                <div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">LT / Luas Tanah</label><input id="edit-ad-landSize" type="number" value="${Number(ad.landSize) || 0}" class="w-full p-3 border border-slate-300 rounded-2xl outline-none focus:border-primary"></div>
+                                <div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">LB / Luas Bangunan</label><input id="edit-ad-sqft" type="number" value="${Number(ad.sqft) || 0}" class="w-full p-3 border border-slate-300 rounded-2xl outline-none focus:border-primary"></div>
+                                <div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Lebar Muka</label><input id="edit-ad-landWidth" type="number" step="0.1" value="${Number(ad.landWidth) || 0}" class="w-full p-3 border border-slate-300 rounded-2xl outline-none focus:border-primary"></div>
+                                <div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Lebar Jalan</label><input id="edit-ad-roadWidth" type="number" step="0.1" value="${Number(ad.roadWidth) || 0}" class="w-full p-3 border border-slate-300 rounded-2xl outline-none focus:border-primary"></div>
+                                <div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Jumlah Lantai</label><input id="edit-ad-floors" type="number" value="${Number(ad.floors) || 0}" class="w-full p-3 border border-slate-300 rounded-2xl outline-none focus:border-primary"></div>
+                                <div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Lantai Unit</label><input id="edit-ad-unitFloor" type="number" value="${Number(ad.unitFloor) || 0}" class="w-full p-3 border border-slate-300 rounded-2xl outline-none focus:border-primary"></div>
+                                <div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Tahun Bangun</label><input id="edit-ad-buildYear" type="number" value="${Number(ad.buildYear) || 0}" class="w-full p-3 border border-slate-300 rounded-2xl outline-none focus:border-primary"></div>
+                                <div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Kondisi</label><select id="edit-ad-condition" class="w-full p-3 border border-slate-300 rounded-2xl outline-none focus:border-primary bg-white">${optionList(['Baru','Bekas Siap Huni','Renovasi Ringan','Butuh Renovasi','Indent / Dalam Pembangunan'], ad.condition, 'Pilih kondisi')}</select></div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                                <div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Kamar Tidur</label><input id="edit-ad-beds" type="number" value="${Number(ad.beds) || 0}" class="w-full p-3 border border-slate-300 rounded-2xl outline-none focus:border-primary"></div>
+                                <div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Kamar Mandi</label><input id="edit-ad-baths" type="number" value="${Number(ad.baths) || 0}" class="w-full p-3 border border-slate-300 rounded-2xl outline-none focus:border-primary"></div>
+                                <div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Kamar ART</label><input id="edit-ad-maidRoom" type="number" value="${Number(ad.maidRoom) || 0}" class="w-full p-3 border border-slate-300 rounded-2xl outline-none focus:border-primary"></div>
+                                <div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">KM ART</label><input id="edit-ad-maidBath" type="number" value="${Number(ad.maidBath) || 0}" class="w-full p-3 border border-slate-300 rounded-2xl outline-none focus:border-primary"></div>
+                                <div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Garasi</label><input id="edit-ad-garage" type="number" value="${Number(ad.garage) || 0}" class="w-full p-3 border border-slate-300 rounded-2xl outline-none focus:border-primary"></div>
+                                <div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Carport</label><input id="edit-ad-carport" type="number" value="${Number(ad.carport) || 0}" class="w-full p-3 border border-slate-300 rounded-2xl outline-none focus:border-primary"></div>
+                                <div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Sertifikat</label><select id="edit-ad-certificate" class="w-full p-3 border border-slate-300 rounded-2xl outline-none focus:border-primary bg-white">${optionList(['SHM','HGB','SHGB','AJB','Girik','PPJB','Strata Title','Lainnya'], ad.certificate, 'Pilih sertifikat')}</select></div>
+                                <div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Hadap</label><select id="edit-ad-facing" class="w-full p-3 border border-slate-300 rounded-2xl outline-none focus:border-primary bg-white">${optionList(['Utara','Timur','Selatan','Barat','Timur Laut','Tenggara','Barat Daya','Barat Laut'], ad.facing, 'Pilih hadap')}</select></div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Listrik</label><select id="edit-ad-electricity" class="w-full p-3 border border-slate-300 rounded-2xl outline-none focus:border-primary bg-white">${optionList(['900 VA','1.300 VA','2.200 VA','3.500 VA','4.400 VA','5.500 VA','7.700 VA','10.600 VA ke atas'], ad.electricity, 'Pilih listrik')}</select></div>
+                                <div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Air</label><select id="edit-ad-water" class="w-full p-3 border border-slate-300 rounded-2xl outline-none focus:border-primary bg-white">${optionList(['PDAM','Sumur Bor','Jet Pump','Air PAM + Sumur','Lainnya'], ad.water, 'Pilih air')}</select></div>
+                                <div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Furnishing</label><select id="edit-ad-furnishing" class="w-full p-3 border border-slate-300 rounded-2xl outline-none focus:border-primary bg-white">${optionList(['Unfurnished','Semi Furnished','Full Furnished'], ad.furnishing, 'Pilih furnishing')}</select></div>
+                                <div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Akses Jalan</label><input id="edit-ad-access" value="${escapeHtml(ad.access || '')}" class="w-full p-3 border border-slate-300 rounded-2xl outline-none focus:border-primary"></div>
+                                <div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Fasilitas</label><input id="edit-ad-facilities" value="${escapeHtml(ad.facilities || '')}" class="w-full p-3 border border-slate-300 rounded-2xl outline-none focus:border-primary"></div>
+                                <div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Akses Sekitar</label><input id="edit-ad-nearby" value="${escapeHtml(ad.nearby || '')}" class="w-full p-3 border border-slate-300 rounded-2xl outline-none focus:border-primary"></div>
+                            </div>
+                        </div>
                         <div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Lokasi</label><input id="edit-ad-location" value="${escapeHtml(ad.location || '')}" class="w-full p-3 border border-slate-300 rounded-2xl outline-none focus:border-primary" required></div>
                         <div class="grid grid-cols-1 md:grid-cols-[1fr_240px] gap-4"><div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Foto Cover</label><div class="flex gap-2"><input id="edit-ad-cover" value="${escapeHtml(img)}" class="flex-1 p-3 border border-slate-300 rounded-2xl outline-none focus:border-primary"><label class="bg-slate-900 text-white px-4 py-3 rounded-2xl font-bold text-sm cursor-pointer hover:bg-slate-700">Upload<input type="file" accept="image/*" class="hidden" onchange="handleEditAdImageUpload(this)"></label></div><p class="text-xs text-slate-500 mt-2">Bisa isi URL gambar atau upload file lokal kecil.</p></div><div id="edit-ad-cover-preview" class="h-36 rounded-2xl overflow-hidden border border-slate-200 bg-slate-50"><img src="${escapeHtml(img)}" class="w-full h-full object-cover"></div></div>
                         <div class="grid grid-cols-1 md:grid-cols-[1fr_240px] gap-4"><div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Video Properti</label><div class="flex gap-2"><input id="edit-ad-video" value="${escapeHtml(ad.videoUrl || '')}" class="flex-1 p-3 border border-slate-300 rounded-2xl outline-none focus:border-primary" placeholder="URL video / YouTube / mp4"><label class="bg-primary text-white px-4 py-3 rounded-2xl font-bold text-sm cursor-pointer hover:bg-secondary">Upload<input type="file" accept="video/mp4,video/webm,video/ogg" class="hidden" onchange="handleEditAdVideoUpload(this)"></label></div><p class="text-xs text-slate-500 mt-2">Opsional, tampil di detail iklan.</p></div><div id="edit-ad-video-preview" class="h-36 rounded-2xl overflow-hidden border border-slate-200 bg-black">${ad.videoUrl && isVideoSource(ad.videoUrl) ? `<video src="${escapeHtml(ad.videoUrl)}" class="w-full h-full object-cover" controls muted></video>` : `<div class="w-full h-full flex items-center justify-center text-slate-400 text-xs text-center px-3">Video URL / YouTube</div>`}</div></div>
@@ -1815,9 +2070,28 @@
             ad.type = document.getElementById('edit-ad-type').value;
             ad.status = document.getElementById('edit-ad-status').value;
             ad.statusColor = isAdLiveStatus(ad.status) ? 'text-green-600' : (ad.status === 'Nonaktif' ? 'text-slate-500' : 'text-accent');
-            ad.sqft = Number(document.getElementById('edit-ad-sqft').value) || 0;
-            ad.beds = Number(document.getElementById('edit-ad-beds').value) || 0;
-            ad.baths = Number(document.getElementById('edit-ad-baths').value) || 0;
+            ad.landSize = Number(document.getElementById('edit-ad-landSize')?.value) || 0;
+            ad.sqft = Number(document.getElementById('edit-ad-sqft')?.value) || 0;
+            ad.landWidth = Number(document.getElementById('edit-ad-landWidth')?.value) || 0;
+            ad.roadWidth = Number(document.getElementById('edit-ad-roadWidth')?.value) || 0;
+            ad.floors = Number(document.getElementById('edit-ad-floors')?.value) || 0;
+            ad.unitFloor = Number(document.getElementById('edit-ad-unitFloor')?.value) || 0;
+            ad.buildYear = Number(document.getElementById('edit-ad-buildYear')?.value) || 0;
+            ad.beds = Number(document.getElementById('edit-ad-beds')?.value) || 0;
+            ad.baths = Number(document.getElementById('edit-ad-baths')?.value) || 0;
+            ad.maidRoom = Number(document.getElementById('edit-ad-maidRoom')?.value) || 0;
+            ad.maidBath = Number(document.getElementById('edit-ad-maidBath')?.value) || 0;
+            ad.garage = Number(document.getElementById('edit-ad-garage')?.value) || 0;
+            ad.carport = Number(document.getElementById('edit-ad-carport')?.value) || 0;
+            ad.certificate = document.getElementById('edit-ad-certificate')?.value || '';
+            ad.electricity = document.getElementById('edit-ad-electricity')?.value || '';
+            ad.water = document.getElementById('edit-ad-water')?.value || '';
+            ad.facing = document.getElementById('edit-ad-facing')?.value || '';
+            ad.condition = document.getElementById('edit-ad-condition')?.value || '';
+            ad.furnishing = document.getElementById('edit-ad-furnishing')?.value || '';
+            ad.access = document.getElementById('edit-ad-access')?.value.trim() || '';
+            ad.facilities = document.getElementById('edit-ad-facilities')?.value.trim() || '';
+            ad.nearby = document.getElementById('edit-ad-nearby')?.value.trim() || '';
             ad.location = document.getElementById('edit-ad-location').value.trim();
             ad.coverImage = document.getElementById('edit-ad-cover').value.trim();
             ad.videoUrl = normalizeYoutubeEmbed(document.getElementById('edit-ad-video').value.trim());
@@ -2062,47 +2336,225 @@
             article.img = document.getElementById('edit-art-img').value.trim();
             article.videoUrl = normalizeYoutubeEmbed(document.getElementById('edit-art-video').value.trim());
             article.desc = document.getElementById('edit-art-desc').value.trim();
-            article.date = article.date || 'Diperbarui';
-            saveAppState(); renderAdminArticlesTable(); renderArticlesList(); renderHomeFeaturedReview(article.id); closeAdminEditorModal(); showMessage('Artikel berhasil diperbarui.');
+            article.date = 'Diperbarui';
+            saveAppState();
+            renderAdminArticlesTable();
+            renderArticlesList();
+            if (Number(article.id) === Number(featuredArticleId)) {
+                renderHomeFeaturedReview(featuredArticleId);
+                loadFeaturedArticleToEditor(featuredArticleId);
+            }
+            closeAdminEditorModal();
+            showMessage('Artikel berhasil diperbarui.');
+        }
+
+        function buildReviewMediaHTML(article, mode = 'hero') {
+            const img = escapeHtml(article?.img || 'https://placehold.co/600x360/0f172a/ffffff?text=Ulasan+Eksklusif');
+            const rawVideo = normalizeYoutubeEmbed(article?.videoUrl || '');
+            const video = escapeHtml(rawVideo);
+            const imageFallback = `<img src="${img}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/600x360/0f172a/ffffff?text=Ulasan+Eksklusif'">`;
+            if (!rawVideo) return imageFallback;
+
+            if (isVideoSource(rawVideo)) {
+                return `<video src="${video}" poster="${img}" class="w-full h-full object-cover bg-black" controls muted playsinline onclick="event.stopPropagation()"></video>`;
+            }
+
+            return `<iframe src="${video}" class="w-full h-full bg-black" title="Video ulasan eksklusif" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen onclick="event.stopPropagation()"></iframe>`;
+        }
+
+        function getFeaturedArticle() {
+            return articlesDB.find(a => Number(a.id) === Number(featuredArticleId)) || articlesDB[0];
         }
 
         function renderFeaturedAdminForm() {
             const select = document.getElementById('featured-article-select');
             if (select) {
-                select.innerHTML = articlesDB.map(a => `<option value="${Number(a.id)}" ${Number(a.id) === Number(featuredArticleId) ? 'selected' : ''}>${escapeHtml(a.title)} — ${escapeHtml(a.category)}</option>`).join('');
+                select.innerHTML = articlesDB.map(a => `<option value="${Number(a.id)}" ${Number(a.id) === Number(featuredArticleId) ? 'selected' : ''}>${escapeHtml(a.title)} — ${escapeHtml(a.category || 'Artikel')}</option>`).join('');
             }
-            const art = articlesDB.find(a => Number(a.id) === Number(featuredArticleId)) || articlesDB[0];
+            loadFeaturedArticleToEditor(featuredArticleId, false);
+        }
+
+        function loadFeaturedArticleToEditor(id = null, showToast = false) {
+            const selectedId = id || Number(document.getElementById('featured-article-select')?.value || featuredArticleId);
+            const art = articlesDB.find(a => Number(a.id) === Number(selectedId)) || getFeaturedArticle();
+            if (!art) return;
+
+            const selected = document.getElementById('featured-article-select');
+            if (selected) selected.value = Number(art.id);
+
+            const idEl = document.getElementById('featured-edit-id');
+            const titleEl = document.getElementById('featured-title-input');
+            const catEl = document.getElementById('featured-category-input');
+            const imgEl = document.getElementById('featured-img-input');
+            const videoEl = document.getElementById('featured-video-input');
+            const descEl = document.getElementById('featured-desc-input');
+
+            if (idEl) idEl.value = Number(art.id);
+            if (titleEl) titleEl.value = art.title || '';
+            if (catEl) catEl.value = art.category || 'Ulasan Eksklusif';
+            if (imgEl) imgEl.value = art.img || '';
+            if (videoEl) videoEl.value = art.videoUrl || '';
+            if (descEl) descEl.value = art.desc || '';
+
+            renderFeaturedAdminLivePreview();
+            if (showToast) showMessage('Materi ulasan dimuat ke form edit.');
+        }
+
+        function readFeaturedEditorPayload() {
+            return {
+                id: Number(document.getElementById('featured-edit-id')?.value || 0),
+                title: (document.getElementById('featured-title-input')?.value || '').trim(),
+                category: (document.getElementById('featured-category-input')?.value || 'Ulasan Eksklusif').trim() || 'Ulasan Eksklusif',
+                img: (document.getElementById('featured-img-input')?.value || '').trim() || 'https://placehold.co/800x500/e2e8f0/64748b?text=Ulasan+Eksklusif',
+                videoUrl: normalizeYoutubeEmbed((document.getElementById('featured-video-input')?.value || '').trim()),
+                desc: (document.getElementById('featured-desc-input')?.value || '').trim()
+            };
+        }
+
+        function renderFeaturedAdminLivePreview() {
             const preview = document.getElementById('featured-admin-preview');
-            if (preview && art) {
-                preview.innerHTML = `
-                    <div class="bg-white/10 border border-white/10 rounded-3xl overflow-hidden shadow-lg">
-                        <div class="h-44 bg-black overflow-hidden"><img src="${escapeHtml(art.img)}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/600x360/0f172a/ffffff?text=Ulasan+Eksklusif'"></div>
-                        <div class="p-5"><div class="text-xs text-accent font-black uppercase tracking-widest mb-2">${escapeHtml(art.category)}</div><h3 class="text-xl font-black leading-tight mb-3">${escapeHtml(art.title)}</h3><p class="text-sm text-slate-300 line-clamp-3 mb-4">${escapeHtml(art.desc)}</p><button onclick="showReview(${Number(art.id)})" class="w-full bg-primary hover:bg-blue-500 text-white rounded-2xl py-3 font-bold">Lihat Preview Detail</button></div>
-                    </div>`;
+            const status = document.getElementById('featured-media-status');
+            if (!preview) return;
+
+            const data = readFeaturedEditorPayload();
+            const hasVideo = Boolean(data.videoUrl);
+            if (status) {
+                status.innerHTML = hasVideo
+                    ? `<span class="text-red-600"><i class="ph ph-video-camera mr-1"></i> Video aktif</span>`
+                    : `<span class="text-slate-500"><i class="ph ph-image mr-1"></i> Gambar saja</span>`;
             }
+
+            const previewArticle = {
+                id: data.id || 0,
+                title: data.title || 'Judul ulasan belum diisi',
+                category: data.category || 'Ulasan Eksklusif',
+                img: data.img,
+                videoUrl: data.videoUrl,
+                desc: data.desc || 'Deskripsi ulasan akan tampil di sini.'
+            };
+
+            preview.innerHTML = `
+                <div class="bg-white/10 border border-white/10 rounded-3xl overflow-hidden shadow-lg">
+                    <div class="h-52 bg-black overflow-hidden">${buildReviewMediaHTML(previewArticle, 'admin')}</div>
+                    <div class="p-5">
+                        <div class="flex items-center justify-between gap-3 mb-3">
+                            <div class="text-xs text-accent font-black uppercase tracking-widest">${escapeHtml(previewArticle.category)}</div>
+                            <div class="text-[10px] px-2 py-1 rounded-full ${hasVideo ? 'bg-red-500/20 text-red-200 border border-red-400/30' : 'bg-white/10 text-slate-200 border border-white/10'}">${hasVideo ? 'VIDEO AKTIF' : 'COVER IMAGE'}</div>
+                        </div>
+                        <h3 class="text-xl font-black leading-tight mb-3">${escapeHtml(previewArticle.title)}</h3>
+                        <p class="text-sm text-slate-300 line-clamp-3 mb-4">${escapeHtml(previewArticle.desc)}</p>
+                        <button onclick="${data.id ? `showReview(${Number(data.id)})` : `showMessage('Simpan dulu materi ini agar bisa dibuka detailnya.')`}" class="w-full bg-primary hover:bg-blue-500 text-white rounded-2xl py-3 font-bold">Preview Detail</button>
+                    </div>
+                </div>`;
+        }
+
+        function handleFeaturedCoverUpload(input) {
+            readFileAsDataUrl(input, (dataUrl) => {
+                const el = document.getElementById('featured-img-input');
+                if (el) el.value = dataUrl;
+                renderFeaturedAdminLivePreview();
+                showMessage('Cover ulasan berhasil dimuat.');
+            }, 4);
+        }
+
+        function handleFeaturedVideoUpload(input) {
+            readFileAsDataUrl(input, (dataUrl) => {
+                const el = document.getElementById('featured-video-input');
+                if (el) el.value = dataUrl;
+                renderFeaturedAdminLivePreview();
+                showMessage('Video ulasan berhasil dimuat.');
+            }, 8);
+        }
+
+        function clearFeaturedVideoInput() {
+            const el = document.getElementById('featured-video-input');
+            if (el) el.value = '';
+            renderFeaturedAdminLivePreview();
+            showMessage('Video ulasan dikosongkan. Materi akan memakai cover gambar.');
+        }
+
+        function saveFeaturedEditorAsActive() {
+            const data = readFeaturedEditorPayload();
+            if (!data.title) { showMessage('Judul ulasan wajib diisi.'); return; }
+            if (!data.desc) { showMessage('Deskripsi ulasan wajib diisi.'); return; }
+
+            let article = articlesDB.find(a => Number(a.id) === Number(data.id));
+            if (!article) {
+                article = { id: Date.now(), date: 'Baru Saja' };
+                articlesDB.unshift(article);
+            }
+
+            article.title = data.title;
+            article.category = data.category;
+            article.img = data.img;
+            article.videoUrl = data.videoUrl;
+            article.desc = data.desc;
+            article.date = article.date || 'Diperbarui';
+
+            featuredArticleId = Number(article.id);
+
+            saveAppState();
+            renderAdminArticlesTable();
+            renderArticlesList();
+            renderHomeFeaturedReview(featuredArticleId);
+            renderFeaturedAdminForm();
+            updateAdminRingkasan();
+            showMessage('Ulasan Eksklusif berhasil disimpan dan tampil di beranda.');
+        }
+
+        function createNewFeaturedArticleFromForm() {
+            const data = readFeaturedEditorPayload();
+            if (!data.title) { showMessage('Judul ulasan wajib diisi sebelum buat baru.'); return; }
+            if (!data.desc) { showMessage('Deskripsi ulasan wajib diisi sebelum buat baru.'); return; }
+
+            const article = {
+                id: Date.now(),
+                title: data.title,
+                category: data.category || 'Ulasan Eksklusif',
+                date: 'Baru Saja',
+                img: data.img,
+                videoUrl: data.videoUrl,
+                desc: data.desc
+            };
+            articlesDB.unshift(article);
+            featuredArticleId = Number(article.id);
+
+            saveAppState();
+            renderAdminArticlesTable();
+            renderArticlesList();
+            renderHomeFeaturedReview(featuredArticleId);
+            renderFeaturedAdminForm();
+            updateAdminRingkasan();
+            showMessage('Materi ulasan baru dibuat dan langsung tampil di beranda.');
         }
 
         function saveFeaturedArticleSelection() {
             const select = document.getElementById('featured-article-select');
             if (!select) return;
             featuredArticleId = Number(select.value);
+            loadFeaturedArticleToEditor(featuredArticleId);
             renderHomeFeaturedReview(featuredArticleId);
-            renderFeaturedAdminForm();
             saveAppState();
             showMessage('Ulasan Eksklusif beranda berhasil diganti.');
         }
 
         function editSelectedFeaturedArticle() {
-            const select = document.getElementById('featured-article-select');
-            const id = select ? Number(select.value) : featuredArticleId;
-            openAdminArticleEditor(id);
+            loadFeaturedArticleToEditor(null, true);
         }
 
         function duplicateSelectedFeaturedArticle() {
-            const select = document.getElementById('featured-article-select');
-            const id = select ? Number(select.value) : featuredArticleId;
-            duplicateAdminArticle(id);
+            const data = readFeaturedEditorPayload();
+            const source = articlesDB.find(a => Number(a.id) === Number(data.id)) || getFeaturedArticle();
+            if (!source) return;
+            const duplicate = { ...source, id: Date.now(), title: `${source.title} Copy`, date: 'Baru Saja' };
+            articlesDB.unshift(duplicate);
+            featuredArticleId = Number(duplicate.id);
+            saveAppState();
+            renderAdminArticlesTable();
+            renderArticlesList();
+            renderHomeFeaturedReview(featuredArticleId);
             renderFeaturedAdminForm();
+            showMessage('Materi ulasan berhasil diduplikasi dan aktif di beranda.');
         }
 
         function renderRunningAds() {
@@ -2171,49 +2623,48 @@
             saveAppState(); renderRunningAdsAdmin(); renderRunningAds();
         }
 
-        // Tampilkan Artikel di Hero Banner Kanan
+        // Tampilkan Artikel/Video Ulasan di Hero Banner Kanan
         function renderHomeFeaturedReview(id) {
             const art = articlesDB.find(a => Number(a.id) === Number(id)) || articlesDB[0]; 
             if (!art) return;
             featuredArticleId = Number(art.id);
             const el = document.getElementById('home-featured-review'); 
             if (!el) return;
-            
+
+            const hasVideo = Boolean(normalizeYoutubeEmbed(art.videoUrl || ''));
+            const mediaHtml = buildReviewMediaHTML(art, 'hero');
+
             el.innerHTML = `
-                <div class="relative bg-white/10 backdrop-blur-xl border border-white/30 p-5 rounded-[40px] rounded-tr-[10px] rounded-bl-[10px] shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden" onclick="showReview(${art.id})">
+                <div class="group relative bg-white/10 backdrop-blur-xl border border-white/30 p-5 rounded-[40px] rounded-tr-[10px] rounded-bl-[10px] shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden">
                     <div class="absolute -top-10 -right-10 w-40 h-40 bg-accent rounded-full mix-blend-screen filter blur-[40px] opacity-70 group-hover:opacity-100 transition-opacity duration-500 animate-pulse"></div>
                     <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-primary rounded-full mix-blend-screen filter blur-[40px] opacity-70 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div class="relative z-10">
                         <div class="flex justify-between items-center mb-4">
                             <span class="bg-gradient-to-r from-red-600 to-red-500 text-white text-[10px] font-bold px-3 py-1.5 uppercase tracking-wider rounded-full flex items-center gap-1 shadow-lg shadow-red-500/30">
-                                <i class="ph-fill ph-play-circle text-sm animate-pulse"></i> ${art.category}
+                                <i class="ph-fill ${hasVideo ? 'ph-play-circle' : 'ph-star'} text-sm animate-pulse"></i> ${escapeHtml(art.category || 'Ulasan Eksklusif')}
                             </span>
-                            <span class="bg-black/40 text-white text-[10px] font-bold px-2.5 py-1 rounded-md backdrop-blur border border-white/20">Spesial RUMASA</span>
+                            <span class="bg-black/40 text-white text-[10px] font-bold px-2.5 py-1 rounded-md backdrop-blur border border-white/20">${hasVideo ? 'Video Aktif' : 'Spesial RUMASA'}</span>
                         </div>
-                        <div class="relative h-44 rounded-2xl overflow-hidden mb-4 border border-white/10 group-hover:shadow-[0_0_20px_rgba(255,255,255,0.2)] transition duration-500">
-                            <img src="${art.img}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
-                            <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition flex items-center justify-center">
-                                <div class="w-14 h-14 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white border border-white/50 group-hover:bg-accent group-hover:border-accent group-hover:scale-110 transition duration-300 shadow-xl">
-                                    <i class="ph-fill ph-play text-2xl ml-1"></i>
-                                </div>
-                            </div>
+                        <div class="relative h-44 rounded-2xl overflow-hidden mb-4 border border-white/10 bg-black group-hover:shadow-[0_0_20px_rgba(255,255,255,0.2)] transition duration-500" onclick="event.stopPropagation()">
+                            ${mediaHtml}
+                            ${hasVideo ? '' : `<div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition flex items-center justify-center"><div class="w-14 h-14 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white border border-white/50 group-hover:bg-accent group-hover:border-accent group-hover:scale-110 transition duration-300 shadow-xl"><i class="ph-fill ph-play text-2xl ml-1"></i></div></div>`}
                         </div>
-                        <h3 class="text-white font-bold text-xl leading-tight mb-2 drop-shadow-md group-hover:text-accent transition">${art.title}</h3>
-                        <p class="text-slate-200 text-xs line-clamp-2 mb-4 leading-relaxed">${art.desc}</p>
+                        <h3 class="text-white font-bold text-xl leading-tight mb-2 drop-shadow-md group-hover:text-accent transition">${escapeHtml(art.title || 'Ulasan Eksklusif')}</h3>
+                        <p class="text-slate-200 text-xs line-clamp-2 mb-4 leading-relaxed">${escapeHtml(art.desc || '')}</p>
                         <div class="flex items-center justify-between border-t border-white/20 pt-3">
                             <div class="flex items-center gap-2">
                                 <img src="${RUMASA_LOGO_DATA}" alt="Logo RUMASA" class="w-7 h-7 rounded-full border-2 border-accent object-cover bg-white shrink-0">
                                 <span class="text-white text-xs font-medium">Tim RUMASA</span>
                             </div>
-                            <span class="text-accent text-xs font-bold group-hover:text-white transition flex items-center bg-white/10 px-3 py-1.5 rounded-full backdrop-blur">
-                                Buka <i class="ph ph-arrow-right ml-1"></i>
-                            </span>
+                            <button onclick="showReview(${Number(art.id)})" class="text-accent text-xs font-bold hover:text-white transition flex items-center bg-white/10 px-3 py-1.5 rounded-full backdrop-blur">
+                                Buka Detail <i class="ph ph-arrow-right ml-1"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
             `;
         }
-        
+
         function setFeaturedArticle(id) {
             renderHomeFeaturedReview(id);
             renderFeaturedAdminForm();
@@ -2370,20 +2821,60 @@
         }
 
         function showDetails(id) {
-            const p = properties.find(item => item.id === id);
+            const p = properties.find(item => Number(item.id) === Number(id));
             if (!p) { showMessage('Detail properti tidak ditemukan.'); return; }
             const content = document.getElementById('details-content'); if (!content) return;
             const priceText = typeof p.price === 'string' ? p.price : `Rp ${formatNumber(p.price)}`;
             const videoUrl = normalizeYoutubeEmbed(p.videoUrl || '');
             const mediaBlock = videoUrl
                 ? (isVideoSource(videoUrl)
-                    ? `<video src="${escapeHtml(videoUrl)}" poster="${escapeHtml(p.img)}" class="w-full h-full object-cover" controls playsinline></video>`
+                    ? `<video src="${escapeHtml(videoUrl)}" poster="${escapeHtml(p.img || p.coverImage || '')}" class="w-full h-full object-cover" controls playsinline></video>`
                     : `<iframe class="w-full h-full" src="${escapeHtml(videoUrl)}" title="Video properti" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`)
-                : `<img src="${escapeHtml(p.img)}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/1200x700/e2e8f0/64748b?text=Properti'">`;
+                : `<img src="${escapeHtml(p.img || p.coverImage || '')}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/1200x700/e2e8f0/64748b?text=Properti'">`;
+
+            const hasSpec = value => value !== undefined && value !== null && String(value).trim() !== '' && String(value) !== '0';
+            const metric = (value, suffix = '') => hasSpec(value) ? `${formatNumber(Number(value))}${suffix}` : '';
+            const specs = [
+                ['Tipe Properti', p.type],
+                ['Transaksi', p.status],
+                ['Luas Tanah', metric(p.landSize, ' m²')],
+                ['Luas Bangunan', metric(p.sqft, ' m²')],
+                ['Lebar Muka', metric(p.landWidth, ' m')],
+                ['Lebar Jalan', metric(p.roadWidth, ' m')],
+                ['Jumlah Lantai', hasSpec(p.floors) ? `${p.floors} lantai` : ''],
+                ['Lantai Unit', hasSpec(p.unitFloor) ? `Lantai ${p.unitFloor}` : ''],
+                ['Tahun Bangun', p.buildYear],
+                ['Kondisi Unit', p.condition],
+                ['Kamar Tidur', p.beds],
+                ['Kamar Mandi', p.baths],
+                ['Kamar ART', p.maidRoom],
+                ['KM ART', p.maidBath],
+                ['Garasi', p.garage],
+                ['Carport', p.carport],
+                ['Sertifikat', p.certificate],
+                ['Daya Listrik', p.electricity],
+                ['Sumber Air', p.water],
+                ['Hadap', p.facing],
+                ['Furnishing', p.furnishing],
+                ['Akses Jalan', p.access],
+                ['Fasilitas', p.facilities],
+                ['Akses Sekitar', p.nearby]
+            ].filter(item => hasSpec(item[1]));
+
+            const specGrid = specs.length
+                ? `<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3">${specs.map(([label, value]) => `
+                    <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                        <div class="text-[11px] font-black uppercase tracking-widest text-slate-400 mb-1">${escapeHtml(label)}</div>
+                        <div class="font-extrabold text-slate-800 leading-snug">${escapeHtml(value)}</div>
+                    </div>`).join('')}</div>`
+                : `<div class="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-5 text-slate-500 text-sm">Spesifikasi belum dilengkapi.</div>`;
+
             const contactUnlocked = isContactUnlocked(p.id);
+            const titleArg = JSON.stringify(p.title || 'Properti').replace(/'/g, '&#39;');
             const contactBlock = contactUnlocked
-                ? `<button onclick="openPaidContact(${Number(p.id)}, '${escapeHtml(p.title)}')" class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-2xl font-black flex items-center justify-center gap-2"><i class="ph-fill ph-whatsapp-logo text-xl"></i> Hubungi via WhatsApp</button><p class="text-[11px] text-green-700 bg-green-50 border border-green-100 rounded-2xl p-3 mt-3">Akses kontak sudah aktif karena layanan berbayar berstatus lunas.</p>`
-                : `<button onclick="requestContactAccess(${Number(p.id)}, '${escapeHtml(p.title)}')" class="w-full bg-slate-900 hover:bg-primary text-white py-3 rounded-2xl font-black flex items-center justify-center gap-2"><i class="ph ph-lock-key text-xl"></i> Aktifkan Akses Kontak</button><p class="text-[11px] text-slate-500 bg-slate-50 border border-slate-200 rounded-2xl p-3 mt-3">Nomor WhatsApp pengiklan dikunci untuk Pembeli, Penjual, dan Agen Properti. Setelah layanan akses kontak berbayar lunas, tombol WhatsApp akan terbuka.</p>`;
+                ? `<button onclick='openPaidContact(${Number(p.id)}, ${titleArg})' class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-2xl font-black flex items-center justify-center gap-2"><i class="ph ph-whatsapp-logo text-xl"></i> Hubungi via WhatsApp</button><p class="text-xs text-green-700 bg-green-50 rounded-2xl p-3 mt-3">Akses kontak aktif untuk akun ini.</p>`
+                : `<button onclick='requestContactAccess(${Number(p.id)}, ${titleArg})' class="w-full bg-primary hover:bg-secondary text-white py-3 rounded-2xl font-black flex items-center justify-center gap-2"><i class="ph ph-lock-key text-xl"></i> Aktifkan Akses Kontak</button><p class="text-xs text-slate-500 bg-slate-50 rounded-2xl p-3 mt-3">Kontak WA pengiklan dikunci. Setelah layanan akses kontak dibayar dan divalidasi admin, tombol WhatsApp akan terbuka.</p>`;
+
             content.innerHTML = `
                 <div class="bg-slate-900 text-white py-8 md:py-12">
                     <div class="container mx-auto px-4 max-w-6xl">
@@ -2395,10 +2886,11 @@
                                 <h1 class="text-3xl md:text-5xl font-black leading-tight mb-4">${escapeHtml(p.title)}</h1>
                                 <div class="text-3xl font-black text-accent mb-4">${escapeHtml(priceText)}</div>
                                 <div class="flex items-start gap-2 text-slate-300 mb-6"><i class="ph ph-map-pin text-xl text-accent"></i><span>${escapeHtml(p.location)}</span></div>
-                                <div class="grid grid-cols-3 gap-3 text-center">
+                                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-center">
                                     <div class="bg-white/10 rounded-2xl p-4"><div class="text-2xl font-black">${escapeHtml(p.beds || 0)}</div><div class="text-xs text-slate-300">Kamar</div></div>
                                     <div class="bg-white/10 rounded-2xl p-4"><div class="text-2xl font-black">${escapeHtml(p.baths || 0)}</div><div class="text-xs text-slate-300">Mandi</div></div>
-                                    <div class="bg-white/10 rounded-2xl p-4"><div class="text-2xl font-black">${escapeHtml(p.sqft || 0)}</div><div class="text-xs text-slate-300">m²</div></div>
+                                    <div class="bg-white/10 rounded-2xl p-4"><div class="text-2xl font-black">${escapeHtml(p.sqft || 0)}</div><div class="text-xs text-slate-300">LB m²</div></div>
+                                    <div class="bg-white/10 rounded-2xl p-4"><div class="text-2xl font-black">${escapeHtml(p.landSize || 0)}</div><div class="text-xs text-slate-300">LT m²</div></div>
                                 </div>
                             </div>
                         </div>
@@ -2407,7 +2899,9 @@
                 <div class="container mx-auto px-4 max-w-6xl py-8">
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         <div class="lg:col-span-2 bg-white rounded-3xl border border-slate-200 p-6 md:p-8 shadow-sm">
-                            <h2 class="text-2xl font-black mb-4">Deskripsi Properti</h2>
+                            <h2 class="text-2xl font-black mb-4">Spesifikasi Lengkap</h2>
+                            ${specGrid}
+                            <h2 class="text-2xl font-black mt-8 mb-4">Deskripsi Properti</h2>
                             <p class="text-slate-600 leading-relaxed whitespace-pre-line">${escapeHtml(p.desc || 'Belum ada deskripsi.')}</p>
                         </div>
                         <div class="bg-white rounded-3xl border border-slate-200 p-6 md:p-8 shadow-sm h-fit">
