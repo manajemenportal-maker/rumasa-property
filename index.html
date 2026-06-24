@@ -185,23 +185,45 @@
 
 
 
-        <!-- =================== VIEW: PERMINTAAN PROPERTI =================== -->
+        <!-- =================== VIEW: PERMINTAAN PROPERTI & JASA =================== -->
         <section id="view-requests" class="view-section pb-12 bg-slate-50 min-h-screen">
             <div class="bg-slate-950 pt-14 pb-20 text-white relative overflow-hidden">
                 <div class="absolute inset-0 opacity-25 bg-[radial-gradient(circle_at_top_right,#2563eb,transparent_35%),radial-gradient(circle_at_bottom_left,#f59e0b,transparent_30%)]"></div>
                 <div class="container mx-auto px-4 relative z-10">
                     <div class="max-w-3xl">
-                        <span class="inline-flex items-center gap-2 bg-white/10 border border-white/15 px-3 py-1.5 rounded-full text-xs font-black uppercase tracking-widest mb-4"><i class="ph ph-globe-hemisphere-east"></i> Buyer Requirement</span>
-                        <h1 class="text-3xl md:text-5xl font-black mb-4">Permintaan Properti Terbuka</h1>
-                        <p class="text-slate-300 text-base md:text-lg leading-relaxed">Modelnya dibuat seperti marketplace B2B: kebutuhan pembeli terlihat semua, tetapi kontak dan komunikasi langsung hanya terbuka untuk member aktif atau akses berbayar.</p>
+                        <span class="inline-flex items-center gap-2 bg-white/10 border border-white/15 px-3 py-1.5 rounded-full text-xs font-black uppercase tracking-widest mb-4"><i class="ph ph-globe-hemisphere-east"></i> Requirement & Service Leads</span>
+                        <h1 class="text-3xl md:text-5xl font-black mb-4">Permintaan Properti & Jasa Terbuka</h1>
+                        <p class="text-slate-300 text-base md:text-lg leading-relaxed">Kebutuhan pembeli, penjual, agen, jasa tukang, desain, renovasi, kontraktor, legal, dan layanan pendukung properti terlihat semua. Kontak dan komunikasi langsung hanya terbuka untuk member aktif atau akses berbayar.</p>
                     </div>
                     <div class="mt-6 flex flex-col sm:flex-row gap-3">
-                        <button onclick="handlePostRequestClick()" class="bg-accent hover:bg-yellow-600 text-white px-5 py-3 rounded-2xl font-black shadow-lg flex items-center justify-center gap-2"><i class="ph ph-plus-circle"></i> Posting Permintaan</button>
+                        <button onclick="handlePostRequestClick()" class="bg-accent hover:bg-yellow-600 text-white px-5 py-3 rounded-2xl font-black shadow-lg flex items-center justify-center gap-2"><i class="ph ph-plus-circle"></i> Posting Permintaan / Jasa</button>
                         <button onclick="requestMembershipUpgrade(true); renderUserDashboard();" class="bg-white text-slate-900 hover:bg-slate-100 px-5 py-3 rounded-2xl font-black shadow-lg flex items-center justify-center gap-2"><i class="ph ph-crown"></i> Upgrade Member</button>
                     </div>
                 </div>
             </div>
             <div class="container mx-auto px-4 -mt-10 relative z-20">
+                <div class="bg-white border border-slate-200 rounded-3xl shadow-sm p-4 md:p-5 mb-5">
+                    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                        <div>
+                            <h2 class="text-xl font-black text-slate-900 flex items-center gap-2"><i class="ph ph-funnel text-primary"></i> Pilih Kategori Permintaan</h2>
+                            <p class="text-sm text-slate-500 mt-1">Properti dan bidang jasa tampil dalam satu pasar permintaan agar penyedia jasa, tukang, desainer, kontraktor, agen, dan owner bisa saling bertemu.</p>
+                        </div>
+                        <div class="relative w-full lg:w-80">
+                            <i class="ph ph-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                            <input id="request-search-input" oninput="setRequestSearch(this.value)" class="w-full pl-11 pr-4 py-3 border border-slate-200 rounded-2xl outline-none focus:border-primary" placeholder="Cari permintaan, lokasi, jasa...">
+                        </div>
+                    </div>
+                    <div id="request-filter-tabs" class="flex flex-wrap gap-2 mt-4">
+                        <button onclick="setRequestFilter('all')" data-request-filter="all" class="request-filter-btn bg-primary text-white px-4 py-2 rounded-full text-xs font-black shadow-sm"><i class="ph ph-squares-four mr-1"></i> Semua</button>
+                        <button onclick="setRequestFilter('Properti')" data-request-filter="Properti" class="request-filter-btn bg-slate-100 text-slate-700 px-4 py-2 rounded-full text-xs font-black hover:bg-blue-50 hover:text-primary"><i class="ph ph-house mr-1"></i> Properti</button>
+                        <button onclick="setRequestFilter('Jasa Tukang')" data-request-filter="Jasa Tukang" class="request-filter-btn bg-slate-100 text-slate-700 px-4 py-2 rounded-full text-xs font-black hover:bg-blue-50 hover:text-primary"><i class="ph ph-hammer mr-1"></i> Jasa Tukang</button>
+                        <button onclick="setRequestFilter('Desain')" data-request-filter="Desain" class="request-filter-btn bg-slate-100 text-slate-700 px-4 py-2 rounded-full text-xs font-black hover:bg-blue-50 hover:text-primary"><i class="ph ph-pencil-ruler mr-1"></i> Desain</button>
+                        <button onclick="setRequestFilter('Renovasi')" data-request-filter="Renovasi" class="request-filter-btn bg-slate-100 text-slate-700 px-4 py-2 rounded-full text-xs font-black hover:bg-blue-50 hover:text-primary"><i class="ph ph-paint-roller mr-1"></i> Renovasi</button>
+                        <button onclick="setRequestFilter('Kontraktor')" data-request-filter="Kontraktor" class="request-filter-btn bg-slate-100 text-slate-700 px-4 py-2 rounded-full text-xs font-black hover:bg-blue-50 hover:text-primary"><i class="ph ph-hard-hat mr-1"></i> Kontraktor</button>
+                        <button onclick="setRequestFilter('Legal & KPR')" data-request-filter="Legal & KPR" class="request-filter-btn bg-slate-100 text-slate-700 px-4 py-2 rounded-full text-xs font-black hover:bg-blue-50 hover:text-primary"><i class="ph ph-bank mr-1"></i> Legal & KPR</button>
+                        <button onclick="setRequestFilter('Layanan Lain')" data-request-filter="Layanan Lain" class="request-filter-btn bg-slate-100 text-slate-700 px-4 py-2 rounded-full text-xs font-black hover:bg-blue-50 hover:text-primary"><i class="ph ph-dots-three-outline mr-1"></i> Lainnya</button>
+                    </div>
+                </div>
                 <div id="requests-grid" class="grid grid-cols-1 lg:grid-cols-2 gap-5"></div>
             </div>
         </section>
@@ -1227,10 +1249,15 @@
         ];
 
         let propertyRequests = [
-            { id: 1, requesterEmail: 'budi@gmail.com', requesterName: 'Budi Pengguna', requesterPhone: '081234567890', title: 'Cari rumah siap huni area Tangerang', type: 'Rumah', transaction: 'Dibeli', location: 'Tangerang / BSD / Gading Serpong', budget: 900000000, need: '3 kamar, akses mobil, dekat sekolah', deadline: '30 hari', status: 'Aktif', createdAt: new Date().toISOString(), desc: 'Butuh rumah siap huni untuk keluarga. Lebih disukai SHM, lingkungan aman, dan bisa KPR.' },
-            { id: 2, requesterEmail: 'budi@gmail.com', requesterName: 'Budi Pengguna', requesterPhone: '081234567890', title: 'Butuh ruko untuk usaha kuliner', type: 'Ruko', transaction: 'Disewa', location: 'Kabupaten Tangerang', budget: 75000000, need: 'Pinggir jalan, parkir cukup, listrik minimal 3500 VA', deadline: '2 minggu', status: 'Aktif', createdAt: new Date().toISOString(), desc: 'Mencari ruko sewa tahunan untuk usaha makanan. Prioritas dekat perumahan padat.' }
+            { id: 1, segment: 'Properti', category: 'Properti', requesterEmail: 'budi@gmail.com', requesterName: 'Budi Pengguna', requesterPhone: '081234567890', title: 'Cari rumah siap huni area Tangerang', type: 'Rumah', serviceType: '', transaction: 'Dibeli', location: 'Tangerang / BSD / Gading Serpong', budget: 900000000, need: '3 kamar, akses mobil, dekat sekolah', deadline: '30 hari', status: 'Aktif', createdAt: new Date().toISOString(), desc: 'Butuh rumah siap huni untuk keluarga. Lebih disukai SHM, lingkungan aman, dan bisa KPR.' },
+            { id: 2, segment: 'Properti', category: 'Properti', requesterEmail: 'budi@gmail.com', requesterName: 'Budi Pengguna', requesterPhone: '081234567890', title: 'Butuh ruko untuk usaha kuliner', type: 'Ruko', serviceType: '', transaction: 'Disewa', location: 'Kabupaten Tangerang', budget: 75000000, need: 'Pinggir jalan, parkir cukup, listrik minimal 3500 VA', deadline: '2 minggu', status: 'Aktif', createdAt: new Date().toISOString(), desc: 'Mencari ruko sewa tahunan untuk usaha makanan. Prioritas dekat perumahan padat.' },
+            { id: 3, segment: 'Jasa Tukang', category: 'Jasa Tukang', requesterEmail: 'budi@gmail.com', requesterName: 'Budi Pengguna', requesterPhone: '081234567890', title: 'Butuh tukang renovasi kamar mandi', type: 'Jasa Tukang', serviceType: 'Tukang Bangunan / Plumbing', transaction: 'Butuh Jasa', location: 'Cikupa, Tangerang', budget: 3500000, need: 'Bongkar pasang keramik, waterproofing, pipa air, estimasi 5-7 hari', deadline: 'Minggu ini', status: 'Aktif', createdAt: new Date().toISOString(), desc: 'Dicari tukang yang bisa renovasi kamar mandi rumah tinggal. Harus bisa estimasi bahan dan pekerjaan borongan.' },
+            { id: 4, segment: 'Desain', category: 'Desain', requesterEmail: 'budi@gmail.com', requesterName: 'Budi Pengguna', requesterPhone: '081234567890', title: 'Cari jasa desain interior rumah minimalis', type: 'Desain Interior', serviceType: 'Desain Interior', transaction: 'Butuh Jasa', location: 'BSD / Online', budget: 2500000, need: 'Konsep ruang tamu, kitchen set, kamar utama, gambar 3D sederhana', deadline: '2 minggu', status: 'Aktif', createdAt: new Date().toISOString(), desc: 'Butuh desainer interior untuk konsep rumah kecil modern. Bisa meeting online dan revisi 2 kali.' }
         ];
-        let requestCounterId = 2;
+        let requestCounterId = 4;
+        let selectedRequestFilter = 'all';
+        let requestSearchTerm = '';
+        let uploadedRequestReference = '';
 
         let monetizationSettings = {
             freeAdsLimit: 1,
@@ -2191,30 +2218,62 @@
             const panel = document.getElementById('user-request-panel');
             if (!panel || !currentUser) return;
             const myRequests = (propertyRequests || []).filter(r => r.requesterEmail === currentUser.email);
+            const serviceOptions = getServiceCategoryOptions();
             panel.innerHTML = `
                 <div class="bg-white border border-slate-200 rounded-3xl shadow-sm p-5 md:p-6">
                     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-5">
                         <div>
-                            <h3 class="text-xl font-black text-slate-900 flex items-center gap-2"><i class="ph ph-megaphone text-primary"></i> Permintaan Properti Saya</h3>
-                            <p class="text-sm text-slate-500 mt-1">Kebutuhan pembeli terlihat semua seperti buy leads. Member dapat merespons lewat chat teks/WA sesuai setting.</p>
+                            <h3 class="text-xl font-black text-slate-900 flex items-center gap-2"><i class="ph ph-megaphone text-primary"></i> Permintaan Properti & Jasa Saya</h3>
+                            <p class="text-sm text-slate-500 mt-1">Posting kebutuhan properti, jasa tukang, desain, renovasi, kontraktor, legal, KPR, material, dan layanan pendukung lainnya. Semua terlihat publik; kontak tetap terkunci untuk non-member.</p>
                         </div>
                         <button onclick="toggleAdminForm('user-request-form')" class="bg-primary hover:bg-secondary text-white px-5 py-3 rounded-2xl font-black"><i class="ph ph-plus-circle mr-1"></i> Buat Permintaan</button>
                     </div>
-                    <form id="user-request-form" onsubmit="event.preventDefault(); submitPropertyRequest();" class="hidden bg-slate-50 border border-slate-200 rounded-3xl p-4 mb-5 space-y-3">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                            <input id="req-title" required class="p-3 border border-slate-300 rounded-2xl" placeholder="Judul kebutuhan, contoh: Cari rumah 3 kamar BSD">
-                            <select id="req-type" class="p-3 border border-slate-300 rounded-2xl bg-white"><option>Rumah</option><option>Apartemen</option><option>Tanah</option><option>Ruko</option><option>Gudang</option><option>Ruang Kantor</option><option>Kost</option><option>Villa</option><option>Pabrik</option></select>
-                            <select id="req-transaction" class="p-3 border border-slate-300 rounded-2xl bg-white"><option>Dibeli</option><option>Disewa</option><option>Kerjasama</option></select>
-                            <input id="req-budget" type="number" min="0" class="p-3 border border-slate-300 rounded-2xl" placeholder="Budget maksimal / tahun">
-                            <input id="req-location" required class="p-3 border border-slate-300 rounded-2xl" placeholder="Area/lokasi yang dicari">
-                            <input id="req-deadline" class="p-3 border border-slate-300 rounded-2xl" placeholder="Target waktu, contoh: 30 hari">
+                    <form id="user-request-form" onsubmit="event.preventDefault(); submitPropertyRequest();" class="hidden bg-slate-50 border border-slate-200 rounded-3xl p-4 mb-5 space-y-4">
+                        <div class="bg-white border border-slate-200 rounded-2xl p-4">
+                            <div class="font-black text-slate-900 mb-3 flex items-center gap-2"><i class="ph ph-list-checks text-primary"></i> Jenis Kebutuhan</div>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                <select id="req-segment" onchange="updateRequestFormMode()" class="p-3 border border-slate-300 rounded-2xl bg-white font-bold">
+                                    <option value="Properti">Properti</option>
+                                    <option value="Jasa Tukang">Jasa Tukang</option>
+                                    <option value="Desain">Desain / Arsitek</option>
+                                    <option value="Renovasi">Renovasi</option>
+                                    <option value="Kontraktor">Kontraktor</option>
+                                    <option value="Legal & KPR">Legal, Notaris, KPR</option>
+                                    <option value="Layanan Lain">Layanan Lain</option>
+                                </select>
+                                <select id="req-type" class="p-3 border border-slate-300 rounded-2xl bg-white">${serviceOptions}</select>
+                                <select id="req-transaction" class="p-3 border border-slate-300 rounded-2xl bg-white"><option>Dibeli</option><option>Disewa</option><option>Butuh Jasa</option><option>Cari Mitra</option><option>Kerjasama</option></select>
+                            </div>
+                            <p id="req-mode-help" class="text-xs text-slate-500 mt-2">Pilih Properti untuk kebutuhan beli/sewa. Pilih Jasa Tukang/Desain/Renovasi untuk mencari penyedia jasa.</p>
                         </div>
-                        <input id="req-need" class="w-full p-3 border border-slate-300 rounded-2xl" placeholder="Spesifikasi ringkas, contoh: 3 kamar, akses mobil, SHM">
-                        <textarea id="req-desc" rows="3" class="w-full p-3 border border-slate-300 rounded-2xl" placeholder="Detail kebutuhan"></textarea>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <input id="req-title" required class="p-3 border border-slate-300 rounded-2xl" placeholder="Judul kebutuhan, contoh: Butuh tukang cat rumah / cari rumah 3 kamar BSD">
+                            <input id="req-budget" type="number" min="0" class="p-3 border border-slate-300 rounded-2xl" placeholder="Budget / estimasi biaya">
+                            <input id="req-location" required class="p-3 border border-slate-300 rounded-2xl" placeholder="Area/lokasi proyek atau properti">
+                            <input id="req-deadline" class="p-3 border border-slate-300 rounded-2xl" placeholder="Target waktu, contoh: minggu ini / 30 hari">
+                            <input id="req-area" class="p-3 border border-slate-300 rounded-2xl" placeholder="Luas / volume pekerjaan, contoh: 60 m² / 2 lantai">
+                            <input id="req-urgency" class="p-3 border border-slate-300 rounded-2xl" placeholder="Prioritas, contoh: urgent / survey dulu / bisa nego">
+                        </div>
+                        <input id="req-need" class="w-full p-3 border border-slate-300 rounded-2xl" placeholder="Spesifikasi ringkas, contoh: desain 3D, tukang plafon, cat exterior, legal AJB/SHM, KPR, borongan renovasi">
+                        <textarea id="req-desc" rows="3" class="w-full p-3 border border-slate-300 rounded-2xl" placeholder="Detail kebutuhan, ukuran, bahan, target, kondisi lokasi, catatan khusus"></textarea>
+                        <div class="bg-white border border-slate-200 rounded-2xl p-4">
+                            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                                <div>
+                                    <div class="font-black text-slate-900">Foto referensi / lokasi pekerjaan</div>
+                                    <p class="text-xs text-slate-500 mt-1">Opsional. Bisa dipakai untuk contoh desain, kondisi rumah, area bocor, fasad, atau layout.</p>
+                                </div>
+                                <label class="cursor-pointer bg-slate-900 hover:bg-slate-700 text-white px-4 py-2 rounded-2xl text-sm font-black inline-flex items-center justify-center gap-2">
+                                    <i class="ph ph-image-square"></i> Upload Foto
+                                    <input id="req-reference-file" type="file" accept="image/*" class="hidden" onchange="handleRequestReferenceUpload(this)">
+                                </label>
+                            </div>
+                            <div id="req-reference-preview" class="mt-3 hidden"></div>
+                        </div>
                         <div class="flex justify-end"><button class="bg-slate-900 text-white px-6 py-3 rounded-2xl font-black">Simpan Permintaan</button></div>
                     </form>
-                    <div class="space-y-3">${myRequests.length ? myRequests.map(r => `<div class="border border-slate-200 rounded-2xl p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3"><div><div class="font-black text-slate-900">${escapeHtml(r.title)}</div><div class="text-xs text-slate-500">${escapeHtml(r.type)} • ${escapeHtml(r.location)} • Budget Rp ${formatNumber(r.budget || 0)}</div></div><span class="text-xs font-black px-3 py-1 rounded-full bg-green-100 text-green-700">${escapeHtml(r.status || 'Aktif')}</span></div>`).join('') : `<div class="bg-slate-100 border border-dashed border-slate-300 rounded-2xl p-5 text-sm text-slate-500">Belum ada permintaan. Klik Buat Permintaan agar kebutuhan Anda terlihat oleh penjual/agen.</div>`}</div>
+                    <div class="space-y-3">${myRequests.length ? myRequests.map(r => renderMyRequestRow(r)).join('') : `<div class="bg-slate-100 border border-dashed border-slate-300 rounded-2xl p-5 text-sm text-slate-500">Belum ada permintaan. Klik Buat Permintaan agar kebutuhan Anda terlihat oleh penjual, agen, tukang, desainer, atau kontraktor.</div>`}</div>
                 </div>`;
+            setTimeout(updateRequestFormMode, 50);
         }
 
         function renderUserDashboard() {
@@ -2393,6 +2452,114 @@
 
 
 
+        function getServiceCategoryOptions() {
+            const groups = [
+                ['Properti', ['Rumah', 'Apartemen', 'Tanah', 'Ruko', 'Gudang', 'Ruang Kantor', 'Kost', 'Villa', 'Pabrik']],
+                ['Jasa Tukang', ['Tukang Bangunan', 'Tukang Cat', 'Tukang Keramik', 'Tukang Plafon', 'Tukang Listrik', 'Tukang Plumbing', 'Tukang Las / Kanopi', 'Tukang Kayu / Furniture', 'Tukang Taman', 'Tukang AC']],
+                ['Desain', ['Desain Rumah', 'Desain Interior', 'Desain Fasad', 'Desain Ruko', 'Desain 3D', 'Arsitek', 'Drafter / Gambar Kerja', 'Estimator RAB']],
+                ['Renovasi', ['Renovasi Rumah', 'Renovasi Kamar Mandi', 'Renovasi Dapur', 'Renovasi Atap Bocor', 'Waterproofing', 'Pengecatan', 'Pemasangan Keramik', 'Perbaikan Struktur']],
+                ['Kontraktor', ['Kontraktor Rumah', 'Kontraktor Ruko', 'Kontraktor Gudang', 'Kontraktor Interior', 'Bangun Baru', 'Borongan Tenaga', 'Borongan Material + Tenaga']],
+                ['Legal & KPR', ['Notaris / PPAT', 'Balik Nama Sertifikat', 'AJB / PPJB', 'Cek Sertifikat', 'Konsultan KPR', 'Appraisal', 'Legal Properti']],
+                ['Layanan Lain', ['Surveyor', 'Jasa Foto / Video Properti', 'Pindahan Rumah', 'Cleaning Service', 'Material Bangunan', 'Keamanan / Security', 'Pest Control', 'Internet / CCTV', 'Lainnya']]
+            ];
+            return groups.map(([label, items]) => `<optgroup label="${label}">${items.map(item => `<option value="${item}">${item}</option>`).join('')}</optgroup>`).join('');
+        }
+
+        function updateRequestFormMode() {
+            const segment = document.getElementById('req-segment')?.value || 'Properti';
+            const transaction = document.getElementById('req-transaction');
+            const help = document.getElementById('req-mode-help');
+            if (transaction) transaction.value = segment === 'Properti' ? 'Dibeli' : 'Butuh Jasa';
+            if (help) {
+                help.innerText = segment === 'Properti'
+                    ? 'Mode properti: cocok untuk cari rumah, tanah, ruko, gudang, kantor, sewa atau beli.'
+                    : 'Mode jasa: cocok untuk tukang, desain, renovasi, kontraktor, legal, KPR, material, dan layanan pendukung properti.';
+            }
+        }
+
+        function handleRequestReferenceUpload(input) {
+            const file = input?.files?.[0];
+            const preview = document.getElementById('req-reference-preview');
+            if (!file) return;
+            if (!file.type.startsWith('image/')) { showMessage('File harus berupa gambar.'); return; }
+            if (file.size > 4 * 1024 * 1024) { showMessage('Foto referensi maksimal 4 MB.'); return; }
+            const reader = new FileReader();
+            reader.onload = e => {
+                uploadedRequestReference = e.target.result;
+                if (preview) {
+                    preview.classList.remove('hidden');
+                    preview.innerHTML = `<div class="flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-2xl p-3"><img src="${uploadedRequestReference}" class="w-20 h-20 object-cover rounded-xl border"><div class="flex-1"><div class="font-black text-slate-900">Foto referensi siap disimpan</div><div class="text-xs text-slate-500">Nama file tidak ditampilkan. Foto akan tampil di kartu permintaan.</div></div><button type="button" onclick="clearRequestReference()" class="bg-red-50 text-red-600 px-3 py-2 rounded-xl font-black text-xs">Hapus</button></div>`;
+                }
+                input.value = '';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function clearRequestReference() {
+            uploadedRequestReference = '';
+            const preview = document.getElementById('req-reference-preview');
+            if (preview) { preview.classList.add('hidden'); preview.innerHTML = ''; }
+        }
+
+        function getRequestSegment(req) {
+            const knownProperty = ['Rumah','Apartemen','Tanah','Ruko','Gudang','Ruang Kantor','Kost','Villa','Pabrik'];
+            if (req.segment) return req.segment;
+            if (req.category && req.category !== 'Properti') return req.category;
+            if (knownProperty.includes(req.type)) return 'Properti';
+            return req.category || 'Properti';
+        }
+
+        function getRequestIcon(segment) {
+            const icons = { 'Properti': 'house', 'Jasa Tukang': 'hammer', 'Desain': 'pencil-ruler', 'Renovasi': 'paint-roller', 'Kontraktor': 'hard-hat', 'Legal & KPR': 'bank', 'Layanan Lain': 'dots-three-outline' };
+            return icons[segment] || 'list-checks';
+        }
+
+        function getRequestBadgeClass(segment) {
+            const map = {
+                'Properti': 'bg-blue-50 text-blue-700 border-blue-100',
+                'Jasa Tukang': 'bg-orange-50 text-orange-700 border-orange-100',
+                'Desain': 'bg-purple-50 text-purple-700 border-purple-100',
+                'Renovasi': 'bg-emerald-50 text-emerald-700 border-emerald-100',
+                'Kontraktor': 'bg-slate-100 text-slate-700 border-slate-200',
+                'Legal & KPR': 'bg-indigo-50 text-indigo-700 border-indigo-100',
+                'Layanan Lain': 'bg-amber-50 text-amber-700 border-amber-100'
+            };
+            return map[segment] || 'bg-blue-50 text-blue-700 border-blue-100';
+        }
+
+        function setRequestFilter(filter) {
+            selectedRequestFilter = filter || 'all';
+            document.querySelectorAll('.request-filter-btn').forEach(btn => {
+                const active = btn.dataset.requestFilter === selectedRequestFilter;
+                btn.classList.toggle('bg-primary', active);
+                btn.classList.toggle('text-white', active);
+                btn.classList.toggle('shadow-sm', active);
+                btn.classList.toggle('bg-slate-100', !active);
+                btn.classList.toggle('text-slate-700', !active);
+            });
+            renderPropertyRequests();
+            if (typeof rememberCurrentLocation === 'function') rememberCurrentLocation();
+        }
+
+        function setRequestSearch(value) {
+            requestSearchTerm = String(value || '').toLowerCase().trim();
+            renderPropertyRequests();
+        }
+
+        function renderMyRequestRow(r) {
+            const segment = getRequestSegment(r);
+            return `<div class="border border-slate-200 rounded-2xl p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                <div class="flex items-start gap-3">
+                    ${r.referenceImage ? `<img src="${r.referenceImage}" class="w-14 h-14 rounded-xl object-cover border border-slate-200">` : `<div class="w-14 h-14 rounded-xl bg-slate-100 flex items-center justify-center text-slate-500"><i class="ph ph-${getRequestIcon(segment)} text-2xl"></i></div>`}
+                    <div>
+                        <div class="font-black text-slate-900">${escapeHtml(r.title)}</div>
+                        <div class="text-xs text-slate-500">${escapeHtml(segment)} • ${escapeHtml(r.type || r.serviceType || '-')} • ${escapeHtml(r.location || '-')} • Budget Rp ${formatNumber(r.budget || 0)}</div>
+                    </div>
+                </div>
+                <span class="text-xs font-black px-3 py-1 rounded-full bg-green-100 text-green-700 self-start md:self-center">${escapeHtml(r.status || 'Aktif')}</span>
+            </div>`;
+        }
+
         function handlePostRequestClick() {
             if (!currentUser) { showMessage('Silakan masuk atau daftar dulu untuk posting permintaan.'); navigate('auth'); toggleAuth('login'); return; }
             renderUserDashboard(); navigate('user');
@@ -2406,26 +2573,35 @@
             const location = document.getElementById('req-location')?.value.trim();
             if (!title || !location) { showMessage('Judul dan lokasi wajib diisi.'); return; }
             requestCounterId++;
+            const segment = document.getElementById('req-segment')?.value || 'Properti';
+            const selectedType = document.getElementById('req-type')?.value || (segment === 'Properti' ? 'Rumah' : segment);
             propertyRequests.unshift({
                 id: requestCounterId,
+                segment,
+                category: segment,
                 requesterEmail: currentUser.email,
                 requesterName: currentUser.name,
                 requesterPhone: currentUser.phone,
                 title,
-                type: document.getElementById('req-type')?.value || 'Rumah',
-                transaction: document.getElementById('req-transaction')?.value || 'Dibeli',
+                type: selectedType,
+                serviceType: segment === 'Properti' ? '' : selectedType,
+                transaction: document.getElementById('req-transaction')?.value || (segment === 'Properti' ? 'Dibeli' : 'Butuh Jasa'),
                 location,
                 budget: Number(document.getElementById('req-budget')?.value) || 0,
                 need: document.getElementById('req-need')?.value || '',
                 deadline: document.getElementById('req-deadline')?.value || '',
+                area: document.getElementById('req-area')?.value || '',
+                urgency: document.getElementById('req-urgency')?.value || '',
                 desc: document.getElementById('req-desc')?.value || '',
+                referenceImage: uploadedRequestReference || '',
                 status: 'Aktif',
                 createdAt: new Date().toISOString()
             });
+            uploadedRequestReference = '';
             saveAppState();
             renderUserDashboard();
             renderPropertyRequests();
-            showMessage('Permintaan properti berhasil diposting dan terlihat publik.');
+            showMessage(segment === 'Properti' ? 'Permintaan properti berhasil diposting dan terlihat publik.' : 'Permintaan jasa berhasil diposting dan terlihat publik.');
         }
 
         function isRequestContactAllowed(req) {
@@ -2470,12 +2646,17 @@
         function renderPropertyRequests() {
             const grid = document.getElementById('requests-grid');
             if (!grid) return;
-            const active = (propertyRequests || []).filter(r => String(r.status || 'Aktif').toLowerCase() !== 'nonaktif');
+            let active = (propertyRequests || []).filter(r => String(r.status || 'Aktif').toLowerCase() !== 'nonaktif');
+            if (selectedRequestFilter && selectedRequestFilter !== 'all') active = active.filter(r => getRequestSegment(r) === selectedRequestFilter);
+            if (requestSearchTerm) {
+                active = active.filter(r => [r.title, r.type, r.serviceType, r.transaction, r.location, r.need, r.desc, r.requesterName, getRequestSegment(r)].join(' ').toLowerCase().includes(requestSearchTerm));
+            }
             if (!active.length) {
-                grid.innerHTML = `<div class="col-span-full bg-white border border-dashed border-slate-300 rounded-3xl p-8 text-center text-slate-500"><i class="ph ph-list-checks text-5xl text-slate-300 block mb-3"></i><b>Belum ada permintaan properti.</b><br>Posting kebutuhan pembeli agar penjual/agen bisa merespons.</div>`;
+                grid.innerHTML = `<div class="col-span-full bg-white border border-dashed border-slate-300 rounded-3xl p-8 text-center text-slate-500"><i class="ph ph-list-checks text-5xl text-slate-300 block mb-3"></i><b>Belum ada permintaan pada kategori ini.</b><br>Posting kebutuhan properti atau jasa agar penjual, agen, tukang, desainer, dan kontraktor bisa merespons.</div>`;
                 return;
             }
             grid.innerHTML = active.map(req => {
+                const segment = getRequestSegment(req);
                 const requester = getUserByEmail(req.requesterEmail) || { name: req.requesterName, phone: req.requesterPhone, communicationSettings: { mode: 'website_wa', allowWhatsapp: true } };
                 normalizeUserCommerceState(requester);
                 const unlocked = currentUser && (isMembershipActive(currentUser) || req.requesterEmail === currentUser.email);
@@ -2484,13 +2665,25 @@
                     ? `<div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-4">${waAllowed ? `<button onclick="openRequestWhatsapp(${Number(req.id)})" class="bg-green-600 hover:bg-green-700 text-white rounded-2xl py-3 font-black flex items-center justify-center gap-2"><i class="ph ph-whatsapp-logo text-xl"></i> WA</button>` : `<div class="bg-slate-100 text-slate-600 rounded-2xl py-3 font-black flex items-center justify-center gap-2"><i class="ph ph-chat-circle-text"></i> WA off</div>`}<button onclick="openDirectChatWithRequest(${Number(req.id)})" class="bg-slate-900 hover:bg-slate-700 text-white rounded-2xl py-3 font-black flex items-center justify-center gap-2"><i class="ph ph-chat-circle-text text-xl"></i> Chat Website</button></div>`
                     : `<div class="mt-4 bg-amber-50 border border-amber-200 rounded-2xl p-4"><div class="font-black text-amber-800 flex items-center gap-2"><i class="ph ph-lock-key"></i> Kontak dikunci</div><p class="text-sm text-amber-700 mt-1">Permintaan terlihat publik, tetapi nomor WA/chat user hanya untuk member aktif.</p><button onclick="requestMembershipUpgrade(true); renderUserDashboard();" class="mt-3 w-full bg-primary hover:bg-secondary text-white rounded-2xl py-3 font-black"><i class="ph ph-crown mr-1"></i> Upgrade untuk Respon</button></div>`;
                 return `<div class="bg-white rounded-3xl border border-slate-200 shadow-sm p-5 md:p-6">
-                    <div class="flex items-start justify-between gap-3 mb-4"><div><span class="inline-flex bg-blue-50 text-blue-700 border border-blue-100 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest">${escapeHtml(req.transaction || 'Dibeli')}</span><h3 class="text-xl font-black text-slate-900 mt-3 leading-tight">${escapeHtml(req.title)}</h3></div><span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-black">${escapeHtml(req.status || 'Aktif')}</span></div>
+                    <div class="flex items-start justify-between gap-3 mb-4">
+                        <div>
+                            <span class="inline-flex items-center gap-1 border ${getRequestBadgeClass(segment)} px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest"><i class="ph ph-${getRequestIcon(segment)}"></i> ${escapeHtml(segment)}</span>
+                            <h3 class="text-xl font-black text-slate-900 mt-3 leading-tight">${escapeHtml(req.title)}</h3>
+                        </div>
+                        <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-black">${escapeHtml(req.status || 'Aktif')}</span>
+                    </div>
+                    ${req.referenceImage ? `<img src="${req.referenceImage}" class="w-full h-44 object-cover rounded-2xl border border-slate-200 mb-4">` : ''}
                     <div class="grid grid-cols-2 gap-3 text-sm mb-4">
-                        <div class="bg-slate-50 rounded-2xl p-3"><div class="text-[10px] font-black text-slate-400 uppercase">Tipe</div><b>${escapeHtml(req.type || '-')}</b></div>
+                        <div class="bg-slate-50 rounded-2xl p-3"><div class="text-[10px] font-black text-slate-400 uppercase">Bidang</div><b>${escapeHtml(req.type || req.serviceType || '-')}</b></div>
                         <div class="bg-slate-50 rounded-2xl p-3"><div class="text-[10px] font-black text-slate-400 uppercase">Budget</div><b>Rp ${formatNumber(req.budget || 0)}</b></div>
+                        <div class="bg-slate-50 rounded-2xl p-3"><div class="text-[10px] font-black text-slate-400 uppercase">Status</div><b>${escapeHtml(req.transaction || 'Butuh Jasa')}</b></div>
+                        <div class="bg-slate-50 rounded-2xl p-3"><div class="text-[10px] font-black text-slate-400 uppercase">Target</div><b>${escapeHtml(req.deadline || 'Terbuka')}</b></div>
                         <div class="bg-slate-50 rounded-2xl p-3 col-span-2"><div class="text-[10px] font-black text-slate-400 uppercase">Lokasi</div><b>${escapeHtml(req.location || '-')}</b></div>
+                        ${req.area ? `<div class="bg-slate-50 rounded-2xl p-3"><div class="text-[10px] font-black text-slate-400 uppercase">Luas/Volume</div><b>${escapeHtml(req.area)}</b></div>` : ''}
+                        ${req.urgency ? `<div class="bg-slate-50 rounded-2xl p-3"><div class="text-[10px] font-black text-slate-400 uppercase">Prioritas</div><b>${escapeHtml(req.urgency)}</b></div>` : ''}
                     </div>
                     <p class="text-sm text-slate-600 leading-relaxed mb-3">${escapeHtml(req.need || req.desc || 'Kebutuhan belum dirinci.')}</p>
+                    ${req.desc ? `<p class="text-xs text-slate-500 leading-relaxed mb-3 bg-slate-50 rounded-2xl p-3">${escapeHtml(req.desc)}</p>` : ''}
                     <div class="text-xs text-slate-500 flex flex-wrap gap-2"><span><i class="ph ph-user"></i> ${escapeHtml(req.requesterName || requester.name || 'User')}</span><span><i class="ph ph-clock"></i> ${escapeHtml(req.deadline || 'Terbuka')}</span></div>
                     ${lockBox}
                 </div>`;
