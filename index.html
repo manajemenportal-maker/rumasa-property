@@ -56,10 +56,11 @@
                 <span class="text-xl font-bold tracking-tight">RUMASA</span>
             </div>
             
-            <nav class="hidden md:flex items-center gap-8 font-medium" id="desktop-nav">
+            <nav class="hidden md:flex items-center gap-6 font-medium" id="desktop-nav">
                 <a href="javascript:void(0)" onclick="handleNavMenu('home', 'all', 'all')" id="nav-home" class="nav-link text-primary transition">Beranda</a>
                 <a href="javascript:void(0)" onclick="handleNavMenu('home', 'all', 'Dijual')" id="nav-dijual" class="nav-link text-slate-500 hover:text-primary transition">Dijual</a>
                 <a href="javascript:void(0)" onclick="handleNavMenu('home', 'all', 'Disewakan')" id="nav-disewakan" class="nav-link text-slate-500 hover:text-primary transition">Disewakan</a>
+                <a href="javascript:void(0)" onclick="handleNavMenu('requests', 'all', 'all')" id="nav-requests" class="nav-link text-slate-500 hover:text-primary transition">Permintaan</a>
                 <a href="javascript:void(0)" onclick="handleNavMenu('proyek', 'all', 'all')" id="nav-proyek" class="nav-link text-slate-500 hover:text-primary transition">Proyek Baru</a>
                 <a href="javascript:void(0)" onclick="handleNavMenu('articles', 'all', 'all')" id="nav-articles" class="nav-link text-slate-500 hover:text-primary transition">Artikel & Ulasan</a>
             </nav>
@@ -135,6 +136,10 @@
                                 </div>
                                 <button onclick="showMessage('Mencari properti...')" class="bg-primary hover:bg-secondary text-white rounded-2xl md:rounded-full px-8 py-4 font-semibold shrink-0"><i class="ph ph-magnifying-glass text-xl"></i> Cari</button>
                             </div>
+                            <div class="mt-5 flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
+                                <button onclick="navigate('requests'); renderPropertyRequests();" class="bg-white/15 hover:bg-white/25 border border-white/20 text-white px-5 py-3 rounded-2xl font-black backdrop-blur flex items-center justify-center gap-2"><i class="ph ph-list-checks"></i> Lihat Permintaan Pembeli</button>
+                                <button onclick="handlePostRequestClick()" class="bg-accent hover:bg-yellow-600 text-white px-5 py-3 rounded-2xl font-black shadow-lg flex items-center justify-center gap-2"><i class="ph ph-megaphone"></i> Buat Permintaan</button>
+                            </div>
                         </div>
                         
                         <!-- Tempat Iklan Review (Dimuat oleh JS: renderHomeFeaturedReview) -->
@@ -175,6 +180,29 @@
                 </div>
                 <div id="property-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 px-4"></div>
                 <div id="pagination-container" class="mt-12 flex justify-center items-center gap-2 px-4"></div>
+            </div>
+        </section>
+
+
+
+        <!-- =================== VIEW: PERMINTAAN PROPERTI =================== -->
+        <section id="view-requests" class="view-section pb-12 bg-slate-50 min-h-screen">
+            <div class="bg-slate-950 pt-14 pb-20 text-white relative overflow-hidden">
+                <div class="absolute inset-0 opacity-25 bg-[radial-gradient(circle_at_top_right,#2563eb,transparent_35%),radial-gradient(circle_at_bottom_left,#f59e0b,transparent_30%)]"></div>
+                <div class="container mx-auto px-4 relative z-10">
+                    <div class="max-w-3xl">
+                        <span class="inline-flex items-center gap-2 bg-white/10 border border-white/15 px-3 py-1.5 rounded-full text-xs font-black uppercase tracking-widest mb-4"><i class="ph ph-globe-hemisphere-east"></i> Buyer Requirement</span>
+                        <h1 class="text-3xl md:text-5xl font-black mb-4">Permintaan Properti Terbuka</h1>
+                        <p class="text-slate-300 text-base md:text-lg leading-relaxed">Modelnya dibuat seperti marketplace B2B: kebutuhan pembeli terlihat semua, tetapi kontak dan komunikasi langsung hanya terbuka untuk member aktif atau akses berbayar.</p>
+                    </div>
+                    <div class="mt-6 flex flex-col sm:flex-row gap-3">
+                        <button onclick="handlePostRequestClick()" class="bg-accent hover:bg-yellow-600 text-white px-5 py-3 rounded-2xl font-black shadow-lg flex items-center justify-center gap-2"><i class="ph ph-plus-circle"></i> Posting Permintaan</button>
+                        <button onclick="requestMembershipUpgrade(true); renderUserDashboard();" class="bg-white text-slate-900 hover:bg-slate-100 px-5 py-3 rounded-2xl font-black shadow-lg flex items-center justify-center gap-2"><i class="ph ph-crown"></i> Upgrade Member</button>
+                    </div>
+                </div>
+            </div>
+            <div class="container mx-auto px-4 -mt-10 relative z-20">
+                <div id="requests-grid" class="grid grid-cols-1 lg:grid-cols-2 gap-5"></div>
             </div>
         </section>
 
@@ -413,7 +441,10 @@
                         <button onclick="toggleUserChat()" class="bg-slate-900 text-white px-4 py-2 rounded-lg font-medium hover:bg-slate-800 transition">Chat Admin</button>
                     </div>
                 </div>
+                <div id="user-commerce-overview-panel" class="max-w-4xl mb-8"></div>
+                <div id="user-communication-settings-panel" class="max-w-4xl mb-8"></div>
                 <div id="user-membership-panel" class="max-w-4xl mb-8"></div>
+                <div id="user-request-panel" class="max-w-4xl mb-8"></div>
                 <div class="max-w-4xl">
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="text-lg font-bold">Iklan Properti Saya</h3>
@@ -1082,8 +1113,8 @@
             <a href="javascript:void(0)" onclick="handleNavMenu('home', 'all', 'all')" class="flex flex-col items-center justify-center w-full h-full text-primary">
                 <i class="ph-fill ph-house text-2xl mb-1"></i><span class="text-[10px] font-medium">Beranda</span>
             </a>
-            <a href="javascript:void(0)" onclick="handleNavMenu('home', 'all', 'all'); document.querySelector('input').focus();" class="flex flex-col items-center justify-center w-full h-full text-slate-500 hover:text-primary transition">
-                <i class="ph ph-magnifying-glass text-2xl mb-1"></i><span class="text-[10px] font-medium">Cari</span>
+            <a href="javascript:void(0)" onclick="handleNavMenu('requests', 'all', 'all')" class="flex flex-col items-center justify-center w-full h-full text-slate-500 hover:text-primary transition">
+                <i class="ph ph-list-checks text-2xl mb-1"></i><span class="text-[10px] font-medium">Permintaan</span>
             </a>
             <a href="javascript:void(0)" onclick="handlePasangIklanClick()" class="flex flex-col items-center justify-center w-full h-full text-slate-500 hover:text-primary transition relative -top-3">
                 <div class="bg-primary text-white p-3 rounded-full shadow-lg shadow-blue-500/40"><i class="ph ph-plus text-xl"></i></div>
@@ -1189,6 +1220,13 @@
             { id: 2, icon: 'star', text: 'CASHBACK hingga Rp 50 juta untuk properti pilihan.', active: true },
             { id: 3, icon: 'rocket', text: 'MEGA LAUNCHING: Dapatkan harga perdana unit terbatas.', active: true }
         ];
+
+        let propertyRequests = [
+            { id: 1, requesterEmail: 'budi@gmail.com', requesterName: 'Budi Pengguna', requesterPhone: '081234567890', title: 'Cari rumah siap huni area Tangerang', type: 'Rumah', transaction: 'Dibeli', location: 'Tangerang / BSD / Gading Serpong', budget: 900000000, need: '3 kamar, akses mobil, dekat sekolah', deadline: '30 hari', status: 'Aktif', createdAt: new Date().toISOString(), desc: 'Butuh rumah siap huni untuk keluarga. Lebih disukai SHM, lingkungan aman, dan bisa KPR.' },
+            { id: 2, requesterEmail: 'budi@gmail.com', requesterName: 'Budi Pengguna', requesterPhone: '081234567890', title: 'Butuh ruko untuk usaha kuliner', type: 'Ruko', transaction: 'Disewa', location: 'Kabupaten Tangerang', budget: 75000000, need: 'Pinggir jalan, parkir cukup, listrik minimal 3500 VA', deadline: '2 minggu', status: 'Aktif', createdAt: new Date().toISOString(), desc: 'Mencari ruko sewa tahunan untuk usaha makanan. Prioritas dekat perumahan padat.' }
+        ];
+        let requestCounterId = 2;
+
         let monetizationSettings = {
             freeAdsLimit: 1,
             membershipPrice: 75000,
@@ -1198,7 +1236,7 @@
         };
         let peerChatDB = {};
         let activePeerChatKey = '';
-        const RUMASA_STORAGE_KEY = 'rumasa_marketplace_live_v19';
+        const RUMASA_STORAGE_KEY = 'rumasa_marketplace_live_v20';
         const RUMASA_LOGO_DATA = 'data:image/webp;base64,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';
 
         const firebaseConfig = {
@@ -1218,7 +1256,7 @@
 
         function buildAppSnapshot() {
             ensureRunningAdsReady();
-            normalizeAllUsersCommerceState(); return { usersDB, invoiceDB, chatDatabase, peerChatDB, carouselItems, articlesDB, featuredArticleId, runningAds, monetizationSettings, properties, adCounterId, invoiceCounter };
+            normalizeAllUsersCommerceState(); return { usersDB, invoiceDB, chatDatabase, peerChatDB, carouselItems, articlesDB, featuredArticleId, runningAds, propertyRequests, requestCounterId, monetizationSettings, properties, adCounterId, invoiceCounter };
         }
 
         function applyAppSnapshot(data = {}) {
@@ -1230,6 +1268,8 @@
             if (data.articlesDB) articlesDB = data.articlesDB;
             if (data.featuredArticleId) featuredArticleId = data.featuredArticleId;
             if (Array.isArray(data.runningAds)) runningAds = data.runningAds;
+            if (Array.isArray(data.propertyRequests)) propertyRequests = data.propertyRequests;
+            if (data.requestCounterId) requestCounterId = data.requestCounterId;
             if (data.monetizationSettings) monetizationSettings = { ...monetizationSettings, ...data.monetizationSettings };
             ensureRunningAdsReady();
             normalizeAllUsersCommerceState();
@@ -1439,6 +1479,7 @@
             document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
             const targetView = document.getElementById(`view-${viewId}`);
             if (targetView) targetView.classList.add('active');
+            if (viewId === 'requests') setTimeout(renderPropertyRequests, 30);
             
             // Otomatis menutup dropdown menu profil jika sedang terbuka
             const dropdown = document.getElementById('dropdown-menu');
@@ -1506,7 +1547,8 @@
 
             if (usersDB[email]) { showMessage('Pendaftaran gagal: Email sudah terdaftar.'); return; }
 
-            usersDB[email] = { name: name, email: email, phone: phone, role: role, ads: [], membership: { active: false, expiresAt: '' } };
+            usersDB[email] = { name: name, email: email, phone: phone, role: role, ads: [], membership: { active: false, expiresAt: '' }, communicationSettings: { mode: 'website_wa', allowWebsiteChat: true, allowWhatsapp: true, autoReply: 'Halo, terima kasih sudah menghubungi saya melalui RUMASA.' } };
+            normalizeUserCommerceState(usersDB[email]);
             showMessage('Pendaftaran akun berhasil! Silakan masuk.');
             toggleAuth('login');
             saveAppState(); renderAdminUsers(); updateAdminRingkasan();
@@ -1742,6 +1784,10 @@
             if (!user) return user;
             if (!Array.isArray(user.ads)) user.ads = [];
             if (!user.membership) user.membership = { active: false, expiresAt: '' };
+            if (!user.communicationSettings) user.communicationSettings = { mode: 'website_wa', allowWebsiteChat: true, allowWhatsapp: true, autoReply: 'Halo, terima kasih sudah menghubungi saya melalui RUMASA.' };
+            if (!user.communicationSettings.mode) user.communicationSettings.mode = user.communicationSettings.allowWhatsapp === false ? 'website' : 'website_wa';
+            user.communicationSettings.allowWebsiteChat = true;
+            user.communicationSettings.allowWhatsapp = user.communicationSettings.mode === 'website_wa';
             if (user.role === 'Pencari Properti') user.role = 'Pembeli';
             return user;
         }
@@ -1805,6 +1851,83 @@
             });
         }
 
+        function renderUserCommerceOverviewPanel() {
+            const panel = document.getElementById('user-commerce-overview-panel');
+            if (!panel || !currentUser) return;
+            normalizeUserCommerceState(currentUser);
+            const member = isMembershipActive(currentUser);
+            const freeLimit = Number(monetizationSettings.freeAdsLimit || 1);
+            const usedAds = (currentUser.ads || []).length;
+            const myRequests = (propertyRequests || []).filter(r => r.requesterEmail === currentUser.email).length;
+            panel.innerHTML = `
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+                    <div class="bg-white border border-slate-200 rounded-3xl p-5 shadow-sm">
+                        <div class="text-xs font-black uppercase tracking-widest text-slate-400">Status</div>
+                        <div class="mt-2 text-xl font-black ${member ? 'text-green-700' : 'text-slate-900'}">${escapeHtml(getMembershipLabel(currentUser))}</div>
+                    </div>
+                    <div class="bg-white border border-slate-200 rounded-3xl p-5 shadow-sm">
+                        <div class="text-xs font-black uppercase tracking-widest text-slate-400">Jatah Iklan</div>
+                        <div class="mt-2 text-xl font-black text-primary">${usedAds}/${member ? 'Unlimited' : freeLimit}</div>
+                    </div>
+                    <div class="bg-white border border-slate-200 rounded-3xl p-5 shadow-sm">
+                        <div class="text-xs font-black uppercase tracking-widest text-slate-400">Permintaan Saya</div>
+                        <div class="mt-2 text-xl font-black text-slate-900">${myRequests}</div>
+                    </div>
+                    <div class="bg-white border border-slate-200 rounded-3xl p-5 shadow-sm">
+                        <div class="text-xs font-black uppercase tracking-widest text-slate-400">Akses Kontak</div>
+                        <div class="mt-2 text-xl font-black ${member ? 'text-green-700' : 'text-amber-600'}">${member ? 'Terbuka' : 'Terkunci'}</div>
+                    </div>
+                </div>`;
+        }
+
+        function renderUserCommunicationSettingsPanel() {
+            const panel = document.getElementById('user-communication-settings-panel');
+            if (!panel || !currentUser) return;
+            normalizeUserCommerceState(currentUser);
+            const s = currentUser.communicationSettings || {};
+            const member = isMembershipActive(currentUser);
+            panel.innerHTML = `
+                <div class="bg-white border border-slate-200 rounded-3xl shadow-sm p-5 md:p-6">
+                    <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-5">
+                        <div>
+                            <h3 class="text-xl font-black text-slate-900 flex items-center gap-2"><i class="ph ph-sliders-horizontal text-primary"></i> Setting Koneksi Dashboard</h3>
+                            <p class="text-sm text-slate-500 mt-1">User bisa mengatur sendiri cara komunikasi: hanya chat teks website atau chat website + WhatsApp. Kontak tetap hanya terlihat untuk member/akses berbayar.</p>
+                        </div>
+                        <span class="inline-flex px-3 py-1.5 rounded-full text-xs font-black ${member ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}">${member ? 'Member aktif' : 'Free / kontak terkunci'}</span>
+                    </div>
+                    <form onsubmit="event.preventDefault(); saveUserCommunicationSettings();" class="grid grid-cols-1 md:grid-cols-[1fr_1fr_auto] gap-3 items-end">
+                        <div>
+                            <label class="block text-xs font-black text-slate-500 uppercase mb-1">Mode komunikasi yang diizinkan</label>
+                            <select id="user-comm-mode" class="w-full p-3 border border-slate-300 rounded-2xl bg-white">
+                                <option value="website" ${s.mode === 'website' ? 'selected' : ''}>Hanya chat teks di website</option>
+                                <option value="website_wa" ${s.mode !== 'website' ? 'selected' : ''}>Chat teks website + tampilkan WA</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-black text-slate-500 uppercase mb-1">Auto reply awal</label>
+                            <input id="user-comm-autoreply" value="${escapeHtml(s.autoReply || '')}" class="w-full p-3 border border-slate-300 rounded-2xl" placeholder="Contoh: Halo, unit masih tersedia.">
+                        </div>
+                        <button type="submit" class="bg-slate-900 hover:bg-slate-700 text-white px-5 py-3 rounded-2xl font-black"><i class="ph ph-floppy-disk mr-1"></i> Simpan</button>
+                    </form>
+                </div>`;
+        }
+
+        function saveUserCommunicationSettings() {
+            if (!currentUser) return;
+            normalizeUserCommerceState(currentUser);
+            const mode = document.getElementById('user-comm-mode')?.value || 'website_wa';
+            currentUser.communicationSettings = {
+                mode,
+                allowWebsiteChat: true,
+                allowWhatsapp: mode === 'website_wa',
+                autoReply: document.getElementById('user-comm-autoreply')?.value || ''
+            };
+            usersDB[currentUser.email] = currentUser;
+            saveAppState();
+            renderUserDashboard();
+            showMessage('Setting komunikasi dashboard berhasil disimpan.');
+        }
+
         function renderUserMembershipPanel() {
             const panel = document.getElementById('user-membership-panel');
             if (!panel || !currentUser) return;
@@ -1814,25 +1937,59 @@
             const freeLimit = Number(monetizationSettings.freeAdsLimit || 1);
             const unlocked = getUnlockedContactProperties();
             const statusCard = member
-                ? `<div class="bg-green-50 border border-green-200 rounded-3xl p-5"><div class="text-xs font-black uppercase tracking-widest text-green-700">Keanggotaan aktif</div><div class="text-xl font-black text-green-800 mt-1">${escapeHtml(getMembershipLabel(currentUser))}</div><p class="text-sm text-green-700 mt-2">Anda bisa tambah iklan, melihat nomor WA pengiklan, dan chat teks langsung dengan user lain.</p></div>`
-                : `<div class="bg-white border border-slate-200 rounded-3xl p-5 shadow-sm"><div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4"><div><div class="text-xs font-black uppercase tracking-widest text-slate-400">Akun free</div><div class="text-xl font-black text-slate-900 mt-1">Jatah iklan: ${usedAds}/${freeLimit}</div><p class="text-sm text-slate-500 mt-2">Upgrade untuk tambah iklan, membuka nomor WA, dan chat teks langsung.</p></div><button onclick="requestMembershipUpgrade(true); renderUserDashboard();" class="bg-primary hover:bg-secondary text-white px-5 py-3 rounded-2xl font-black shadow-sm">Upgrade Rp ${formatNumber(monetizationSettings.membershipPrice || 75000)}</button></div></div>`;
+                ? `<div class="bg-green-50 border border-green-200 rounded-3xl p-5"><div class="text-xs font-black uppercase tracking-widest text-green-700">Benefit member aktif</div><div class="text-xl font-black text-green-800 mt-1">${escapeHtml(getMembershipLabel(currentUser))}</div><div class="grid grid-cols-1 md:grid-cols-2 gap-2 mt-4 text-sm text-green-800"><div><i class="ph ph-check-circle"></i> Bisa tambah iklan lebih dari ${freeLimit}</div><div><i class="ph ph-check-circle"></i> Bisa melihat WA sesuai setting user</div><div><i class="ph ph-check-circle"></i> Bisa chat teks langsung di website</div><div><i class="ph ph-check-circle"></i> Iklan pending otomatis aktif setelah dibayar</div></div></div>`
+                : `<div class="bg-white border border-slate-200 rounded-3xl p-5 shadow-sm"><div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4"><div><div class="text-xs font-black uppercase tracking-widest text-slate-400">Akun free</div><div class="text-xl font-black text-slate-900 mt-1">Jatah iklan gratis: ${usedAds}/${freeLimit}</div><p class="text-sm text-slate-500 mt-2">Kontak WA dan chat teks user lain terkunci. Upgrade untuk semua akses, atau bayar akses kontak per properti.</p></div><button onclick="requestMembershipUpgrade(true); renderUserDashboard();" class="bg-primary hover:bg-secondary text-white px-5 py-3 rounded-2xl font-black shadow-sm">Upgrade Rp ${formatNumber(monetizationSettings.membershipPrice || 75000)}</button></div></div>`;
             const contactsHtml = unlocked.length
                 ? unlocked.slice(0, 8).map(p => {
                     const ownerEmail = getPropertyOwnerEmail(p);
-                    const owner = getUserByEmail(ownerEmail) || { name: p.agent?.name || 'Pengiklan', phone: getPropertyContactPhone(p) };
+                    const owner = getUserByEmail(ownerEmail) || { name: p.agent?.name || 'Pengiklan', phone: getPropertyContactPhone(p), communicationSettings: { mode: 'website_wa' } };
+                    normalizeUserCommerceState(owner);
                     const phone = owner.phone || getPropertyContactPhone(p);
                     const title = JSON.stringify(p.title || 'Properti').replace(/'/g, '&#39;');
-                    return `<div class="bg-white border border-slate-200 rounded-2xl p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3"><div><div class="font-black text-sm text-slate-800 line-clamp-1">${escapeHtml(p.title)}</div><div class="text-xs text-slate-500">${escapeHtml(owner.name)} • WA: <b>${escapeHtml(phone || '-')}</b></div></div><div class="flex gap-2"><button onclick='openPaidContact(${Number(p.id)}, ${title})' class="bg-green-600 text-white px-3 py-2 rounded-xl text-xs font-black"><i class="ph ph-whatsapp-logo"></i> WA</button><button onclick="openDirectChatWithProperty(${Number(p.id)})" class="bg-slate-900 text-white px-3 py-2 rounded-xl text-xs font-black"><i class="ph ph-chat-circle-text"></i> Chat</button></div></div>`;
+                    const waBtn = owner.communicationSettings?.allowWhatsapp !== false ? `<button onclick='openPaidContact(${Number(p.id)}, ${title})' class="bg-green-600 text-white px-3 py-2 rounded-xl text-xs font-black"><i class="ph ph-whatsapp-logo"></i> WA</button>` : `<span class="bg-slate-100 text-slate-500 px-3 py-2 rounded-xl text-xs font-black">WA off</span>`;
+                    return `<div class="bg-white border border-slate-200 rounded-2xl p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3"><div><div class="font-black text-sm text-slate-800 line-clamp-1">${escapeHtml(p.title)}</div><div class="text-xs text-slate-500">${escapeHtml(owner.name)} ${owner.communicationSettings?.allowWhatsapp !== false ? `• WA: <b>${escapeHtml(phone || '-')}</b>` : '• memilih chat teks website'}</div></div><div class="flex gap-2">${waBtn}<button onclick="openDirectChatWithProperty(${Number(p.id)})" class="bg-slate-900 text-white px-3 py-2 rounded-xl text-xs font-black"><i class="ph ph-chat-circle-text"></i> Chat</button></div></div>`;
                 }).join('')
                 : `<div class="bg-slate-100 border border-dashed border-slate-300 rounded-2xl p-5 text-sm text-slate-500">Belum ada kontak terbuka. Upgrade member atau bayar akses kontak pada halaman detail properti.</div>`;
             panel.innerHTML = `${statusCard}<div class="mt-4 bg-slate-50 border border-slate-200 rounded-3xl p-5"><div class="flex items-center justify-between mb-3"><h3 class="font-black text-slate-900">Koneksi Dashboard</h3><span class="text-xs text-slate-500">WA & chat teks</span></div><div class="space-y-3">${contactsHtml}</div></div>`;
         }
 
+        function renderUserRequestPanel() {
+            const panel = document.getElementById('user-request-panel');
+            if (!panel || !currentUser) return;
+            const myRequests = (propertyRequests || []).filter(r => r.requesterEmail === currentUser.email);
+            panel.innerHTML = `
+                <div class="bg-white border border-slate-200 rounded-3xl shadow-sm p-5 md:p-6">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-5">
+                        <div>
+                            <h3 class="text-xl font-black text-slate-900 flex items-center gap-2"><i class="ph ph-megaphone text-primary"></i> Permintaan Properti Saya</h3>
+                            <p class="text-sm text-slate-500 mt-1">Kebutuhan pembeli terlihat semua seperti buy leads. Member dapat merespons lewat chat teks/WA sesuai setting.</p>
+                        </div>
+                        <button onclick="toggleAdminForm('user-request-form')" class="bg-primary hover:bg-secondary text-white px-5 py-3 rounded-2xl font-black"><i class="ph ph-plus-circle mr-1"></i> Buat Permintaan</button>
+                    </div>
+                    <form id="user-request-form" onsubmit="event.preventDefault(); submitPropertyRequest();" class="hidden bg-slate-50 border border-slate-200 rounded-3xl p-4 mb-5 space-y-3">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <input id="req-title" required class="p-3 border border-slate-300 rounded-2xl" placeholder="Judul kebutuhan, contoh: Cari rumah 3 kamar BSD">
+                            <select id="req-type" class="p-3 border border-slate-300 rounded-2xl bg-white"><option>Rumah</option><option>Apartemen</option><option>Tanah</option><option>Ruko</option><option>Gudang</option><option>Ruang Kantor</option><option>Kost</option><option>Villa</option><option>Pabrik</option></select>
+                            <select id="req-transaction" class="p-3 border border-slate-300 rounded-2xl bg-white"><option>Dibeli</option><option>Disewa</option><option>Kerjasama</option></select>
+                            <input id="req-budget" type="number" min="0" class="p-3 border border-slate-300 rounded-2xl" placeholder="Budget maksimal / tahun">
+                            <input id="req-location" required class="p-3 border border-slate-300 rounded-2xl" placeholder="Area/lokasi yang dicari">
+                            <input id="req-deadline" class="p-3 border border-slate-300 rounded-2xl" placeholder="Target waktu, contoh: 30 hari">
+                        </div>
+                        <input id="req-need" class="w-full p-3 border border-slate-300 rounded-2xl" placeholder="Spesifikasi ringkas, contoh: 3 kamar, akses mobil, SHM">
+                        <textarea id="req-desc" rows="3" class="w-full p-3 border border-slate-300 rounded-2xl" placeholder="Detail kebutuhan"></textarea>
+                        <div class="flex justify-end"><button class="bg-slate-900 text-white px-6 py-3 rounded-2xl font-black">Simpan Permintaan</button></div>
+                    </form>
+                    <div class="space-y-3">${myRequests.length ? myRequests.map(r => `<div class="border border-slate-200 rounded-2xl p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3"><div><div class="font-black text-slate-900">${escapeHtml(r.title)}</div><div class="text-xs text-slate-500">${escapeHtml(r.type)} • ${escapeHtml(r.location)} • Budget Rp ${formatNumber(r.budget || 0)}</div></div><span class="text-xs font-black px-3 py-1 rounded-full bg-green-100 text-green-700">${escapeHtml(r.status || 'Aktif')}</span></div>`).join('') : `<div class="bg-slate-100 border border-dashed border-slate-300 rounded-2xl p-5 text-sm text-slate-500">Belum ada permintaan. Klik Buat Permintaan agar kebutuhan Anda terlihat oleh penjual/agen.</div>`}</div>
+                </div>`;
+        }
 
         function renderUserDashboard() {
             if (!currentUser) return;
             normalizeUserCommerceState(currentUser);
+            renderUserCommerceOverviewPanel();
+            renderUserCommunicationSettingsPanel();
             renderUserMembershipPanel();
+            renderUserRequestPanel();
             const list = document.getElementById('user-ads-list');
             const ads = currentUser.ads || [];
             if (ads.length === 0) {
@@ -1895,7 +2052,9 @@
         }
 
         function getPropertyContactPhone(p) {
-            return p?.agent?.phone || '085111033789';
+            const ownerEmail = getPropertyOwnerEmail(p);
+            const owner = ownerEmail ? getUserByEmail(ownerEmail) : null;
+            return owner?.phone || p?.agent?.phone || '085111033789';
         }
 
         function isContactUnlocked(adId) {
@@ -1925,6 +2084,9 @@
         function openPaidContact(adId, title) {
             const p = properties.find(item => Number(item.id) === Number(adId));
             if (!p || !isContactUnlocked(adId)) { requestContactAccess(adId, title); return; }
+            const owner = getUserByEmail(getPropertyOwnerEmail(p));
+            if (owner) normalizeUserCommerceState(owner);
+            if (owner && owner.communicationSettings?.allowWhatsapp === false) { showMessage('User ini memilih komunikasi hanya lewat chat teks website.'); openDirectChatWithProperty(adId); return; }
             const phone = normalizeWaNumber(getPropertyContactPhone(p));
             const text = encodeURIComponent(`Halo, saya tertarik dengan properti: ${title}. Mohon info detailnya.`);
             window.open(`https://wa.me/${phone}?text=${text}`, '_blank');
@@ -1947,6 +2109,8 @@
             activePeerChatKey = makePeerChatKey(currentUser.email, ownerEmail, adId);
             if (!peerChatDB[activePeerChatKey]) {
                 peerChatDB[activePeerChatKey] = { adId: adId, title: p.title, participants: [currentUser.email, ownerEmail], names: { [currentUser.email]: currentUser.name, [ownerEmail]: owner.name }, messages: [] };
+                const auto = owner.communicationSettings?.autoReply || '';
+                if (auto) peerChatDB[activePeerChatKey].messages.push({ sender: ownerEmail, text: auto, time: 'Auto', createdAt: new Date().toISOString() });
             }
             renderDirectChatPanel();
             const panel = document.getElementById('direct-chat-panel');
@@ -1993,6 +2157,111 @@
             saveAppState(); renderDirectChatPanel(); renderUserMembershipPanel();
         }
 
+
+
+        function handlePostRequestClick() {
+            if (!currentUser) { showMessage('Silakan masuk atau daftar dulu untuk posting permintaan.'); navigate('auth'); toggleAuth('login'); return; }
+            renderUserDashboard(); navigate('user');
+            setTimeout(() => { const form = document.getElementById('user-request-form'); if (form) form.classList.remove('hidden'); }, 150);
+        }
+
+        function submitPropertyRequest() {
+            if (!currentUser) { showMessage('Silakan masuk dulu.'); return; }
+            normalizeUserCommerceState(currentUser);
+            const title = document.getElementById('req-title')?.value.trim();
+            const location = document.getElementById('req-location')?.value.trim();
+            if (!title || !location) { showMessage('Judul dan lokasi wajib diisi.'); return; }
+            requestCounterId++;
+            propertyRequests.unshift({
+                id: requestCounterId,
+                requesterEmail: currentUser.email,
+                requesterName: currentUser.name,
+                requesterPhone: currentUser.phone,
+                title,
+                type: document.getElementById('req-type')?.value || 'Rumah',
+                transaction: document.getElementById('req-transaction')?.value || 'Dibeli',
+                location,
+                budget: Number(document.getElementById('req-budget')?.value) || 0,
+                need: document.getElementById('req-need')?.value || '',
+                deadline: document.getElementById('req-deadline')?.value || '',
+                desc: document.getElementById('req-desc')?.value || '',
+                status: 'Aktif',
+                createdAt: new Date().toISOString()
+            });
+            saveAppState();
+            renderUserDashboard();
+            renderPropertyRequests();
+            showMessage('Permintaan properti berhasil diposting dan terlihat publik.');
+        }
+
+        function isRequestContactAllowed(req) {
+            if (!currentUser || !req) return false;
+            if (req.requesterEmail === currentUser.email) return true;
+            return isMembershipActive(currentUser);
+        }
+
+        function openRequestWhatsapp(reqId) {
+            const req = (propertyRequests || []).find(r => Number(r.id) === Number(reqId));
+            if (!req) { showMessage('Permintaan tidak ditemukan.'); return; }
+            if (!currentUser) { showMessage('Silakan masuk dulu.'); navigate('auth'); toggleAuth('login'); return; }
+            if (!isMembershipActive(currentUser) && req.requesterEmail !== currentUser.email) { requestMembershipUpgrade(true); showMessage('Kontak permintaan hanya terbuka untuk member aktif.'); return; }
+            const requester = getUserByEmail(req.requesterEmail) || { phone: req.requesterPhone, name: req.requesterName, communicationSettings: { mode: 'website_wa', allowWhatsapp: true } };
+            normalizeUserCommerceState(requester);
+            if (requester.communicationSettings?.allowWhatsapp === false) { showMessage('User ini memilih hanya chat teks website.'); openDirectChatWithRequest(reqId); return; }
+            const phone = normalizeWaNumber(requester.phone || req.requesterPhone || '085111033789');
+            const msg = encodeURIComponent(`Halo, saya melihat permintaan properti di RUMASA: ${req.title}. Saya ingin menawarkan/membahas properti yang sesuai.`);
+            window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
+        }
+
+        function openDirectChatWithRequest(reqId) {
+            const req = (propertyRequests || []).find(r => Number(r.id) === Number(reqId));
+            if (!req) { showMessage('Permintaan tidak ditemukan.'); return; }
+            if (!currentUser) { showMessage('Silakan masuk dulu untuk chat teks.'); navigate('auth'); toggleAuth('login'); return; }
+            if (!isMembershipActive(currentUser) && req.requesterEmail !== currentUser.email) { requestMembershipUpgrade(true); showMessage('Chat permintaan hanya terbuka untuk member aktif.'); return; }
+            const otherEmail = req.requesterEmail;
+            if (otherEmail === currentUser.email) { showMessage('Ini permintaan Anda sendiri.'); return; }
+            const other = getUserByEmail(otherEmail) || { name: req.requesterName || 'Pemilik Permintaan', email: otherEmail };
+            activePeerChatKey = makePeerChatKey(currentUser.email, otherEmail, 900000 + Number(req.id));
+            if (!peerChatDB[activePeerChatKey]) {
+                peerChatDB[activePeerChatKey] = { adId: 900000 + Number(req.id), title: `Permintaan: ${req.title}`, participants: [currentUser.email, otherEmail], names: { [currentUser.email]: currentUser.name, [otherEmail]: other.name }, messages: [] };
+                const auto = other.communicationSettings?.autoReply || '';
+                if (auto) peerChatDB[activePeerChatKey].messages.push({ sender: otherEmail, text: auto, time: 'Auto', createdAt: new Date().toISOString() });
+            }
+            renderDirectChatPanel();
+            const panel = document.getElementById('direct-chat-panel');
+            if (panel) { panel.classList.remove('hidden'); panel.classList.add('flex'); }
+            saveAppState();
+        }
+
+        function renderPropertyRequests() {
+            const grid = document.getElementById('requests-grid');
+            if (!grid) return;
+            const active = (propertyRequests || []).filter(r => String(r.status || 'Aktif').toLowerCase() !== 'nonaktif');
+            if (!active.length) {
+                grid.innerHTML = `<div class="col-span-full bg-white border border-dashed border-slate-300 rounded-3xl p-8 text-center text-slate-500"><i class="ph ph-list-checks text-5xl text-slate-300 block mb-3"></i><b>Belum ada permintaan properti.</b><br>Posting kebutuhan pembeli agar penjual/agen bisa merespons.</div>`;
+                return;
+            }
+            grid.innerHTML = active.map(req => {
+                const requester = getUserByEmail(req.requesterEmail) || { name: req.requesterName, phone: req.requesterPhone, communicationSettings: { mode: 'website_wa', allowWhatsapp: true } };
+                normalizeUserCommerceState(requester);
+                const unlocked = currentUser && (isMembershipActive(currentUser) || req.requesterEmail === currentUser.email);
+                const waAllowed = requester.communicationSettings?.allowWhatsapp !== false;
+                const lockBox = unlocked
+                    ? `<div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-4">${waAllowed ? `<button onclick="openRequestWhatsapp(${Number(req.id)})" class="bg-green-600 hover:bg-green-700 text-white rounded-2xl py-3 font-black flex items-center justify-center gap-2"><i class="ph ph-whatsapp-logo text-xl"></i> WA</button>` : `<div class="bg-slate-100 text-slate-600 rounded-2xl py-3 font-black flex items-center justify-center gap-2"><i class="ph ph-chat-circle-text"></i> WA off</div>`}<button onclick="openDirectChatWithRequest(${Number(req.id)})" class="bg-slate-900 hover:bg-slate-700 text-white rounded-2xl py-3 font-black flex items-center justify-center gap-2"><i class="ph ph-chat-circle-text text-xl"></i> Chat Website</button></div>`
+                    : `<div class="mt-4 bg-amber-50 border border-amber-200 rounded-2xl p-4"><div class="font-black text-amber-800 flex items-center gap-2"><i class="ph ph-lock-key"></i> Kontak dikunci</div><p class="text-sm text-amber-700 mt-1">Permintaan terlihat publik, tetapi nomor WA/chat user hanya untuk member aktif.</p><button onclick="requestMembershipUpgrade(true); renderUserDashboard();" class="mt-3 w-full bg-primary hover:bg-secondary text-white rounded-2xl py-3 font-black"><i class="ph ph-crown mr-1"></i> Upgrade untuk Respon</button></div>`;
+                return `<div class="bg-white rounded-3xl border border-slate-200 shadow-sm p-5 md:p-6">
+                    <div class="flex items-start justify-between gap-3 mb-4"><div><span class="inline-flex bg-blue-50 text-blue-700 border border-blue-100 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest">${escapeHtml(req.transaction || 'Dibeli')}</span><h3 class="text-xl font-black text-slate-900 mt-3 leading-tight">${escapeHtml(req.title)}</h3></div><span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-black">${escapeHtml(req.status || 'Aktif')}</span></div>
+                    <div class="grid grid-cols-2 gap-3 text-sm mb-4">
+                        <div class="bg-slate-50 rounded-2xl p-3"><div class="text-[10px] font-black text-slate-400 uppercase">Tipe</div><b>${escapeHtml(req.type || '-')}</b></div>
+                        <div class="bg-slate-50 rounded-2xl p-3"><div class="text-[10px] font-black text-slate-400 uppercase">Budget</div><b>Rp ${formatNumber(req.budget || 0)}</b></div>
+                        <div class="bg-slate-50 rounded-2xl p-3 col-span-2"><div class="text-[10px] font-black text-slate-400 uppercase">Lokasi</div><b>${escapeHtml(req.location || '-')}</b></div>
+                    </div>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-3">${escapeHtml(req.need || req.desc || 'Kebutuhan belum dirinci.')}</p>
+                    <div class="text-xs text-slate-500 flex flex-wrap gap-2"><span><i class="ph ph-user"></i> ${escapeHtml(req.requesterName || requester.name || 'User')}</span><span><i class="ph ph-clock"></i> ${escapeHtml(req.deadline || 'Terbuka')}</span></div>
+                    ${lockBox}
+                </div>`;
+            }).join('');
+        }
 
         function renderUserInvoices() {
             if (!currentUser) return;
@@ -3407,9 +3676,16 @@
 
             const contactUnlocked = isContactUnlocked(p.id);
             const titleArg = JSON.stringify(p.title || 'Properti').replace(/'/g, '&#39;');
+            const ownerEmailForContact = getPropertyOwnerEmail(p);
+            const ownerForContact = getUserByEmail(ownerEmailForContact);
+            if (ownerForContact) normalizeUserCommerceState(ownerForContact);
             const ownerPhoneText = getPropertyContactPhone(p);
+            const ownerAllowsWa = !ownerForContact || ownerForContact.communicationSettings?.allowWhatsapp !== false;
+            const waActionButton = ownerAllowsWa
+                ? `<button onclick='openPaidContact(${Number(p.id)}, ${titleArg})' class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-2xl font-black flex items-center justify-center gap-2"><i class="ph ph-whatsapp-logo text-xl"></i> Hubungi via WhatsApp</button>`
+                : `<div class="w-full bg-slate-100 text-slate-600 py-3 rounded-2xl font-black flex items-center justify-center gap-2"><i class="ph ph-chat-circle-text text-xl"></i> Pemilik memilih chat teks website</div>`;
             const contactBlock = contactUnlocked
-                ? `<div class="bg-green-50 border border-green-100 rounded-2xl p-3 mb-3 text-sm text-green-800">Nomor WA: <b>${escapeHtml(ownerPhoneText || '-')}</b></div><div class="grid grid-cols-1 gap-2"><button onclick='openPaidContact(${Number(p.id)}, ${titleArg})' class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-2xl font-black flex items-center justify-center gap-2"><i class="ph ph-whatsapp-logo text-xl"></i> Hubungi via WhatsApp</button><button onclick="openDirectChatWithProperty(${Number(p.id)})" class="w-full bg-slate-900 hover:bg-slate-700 text-white py-3 rounded-2xl font-black flex items-center justify-center gap-2"><i class="ph ph-chat-circle-text text-xl"></i> Chat Teks Langsung</button></div><p class="text-xs text-green-700 bg-green-50 rounded-2xl p-3 mt-3">Akses kontak aktif untuk akun ini.</p>`
+                ? `<div class="bg-green-50 border border-green-100 rounded-2xl p-3 mb-3 text-sm text-green-800">${ownerAllowsWa ? `Nomor WA: <b>${escapeHtml(ownerPhoneText || '-')}</b>` : 'Nomor WA tidak ditampilkan karena user memilih mode chat teks website.'}</div><div class="grid grid-cols-1 gap-2">${waActionButton}<button onclick="openDirectChatWithProperty(${Number(p.id)})" class="w-full bg-slate-900 hover:bg-slate-700 text-white py-3 rounded-2xl font-black flex items-center justify-center gap-2"><i class="ph ph-chat-circle-text text-xl"></i> Chat Teks Langsung</button></div><p class="text-xs text-green-700 bg-green-50 rounded-2xl p-3 mt-3">Akses kontak aktif untuk akun ini.</p>`
                 : `<button onclick='requestContactAccess(${Number(p.id)}, ${titleArg})' class="w-full bg-primary hover:bg-secondary text-white py-3 rounded-2xl font-black flex items-center justify-center gap-2"><i class="ph ph-lock-key text-xl"></i> Aktifkan Akses Kontak</button><button onclick="requestMembershipUpgrade(true); renderUserDashboard();" class="w-full mt-2 bg-slate-900 hover:bg-slate-700 text-white py-3 rounded-2xl font-black flex items-center justify-center gap-2"><i class="ph ph-crown text-xl"></i> Upgrade Member Semua Akses</button><p class="text-xs text-slate-500 bg-slate-50 rounded-2xl p-3 mt-3">Kontak WA dan chat teks dikunci. Setelah layanan akses kontak/member dibayar dan divalidasi admin, tombol komunikasi akan terbuka.</p>`;
 
             content.innerHTML = `
@@ -3596,6 +3872,7 @@
             safeInit('kartu properti', renderPropertyCards);
             safeInit('proyek baru', renderProyekCards);
             safeInit('artikel', renderArticlesList);
+            safeInit('permintaan properti', renderPropertyRequests);
             safeInit('user admin', renderAdminUsers);
             safeInit('iklan admin', renderAdminAds);
             safeInit('pembayaran admin', renderAdminPayments);
@@ -3615,6 +3892,7 @@
                     safeInit('render ulang properti dari Firebase', renderPropertyCards);
                     safeInit('render ulang proyek dari Firebase', renderProyekCards);
                     safeInit('render ulang artikel dari Firebase', renderArticlesList);
+                    safeInit('render ulang permintaan dari Firebase', renderPropertyRequests);
                     safeInit('render ulang user admin dari Firebase', renderAdminUsers);
                     safeInit('render ulang iklan admin dari Firebase', renderAdminAds);
                     safeInit('render ulang pembayaran dari Firebase', renderAdminPayments);
