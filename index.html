@@ -872,19 +872,69 @@
                             <!-- TAB: IKLAN BERJALAN -->
                             <div id="admin-tab-running" class="admin-tab-content hidden">
                                 <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6">
-                                    <div><h2 class="text-2xl font-extrabold text-slate-900">Kelola Iklan Berjalan</h2><p class="text-sm text-slate-500 mt-1">Atur running text merah di bawah header: tambah, ubah, matikan, hapus, dan urutkan.</p></div>
-                                    <button onclick="addRunningAdItem()" class="bg-primary hover:bg-secondary transition text-white px-4 py-3 rounded-2xl text-sm font-bold shadow-sm"><i class="ph ph-plus mr-1"></i> Tambah Teks</button>
-                                </div>
-                                <div class="bg-gradient-to-r from-accent via-red-500 to-accent text-white py-3 overflow-hidden rounded-3xl mb-6 shadow-md">
-                                    <div id="running-ads-admin-preview" class="animate-marquee font-extrabold tracking-wide text-sm md:text-base flex gap-16 items-center"></div>
-                                </div>
-                                <form onsubmit="event.preventDefault(); saveRunningAds();" class="bg-white rounded-3xl border border-slate-200 shadow-sm p-4 md:p-6">
-                                    <div id="running-ads-admin-list" class="space-y-4 mb-6"></div>
-                                    <div class="flex flex-col sm:flex-row justify-between gap-3 border-t border-slate-100 pt-4">
-                                        <p class="text-xs text-slate-500">Icon pakai nama Phosphor: fire, star, rocket, megaphone, gift, house, tag.</p>
-                                        <div class="flex gap-2"><button type="button" onclick="addRunningAdItem()" class="bg-slate-900 text-white px-5 py-3 rounded-2xl font-bold">Tambah</button><button type="submit" class="bg-primary text-white px-8 py-3 rounded-2xl font-bold shadow-md">Simpan Iklan Berjalan</button></div>
+                                    <div>
+                                        <h2 class="text-2xl font-extrabold text-slate-900">Kelola Iklan Berjalan</h2>
+                                        <p class="text-sm text-slate-500 mt-1">Panel ini khusus untuk mengubah teks promo merah yang berjalan di bawah header. Edit teksnya, pilih icon, aktif/nonaktifkan, lalu klik <b>Simpan & Terapkan</b>.</p>
                                     </div>
-                                </form>
+                                    <div class="flex flex-wrap gap-2">
+                                        <button onclick="addRunningAdItem()" class="bg-primary hover:bg-secondary transition text-white px-4 py-3 rounded-2xl text-sm font-bold shadow-sm"><i class="ph ph-plus mr-1"></i> Tambah Baris</button>
+                                        <button onclick="resetRunningAdsDefaults()" class="bg-white border border-slate-200 hover:border-red-300 hover:text-red-600 transition text-slate-700 px-4 py-3 rounded-2xl text-sm font-bold shadow-sm"><i class="ph ph-arrow-counter-clockwise mr-1"></i> Reset Contoh</button>
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-1 xl:grid-cols-[1fr_360px] gap-6">
+                                    <div class="space-y-6">
+                                        <div class="bg-white rounded-3xl border border-slate-200 shadow-sm p-4 md:p-6">
+                                            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
+                                                <div>
+                                                    <h3 class="font-extrabold text-slate-900">Editor Iklan Baris</h3>
+                                                    <p class="text-xs text-slate-500 mt-1">Setiap baris akan tampil berurutan di running text depan.</p>
+                                                </div>
+                                                <div class="flex flex-wrap gap-2 text-xs">
+                                                    <button type="button" onclick="setRunningAdTemplate('jual')" class="px-3 py-2 rounded-xl bg-blue-50 text-blue-700 font-bold hover:bg-blue-100">Template Jual</button>
+                                                    <button type="button" onclick="setRunningAdTemplate('sewa')" class="px-3 py-2 rounded-xl bg-green-50 text-green-700 font-bold hover:bg-green-100">Template Sewa</button>
+                                                    <button type="button" onclick="setRunningAdTemplate('promo')" class="px-3 py-2 rounded-xl bg-amber-50 text-amber-700 font-bold hover:bg-amber-100">Template Promo</button>
+                                                </div>
+                                            </div>
+
+                                            <div id="running-ads-admin-list" class="space-y-4 mb-6"></div>
+
+                                            <div class="flex flex-col sm:flex-row justify-between gap-3 border-t border-slate-100 pt-4">
+                                                <div class="text-xs text-slate-500 leading-relaxed">
+                                                    <b>Tips:</b> matikan status kalau teks belum mau ditampilkan. Icon sudah disediakan dalam pilihan supaya admin tidak perlu hafal nama icon.
+                                                </div>
+                                                <div class="flex flex-wrap gap-2">
+                                                    <button type="button" onclick="addRunningAdItem()" class="bg-slate-900 text-white px-5 py-3 rounded-2xl font-bold hover:bg-slate-800">Tambah</button>
+                                                    <button type="button" onclick="saveRunningAds(true)" class="bg-primary text-white px-8 py-3 rounded-2xl font-bold shadow-md hover:bg-secondary">Simpan & Terapkan</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="space-y-4">
+                                        <div class="bg-slate-900 text-white rounded-3xl p-5 shadow-xl overflow-hidden relative">
+                                            <div class="absolute -right-16 -top-16 w-48 h-48 bg-red-500 rounded-full blur-3xl opacity-30"></div>
+                                            <div class="relative z-10">
+                                                <div class="text-xs uppercase tracking-widest text-red-200 font-bold mb-2">Preview Live</div>
+                                                <h3 class="text-xl font-black mb-3">Tampilan di Header</h3>
+                                                <div class="bg-gradient-to-r from-accent via-red-500 to-accent text-white py-3 overflow-hidden rounded-2xl shadow-md border border-white/10">
+                                                    <div id="running-ads-admin-preview" class="animate-marquee font-extrabold tracking-wide text-sm md:text-base flex gap-16 items-center"></div>
+                                                </div>
+                                                <p class="text-xs text-slate-300 mt-4 leading-relaxed">Preview ini bergerak seperti bagian depan. Perubahan teks akan terlihat saat admin mengetik, tetapi baru tersimpan setelah klik <b>Simpan & Terapkan</b>.</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="bg-white rounded-3xl border border-slate-200 shadow-sm p-5">
+                                            <h3 class="font-extrabold text-slate-900 mb-3">Checklist Admin</h3>
+                                            <div class="space-y-2 text-sm text-slate-600">
+                                                <div class="flex gap-2"><i class="ph ph-check-circle text-green-600 text-lg"></i><span>Isi teks promo pendek dan jelas.</span></div>
+                                                <div class="flex gap-2"><i class="ph ph-check-circle text-green-600 text-lg"></i><span>Pilih icon yang sesuai.</span></div>
+                                                <div class="flex gap-2"><i class="ph ph-check-circle text-green-600 text-lg"></i><span>Aktifkan hanya baris yang mau tampil.</span></div>
+                                                <div class="flex gap-2"><i class="ph ph-check-circle text-green-600 text-lg"></i><span>Klik Simpan & Terapkan agar masuk Firebase.</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                         </div>
@@ -1072,6 +1122,12 @@
         let slideInterval;
         let currentUser = null;
         let currentActiveUserChat = 'budi_gmail_com';
+        let featuredArticleId = 1;
+        let runningAds = [
+            { id: 1, icon: 'fire', text: 'FLASH SALE: Bebas biaya KPR & notaris bulan ini!', active: true },
+            { id: 2, icon: 'star', text: 'CASHBACK hingga Rp 50 juta untuk properti pilihan.', active: true },
+            { id: 3, icon: 'rocket', text: 'MEGA LAUNCHING: Dapatkan harga perdana unit terbatas.', active: true }
+        ];
         const RUMASA_STORAGE_KEY = 'rumasa_marketplace_demo_v2';
         const RUMASA_LOGO_DATA = 'data:image/webp;base64,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';
 
@@ -1091,6 +1147,7 @@
         let firebaseSyncLock = false;
 
         function buildAppSnapshot() {
+            ensureRunningAdsReady();
             return { usersDB, invoiceDB, chatDatabase, carouselItems, articlesDB, featuredArticleId, runningAds, properties, adCounterId, invoiceCounter };
         }
 
@@ -1101,7 +1158,8 @@
             if (data.carouselItems) carouselItems = data.carouselItems;
             if (data.articlesDB) articlesDB = data.articlesDB;
             if (data.featuredArticleId) featuredArticleId = data.featuredArticleId;
-            if (data.runningAds) runningAds = data.runningAds;
+            if (Array.isArray(data.runningAds)) runningAds = data.runningAds;
+            ensureRunningAdsReady();
             if (data.properties) properties = data.properties;
             if (data.adCounterId) adCounterId = data.adCounterId;
             if (data.invoiceCounter) invoiceCounter = data.invoiceCounter;
@@ -1263,6 +1321,44 @@
             const short = value.match(/youtu\.be\/([^?&]+)/);
             if (short && short[1]) return `https://www.youtube.com/embed/${short[1]}`;
             return value;
+        }
+
+        function buildAutoplayVideoUrl(url = '') {
+            const value = String(url || '').trim();
+            if (!value) return '';
+            if (isVideoSource(value)) return value;
+            try {
+                const parsed = new URL(value, window.location.href);
+                parsed.searchParams.set('autoplay', '1');
+                parsed.searchParams.set('mute', '1');
+                parsed.searchParams.set('playsinline', '1');
+                parsed.searchParams.set('rel', '0');
+                parsed.searchParams.set('modestbranding', '1');
+                const match = parsed.pathname.match(/\/embed\/([^/?#]+)/);
+                if (match && match[1] && !parsed.searchParams.get('playlist')) {
+                    parsed.searchParams.set('loop', '1');
+                    parsed.searchParams.set('playlist', match[1]);
+                }
+                return parsed.toString();
+            } catch (err) {
+                const joiner = value.includes('?') ? '&' : '?';
+                return `${value}${joiner}autoplay=1&mute=1&playsinline=1&rel=0`;
+            }
+        }
+
+        function forceAutoplayFeaturedVideo() {
+            setTimeout(() => {
+                const video = document.querySelector('#home-featured-review video');
+                if (!video) return;
+                video.muted = true;
+                video.autoplay = true;
+                video.loop = true;
+                video.playsInline = true;
+                const playPromise = video.play();
+                if (playPromise && typeof playPromise.catch === 'function') {
+                    playPromise.catch(() => {});
+                }
+            }, 120);
         }
 
 
@@ -2369,15 +2465,16 @@
         function buildReviewMediaHTML(article, mode = 'hero') {
             const img = escapeHtml(article?.img || 'https://placehold.co/600x360/0f172a/ffffff?text=Ulasan+Eksklusif');
             const rawVideo = normalizeYoutubeEmbed(article?.videoUrl || '');
-            const video = escapeHtml(rawVideo);
+            const autoplayVideo = buildAutoplayVideoUrl(rawVideo);
+            const video = escapeHtml(autoplayVideo || rawVideo);
             const imageFallback = `<img src="${img}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/600x360/0f172a/ffffff?text=Ulasan+Eksklusif'">`;
             if (!rawVideo) return imageFallback;
 
             if (isVideoSource(rawVideo)) {
-                return `<video src="${video}" poster="${img}" class="w-full h-full object-cover bg-black" controls muted playsinline onclick="event.stopPropagation()"></video>`;
+                return `<video src="${video}" poster="${img}" class="w-full h-full object-cover bg-black" autoplay muted loop playsinline preload="auto" onclick="event.stopPropagation()"></video>`;
             }
 
-            return `<iframe src="${video}" class="w-full h-full bg-black" title="Video ulasan eksklusif" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen onclick="event.stopPropagation()"></iframe>`;
+            return `<iframe src="${video}" class="w-full h-full bg-black" title="Video ulasan eksklusif" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen onclick="event.stopPropagation()"></iframe>`;
         }
 
         function getFeaturedArticle() {
@@ -2575,10 +2672,61 @@
             showMessage('Materi ulasan berhasil diduplikasi dan aktif di beranda.');
         }
 
-        function renderRunningAds() {
+        function defaultRunningAds() {
+            return [
+                { id: 1, icon: 'fire', text: 'FLASH SALE: Bebas biaya KPR & notaris bulan ini!', active: true },
+                { id: 2, icon: 'star', text: 'CASHBACK hingga Rp 50 juta untuk properti pilihan.', active: true },
+                { id: 3, icon: 'rocket', text: 'MEGA LAUNCHING: Dapatkan harga perdana unit terbatas.', active: true }
+            ];
+        }
+
+        function ensureRunningAdsReady() {
+            if (!Array.isArray(runningAds)) runningAds = defaultRunningAds();
+            runningAds = runningAds.map((item, index) => ({
+                id: item.id || Date.now() + index,
+                icon: String(item.icon || 'megaphone').replace(/^ph-/, ''),
+                text: String(item.text || ''),
+                active: item.active !== false
+            }));
+            if (!runningAds.length) runningAds = defaultRunningAds();
+        }
+
+        function runningIconOptions(selected = 'megaphone') {
+            const icons = [
+                ['megaphone', 'Megaphone'],
+                ['fire', 'Api / Flash sale'],
+                ['star', 'Bintang'],
+                ['rocket', 'Launching'],
+                ['gift', 'Hadiah / Bonus'],
+                ['tag', 'Diskon'],
+                ['house', 'Rumah'],
+                ['buildings', 'Apartemen'],
+                ['money', 'Cashback'],
+                ['seal-percent', 'Promo Persen']
+            ];
+            return icons.map(([value, label]) => `<option value="${value}" ${value === selected ? 'selected' : ''}>${label}</option>`).join('');
+        }
+
+        function getRunningAdsDraftFromForm() {
+            ensureRunningAdsReady();
+            return runningAds.map((item, index) => {
+                const textEl = document.getElementById(`run-text-${index}`);
+                const iconEl = document.getElementById(`run-icon-${index}`);
+                const activeEl = document.getElementById(`run-active-${index}`);
+                return {
+                    id: item.id || Date.now() + index,
+                    text: textEl ? textEl.value.trim() : String(item.text || '').trim(),
+                    icon: iconEl ? iconEl.value : (item.icon || 'megaphone'),
+                    active: activeEl ? activeEl.checked : item.active !== false
+                };
+            });
+        }
+
+        function renderRunningAds(items = runningAds) {
             const track = document.getElementById('running-ads-track');
             if (!track) return;
-            const activeItems = runningAds.filter(item => item.active !== false && String(item.text || '').trim());
+            if (!Array.isArray(items)) items = defaultRunningAds();
+            const activeItems = items.filter(item => item.active !== false && String(item.text || '').trim());
             if (!activeItems.length) {
                 track.innerHTML = `<span><i class="ph-fill ph-megaphone text-yellow-300 text-lg mr-1"></i> RUMASA: promo properti terbaik sedang disiapkan.</span>`;
                 return;
@@ -2586,59 +2734,123 @@
             track.innerHTML = activeItems.map(item => `<span><i class="ph-fill ph-${escapeHtml(item.icon || 'megaphone')} text-yellow-300 text-lg mr-1"></i> ${escapeHtml(item.text)}</span>`).join('');
         }
 
-        function renderRunningAdsAdmin() {
-            const list = document.getElementById('running-ads-admin-list');
+        function previewRunningAdsDraft() {
             const preview = document.getElementById('running-ads-admin-preview');
+            const draft = getRunningAdsDraftFromForm();
+            const activeItems = draft.filter(item => item.active !== false && String(item.text || '').trim());
             if (preview) {
-                const activeItems = runningAds.filter(item => item.active !== false && String(item.text || '').trim());
                 preview.innerHTML = activeItems.length ? activeItems.map(item => `<span><i class="ph-fill ph-${escapeHtml(item.icon || 'megaphone')} text-yellow-300 text-lg mr-1"></i> ${escapeHtml(item.text)}</span>`).join('') : `<span><i class="ph-fill ph-megaphone text-yellow-300 text-lg mr-1"></i> Belum ada iklan berjalan aktif.</span>`;
             }
+            renderRunningAds(draft);
+        }
+
+        function renderRunningAdsAdmin() {
+            ensureRunningAdsReady();
+            const list = document.getElementById('running-ads-admin-list');
             if (!list) return;
-            if (!runningAds.length) {
-                list.innerHTML = `<div class="p-6 bg-slate-50 border border-dashed border-slate-300 rounded-3xl text-center text-slate-500">Belum ada teks berjalan. Klik Tambah Teks.</div>`;
-                return;
-            }
             list.innerHTML = runningAds.map((item, index) => `
-                <div class="bg-slate-50 border border-slate-200 rounded-3xl p-4 grid grid-cols-1 lg:grid-cols-[90px_1fr_160px_auto] gap-3 items-end">
-                    <div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Aktif</label><select id="run-active-${index}" class="w-full p-3 border border-slate-300 rounded-2xl bg-white"><option value="true" ${item.active !== false ? 'selected' : ''}>Ya</option><option value="false" ${item.active === false ? 'selected' : ''}>Tidak</option></select></div>
-                    <div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Teks Iklan Berjalan</label><input id="run-text-${index}" value="${escapeHtml(item.text || '')}" class="w-full p-3 border border-slate-300 rounded-2xl outline-none focus:border-primary" placeholder="Contoh: Cashback hingga Rp 50 juta"></div>
-                    <div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Icon</label><input id="run-icon-${index}" value="${escapeHtml(item.icon || 'megaphone')}" class="w-full p-3 border border-slate-300 rounded-2xl outline-none focus:border-primary" placeholder="fire"></div>
-                    <div class="flex gap-2 flex-wrap"><button type="button" onclick="moveRunningAd(${index}, -1)" class="bg-white border border-slate-200 px-3 py-3 rounded-2xl font-bold hover:text-primary">↑</button><button type="button" onclick="moveRunningAd(${index}, 1)" class="bg-white border border-slate-200 px-3 py-3 rounded-2xl font-bold hover:text-primary">↓</button><button type="button" onclick="deleteRunningAdItem(${index})" class="bg-red-100 text-red-700 px-4 py-3 rounded-2xl font-bold hover:bg-red-600 hover:text-white">Hapus</button></div>
+                <div class="bg-slate-50 border border-slate-200 rounded-3xl p-4 shadow-sm">
+                    <div class="grid grid-cols-1 lg:grid-cols-[90px_170px_1fr_auto] gap-3 items-end">
+                        <label class="block">
+                            <span class="block text-xs font-bold text-slate-500 uppercase mb-1">Tampil</span>
+                            <div class="h-[50px] flex items-center bg-white border border-slate-300 rounded-2xl px-3">
+                                <input type="checkbox" id="run-active-${index}" ${item.active !== false ? 'checked' : ''} onchange="previewRunningAdsDraft()" class="w-5 h-5 accent-blue-600">
+                                <span class="ml-2 text-sm font-bold text-slate-700">Aktif</span>
+                            </div>
+                        </label>
+                        <label class="block">
+                            <span class="block text-xs font-bold text-slate-500 uppercase mb-1">Icon</span>
+                            <select id="run-icon-${index}" onchange="previewRunningAdsDraft()" class="w-full p-3 border border-slate-300 rounded-2xl bg-white outline-none focus:border-primary">${runningIconOptions(item.icon || 'megaphone')}</select>
+                        </label>
+                        <label class="block">
+                            <span class="block text-xs font-bold text-slate-500 uppercase mb-1">Teks Iklan Berjalan</span>
+                            <input id="run-text-${index}" value="${escapeHtml(item.text || '')}" oninput="previewRunningAdsDraft()" class="w-full p-3 border border-slate-300 rounded-2xl outline-none focus:border-primary bg-white" placeholder="Contoh: Cashback hingga Rp 50 juta">
+                        </label>
+                        <div class="flex gap-2 flex-wrap">
+                            <button type="button" title="Naikkan" onclick="moveRunningAd(${index}, -1)" class="bg-white border border-slate-200 px-3 py-3 rounded-2xl font-bold hover:text-primary">↑</button>
+                            <button type="button" title="Turunkan" onclick="moveRunningAd(${index}, 1)" class="bg-white border border-slate-200 px-3 py-3 rounded-2xl font-bold hover:text-primary">↓</button>
+                            <button type="button" title="Duplikat" onclick="duplicateRunningAdItem(${index})" class="bg-white border border-slate-200 px-3 py-3 rounded-2xl font-bold hover:text-primary"><i class="ph ph-copy"></i></button>
+                            <button type="button" title="Hapus" onclick="deleteRunningAdItem(${index})" class="bg-red-100 text-red-700 px-4 py-3 rounded-2xl font-bold hover:bg-red-600 hover:text-white">Hapus</button>
+                        </div>
+                    </div>
                 </div>`).join('');
+            previewRunningAdsDraft();
         }
 
         function saveRunningAds(showToast = true) {
-            runningAds = runningAds.map((item, index) => {
-                const textEl = document.getElementById(`run-text-${index}`);
-                const iconEl = document.getElementById(`run-icon-${index}`);
-                const activeEl = document.getElementById(`run-active-${index}`);
-                return { id: item.id || Date.now() + index, text: textEl ? textEl.value.trim() : item.text, icon: iconEl ? iconEl.value.trim() || 'megaphone' : (item.icon || 'megaphone'), active: activeEl ? activeEl.value === 'true' : item.active !== false };
-            });
+            runningAds = getRunningAdsDraftFromForm().filter(item => item.text || item.active === false);
+            if (!runningAds.length) runningAds = defaultRunningAds();
             saveAppState();
-            renderRunningAds();
             renderRunningAdsAdmin();
-            if (showToast) showMessage('Iklan berjalan berhasil disimpan.');
+            renderRunningAds();
+            if (showToast) showMessage('Iklan berjalan berhasil disimpan dan diterapkan di header.');
         }
 
         function addRunningAdItem() {
-            saveRunningAds(false);
-            runningAds.push({ id: Date.now(), icon: 'megaphone', text: 'Tulis promo baru di sini', active: true });
-            saveAppState(); renderRunningAdsAdmin(); renderRunningAds();
+            runningAds = getRunningAdsDraftFromForm();
+            runningAds.push({ id: Date.now(), icon: 'megaphone', text: '', active: true });
+            renderRunningAdsAdmin();
+            setTimeout(() => {
+                const last = document.getElementById(`run-text-${runningAds.length - 1}`);
+                if (last) last.focus();
+            }, 50);
         }
 
         function deleteRunningAdItem(index) {
+            runningAds = getRunningAdsDraftFromForm();
             if (confirm('Hapus teks iklan berjalan ini?')) {
                 runningAds.splice(index, 1);
-                saveAppState(); renderRunningAdsAdmin(); renderRunningAds(); showMessage('Teks iklan berjalan dihapus.');
+                if (!runningAds.length) runningAds.push({ id: Date.now(), icon: 'megaphone', text: '', active: true });
+                saveAppState();
+                renderRunningAdsAdmin();
+                showMessage('Teks iklan berjalan dihapus.');
             }
         }
 
+        function duplicateRunningAdItem(index) {
+            runningAds = getRunningAdsDraftFromForm();
+            const source = runningAds[index];
+            if (!source) return;
+            runningAds.splice(index + 1, 0, { ...source, id: Date.now(), text: `${source.text} Copy` });
+            renderRunningAdsAdmin();
+            showMessage('Baris iklan berjalan berhasil diduplikasi.');
+        }
+
         function moveRunningAd(index, direction) {
+            runningAds = getRunningAdsDraftFromForm();
             const target = index + direction;
             if (target < 0 || target >= runningAds.length) return;
-            saveRunningAds(false);
             [runningAds[index], runningAds[target]] = [runningAds[target], runningAds[index]];
-            saveAppState(); renderRunningAdsAdmin(); renderRunningAds();
+            renderRunningAdsAdmin();
+        }
+
+        function resetRunningAdsDefaults() {
+            if (!confirm('Reset iklan berjalan ke contoh awal?')) return;
+            runningAds = defaultRunningAds();
+            saveAppState();
+            renderRunningAdsAdmin();
+            renderRunningAds();
+            showMessage('Iklan berjalan kembali ke contoh awal.');
+        }
+
+        function setRunningAdTemplate(type) {
+            const templates = {
+                jual: [
+                    { id: Date.now() + 1, icon: 'house', text: 'Rumah siap huni pilihan terbaru sudah tayang di RUMASA.', active: true },
+                    { id: Date.now() + 2, icon: 'tag', text: 'Properti dijual: cek harga, lokasi, dan spesifikasi lengkap.', active: true }
+                ],
+                sewa: [
+                    { id: Date.now() + 1, icon: 'buildings', text: 'Unit sewa apartemen, ruko, kantor, dan rumah tersedia hari ini.', active: true },
+                    { id: Date.now() + 2, icon: 'megaphone', text: 'Cari properti disewakan? Pilih lokasi dan hubungi lewat akses kontak berbayar.', active: true }
+                ],
+                promo: [
+                    { id: Date.now() + 1, icon: 'gift', text: 'PROMO: pasang iklan properti dan tampil lebih menonjol di RUMASA.', active: true },
+                    { id: Date.now() + 2, icon: 'seal-percent', text: 'Diskon layanan akses kontak untuk periode launching.', active: true }
+                ]
+            };
+            runningAds = templates[type] || defaultRunningAds();
+            renderRunningAdsAdmin();
+            showMessage('Template dimuat. Klik Simpan & Terapkan jika sudah cocok.');
         }
 
         // Tampilkan Artikel/Video Ulasan di Hero Banner Kanan
@@ -2681,6 +2893,7 @@
                     </div>
                 </div>
             `;
+            forceAutoplayFeaturedVideo();
         }
 
         function setFeaturedArticle(id) {
@@ -2699,14 +2912,14 @@
             if (!content) return;
 
             const rawVideo = art.videoUrl || '';
-            const videoEmbed = normalizeYoutubeEmbed(rawVideo);
+            const videoEmbed = buildAutoplayVideoUrl(normalizeYoutubeEmbed(rawVideo));
             const hasLocalVideo = isVideoSource(videoEmbed);
             const hasYoutubeVideo = videoEmbed && !hasLocalVideo;
             let videoBlock = '';
             if (hasLocalVideo) {
-                videoBlock = `<div class="bg-black rounded-3xl shadow-2xl overflow-hidden aspect-video border-4 border-white mb-8"><video src="${escapeHtml(videoEmbed)}" poster="${escapeHtml(art.img)}" class="w-full h-full object-cover" controls playsinline></video></div>`;
+                videoBlock = `<div class="bg-black rounded-3xl shadow-2xl overflow-hidden aspect-video border-4 border-white mb-8"><video src="${escapeHtml(videoEmbed)}" poster="${escapeHtml(art.img)}" class="w-full h-full object-cover" autoplay muted loop playsinline controls preload="auto"></video></div>`;
             } else if (hasYoutubeVideo) {
-                videoBlock = `<div class="bg-black rounded-3xl shadow-2xl overflow-hidden aspect-video border-4 border-white mb-8"><iframe class="w-full h-full" src="${escapeHtml(videoEmbed)}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
+                videoBlock = `<div class="bg-black rounded-3xl shadow-2xl overflow-hidden aspect-video border-4 border-white mb-8"><iframe class="w-full h-full" src="${escapeHtml(videoEmbed)}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>`;
             } else {
                 videoBlock = `<div class="bg-white rounded-3xl shadow-sm overflow-hidden aspect-video border-4 border-white mb-8 relative"><img src="${escapeHtml(art.img)}" class="w-full h-full object-cover"><div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-6 text-white"><div class="inline-flex items-center gap-2 bg-white/15 backdrop-blur px-3 py-1.5 rounded-full text-xs font-bold"><i class="ph ph-image"></i> Materi ini belum memiliki video</div></div></div>`;
             }
