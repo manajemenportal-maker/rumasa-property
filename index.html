@@ -666,7 +666,7 @@
                                 <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6">
                                     <div><h2 class="text-2xl font-extrabold text-slate-900">Kelola Pembayaran</h2><p class="text-sm text-slate-500 mt-1">Invoice, metode bayar, bukti transfer, validasi, penolakan, dan laporan pemasukan.</p></div>
                                     <div class="flex flex-col sm:flex-row gap-2 w-full md:w-auto">
-                                        <button onclick="toggleAdminForm('form-manual-invoice')" class="bg-primary hover:bg-secondary text-white px-4 py-3 rounded-2xl font-bold text-sm"><i class="ph ph-plus mr-1"></i> Buat Invoice</button>
+                                        <button onclick="toggleAdminForm('form-manual-invoice'); setTimeout(() => syncManualInvoiceAmount(false), 50)" class="bg-primary hover:bg-secondary text-white px-4 py-3 rounded-2xl font-bold text-sm"><i class="ph ph-plus mr-1"></i> Buat Invoice</button>
                                         <button onclick="exportPaymentCSV()" class="bg-slate-900 hover:bg-slate-700 text-white px-4 py-3 rounded-2xl font-bold text-sm"><i class="ph ph-download-simple mr-1"></i> Export CSV</button>
                                     </div>
                                 </div>
@@ -679,8 +679,8 @@
                                     <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
                                         <div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Email User</label><input id="manual-inv-email" type="email" class="w-full p-3 border border-slate-300 rounded-2xl" placeholder="user@email.com" required></div>
                                         <div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">ID Iklan</label><input id="manual-inv-adid" type="number" class="w-full p-3 border border-slate-300 rounded-2xl" placeholder="Opsional"></div>
-                                        <div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Paket</label><select id="manual-inv-package" class="w-full p-3 border border-slate-300 rounded-2xl bg-white"><option>Upgrade Keanggotaan RUMASA</option><option>Premium Ads</option><option>Akses Kontak Properti</option><option>Featured Listing</option><option>Banner Sponsor</option><option>Admin Service</option></select></div>
-                                        <div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Nominal</label><input id="manual-inv-amount" type="number" class="w-full p-3 border border-slate-300 rounded-2xl" value="50000" required></div>
+                                        <div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Paket</label><select id="manual-inv-package" onchange="syncManualInvoiceAmount(true)" class="w-full p-3 border border-slate-300 rounded-2xl bg-white"><option>Upgrade Keanggotaan RUMASA</option><option>Premium Ads</option><option>Akses Kontak Properti</option><option>Featured Listing</option><option>Banner Sponsor</option><option>Admin Service</option></select></div>
+                                        <div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Nominal</label><input id="manual-inv-amount" type="number" class="w-full p-3 border border-slate-300 rounded-2xl" placeholder="Otomatis mengikuti paket / boleh override"></div>
                                         <div class="flex items-end"><button class="w-full bg-primary text-white p-3 rounded-2xl font-bold">Simpan</button></div>
                                     </div>
                                 </form>
@@ -1060,10 +1060,11 @@
                     <div class="text-xs text-slate-500 mt-2" id="pay-desc">Invoice</div>
                 </div>
                 <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-sm">
-                    <div class="font-black text-slate-800 mb-2">Tujuan Pembayaran</div>
-                    <div class="flex justify-between border-b border-slate-200 pb-1 mb-1"><span>Bank</span><b>BCA 1234567890</b></div>
-                    <div class="flex justify-between border-b border-slate-200 pb-1 mb-1"><span>QRIS</span><b>RUMASA PAY</b></div>
-                    <div class="flex justify-between"><span>Atas nama</span><b>PT RUMASA</b></div>
+                    <div class="font-black text-slate-800 mb-2 flex items-center gap-2"><i class="ph ph-bank text-primary"></i> Tujuan Pembayaran Resmi</div>
+                    <div class="flex justify-between border-b border-slate-200 pb-1 mb-1"><span>Bank</span><b>BANK BCA</b></div>
+                    <div class="flex justify-between border-b border-slate-200 pb-1 mb-1"><span>No. Rekening</span><b>6044837263</b></div>
+                    <div class="flex justify-between border-b border-slate-200 pb-1 mb-1"><span>Atas Nama</span><b>PT Kalimaja Surya Alam</b></div>
+                    <p class="text-[11px] text-slate-500 mt-3 leading-relaxed">Pastikan nominal transfer sama dengan total tagihan yang tampil di invoice ini.</p>
                 </div>
             </div>
             
@@ -1076,7 +1077,11 @@
                 <div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Catatan Pembayaran</label><input id="pay-note" class="w-full p-3 border border-slate-300 rounded-2xl" placeholder="Contoh: transfer dari BCA jam 10:15"></div>
                 <div>
                     <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Upload Bukti Transfer</label>
-                    <input type="file" id="pay-proof-file" accept="image/*" required class="w-full p-3 border border-slate-300 rounded-2xl bg-slate-50" onchange="previewPaymentProof(this)">
+                    <input type="file" id="pay-proof-file" accept="image/*" required class="hidden" onchange="previewPaymentProof(this)">
+                    <label for="pay-proof-file" class="flex items-center justify-center gap-2 w-full p-4 border-2 border-dashed border-slate-300 rounded-2xl bg-slate-50 hover:bg-blue-50 hover:border-primary cursor-pointer transition font-bold text-slate-700">
+                        <i class="ph ph-image-square text-xl text-primary"></i> Pilih Foto Bukti Transfer
+                    </label>
+                    <div id="pay-proof-status" class="hidden mt-2 text-xs font-bold text-green-700 bg-green-50 border border-green-100 rounded-xl px-3 py-2">Foto bukti sudah dipilih. Nama file tidak ditampilkan untuk menjaga privasi.</div>
                     <div id="pay-proof-preview" class="hidden mt-3 h-48 rounded-2xl overflow-hidden border border-slate-200 bg-slate-50"></div>
                 </div>
                 <button type="submit" class="w-full bg-primary hover:bg-secondary text-white py-4 rounded-2xl font-black shadow-lg transition">Konfirmasi & Kirim Bukti</button>
@@ -1236,7 +1241,7 @@
         };
         let peerChatDB = {};
         let activePeerChatKey = '';
-        const RUMASA_STORAGE_KEY = 'rumasa_marketplace_live_v20';
+        const RUMASA_STORAGE_KEY = 'rumasa_marketplace_live_v21';
         const RUMASA_LOGO_DATA = 'data:image/webp;base64,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';
 
         const firebaseConfig = {
@@ -1342,6 +1347,7 @@
                 if (doc.exists && doc.data() && doc.data().snapshot) {
                     firebaseSyncLock = true;
                     applyAppSnapshot(doc.data().snapshot);
+                    syncPendingInvoiceAmounts(false);
                     const cleanedLegacyUlasan = sanitizeLegacyFeaturedReviewDefaults();
                     localStorage.setItem(RUMASA_STORAGE_KEY, JSON.stringify(buildAppSnapshot()));
                     firebaseSyncLock = false;
@@ -1372,6 +1378,7 @@
                 const raw = localStorage.getItem(RUMASA_STORAGE_KEY);
                 if (!raw) return;
                 applyAppSnapshot(JSON.parse(raw));
+                syncPendingInvoiceAmounts(false);
                 if (sanitizeLegacyFeaturedReviewDefaults()) {
                     localStorage.setItem(RUMASA_STORAGE_KEY, JSON.stringify(buildAppSnapshot()));
                 }
@@ -1819,6 +1826,41 @@
             return `Member Aktif s/d ${exp}`;
         }
 
+        function getConfiguredPackageAmount(packageName = '') {
+            const pkg = String(packageName || '').toLowerCase();
+            if (pkg.includes('keanggotaan') || pkg.includes('member')) return Number(monetizationSettings.membershipPrice ?? 0);
+            if (pkg.includes('akses kontak')) return Number(monetizationSettings.contactAccessPrice ?? 0);
+            if (pkg.includes('premium') || pkg.includes('featured')) return Number(monetizationSettings.premiumAdPrice ?? 0);
+            return null;
+        }
+
+        function refreshInvoiceAmountFromSettings(inv) {
+            if (!inv) return false;
+            if (['Lunas', 'Ditolak'].includes(inv.status)) return false;
+            const configured = getConfiguredPackageAmount(inv.package || inv.desc || '');
+            if (configured === null || Number.isNaN(configured)) return false;
+            if (Number(inv.amount) !== Number(configured)) {
+                inv.amount = Number(configured);
+                return true;
+            }
+            return false;
+        }
+
+        function syncPendingInvoiceAmounts(save = false) {
+            let changed = false;
+            invoiceDB.forEach(inv => { if (refreshInvoiceAmountFromSettings(inv)) changed = true; });
+            if (changed && save) saveAppState();
+            return changed;
+        }
+
+        function syncManualInvoiceAmount(force = false) {
+            const pkgEl = document.getElementById('manual-inv-package');
+            const amountEl = document.getElementById('manual-inv-amount');
+            if (!pkgEl || !amountEl) return;
+            const configured = getConfiguredPackageAmount(pkgEl.value);
+            if (configured !== null && (force || !amountEl.value)) amountEl.value = configured;
+        }
+
         function requestMembershipUpgrade(forceNavigate = true) {
             if (!currentUser) { showMessage('Silakan masuk dulu untuk upgrade keanggotaan.'); navigate('auth'); toggleAuth('login'); return; }
             normalizeUserCommerceState(currentUser);
@@ -1827,7 +1869,7 @@
             if (duplicate) { showMessage('Tagihan upgrade keanggotaan sudah ada di dashboard Anda.'); if (forceNavigate) navigate('user'); return; }
             const invId = 'INV-' + invoiceCounter++;
             const due = new Date(); due.setDate(due.getDate() + 3);
-            invoiceDB.push({ id: invId, adId: '', user: currentUser.name, userEmail: currentUser.email, desc: 'Upgrade Keanggotaan RUMASA', package: 'Upgrade Keanggotaan RUMASA', amount: Number(monetizationSettings.membershipPrice || 75000), status: 'Belum Bayar', method: '-', dueDate: due.toLocaleDateString('id-ID'), proofImage: '', submittedAt: '', paidAt: '', adminNote: 'Benefit: tambah iklan, lihat nomor WA, dan chat teks langsung.' });
+            invoiceDB.push({ id: invId, adId: '', user: currentUser.name, userEmail: currentUser.email, desc: 'Upgrade Keanggotaan RUMASA', package: 'Upgrade Keanggotaan RUMASA', amount: Number(monetizationSettings.membershipPrice ?? 0), status: 'Belum Bayar', method: '-', dueDate: due.toLocaleDateString('id-ID'), proofImage: '', submittedAt: '', paidAt: '', adminNote: 'Benefit: tambah iklan, lihat nomor WA, dan chat teks langsung.' });
             saveAppState(); renderUserInvoices(); updateAdminRingkasan();
             if (forceNavigate) navigate('user');
         }
@@ -1938,7 +1980,7 @@
             const unlocked = getUnlockedContactProperties();
             const statusCard = member
                 ? `<div class="bg-green-50 border border-green-200 rounded-3xl p-5"><div class="text-xs font-black uppercase tracking-widest text-green-700">Benefit member aktif</div><div class="text-xl font-black text-green-800 mt-1">${escapeHtml(getMembershipLabel(currentUser))}</div><div class="grid grid-cols-1 md:grid-cols-2 gap-2 mt-4 text-sm text-green-800"><div><i class="ph ph-check-circle"></i> Bisa tambah iklan lebih dari ${freeLimit}</div><div><i class="ph ph-check-circle"></i> Bisa melihat WA sesuai setting user</div><div><i class="ph ph-check-circle"></i> Bisa chat teks langsung di website</div><div><i class="ph ph-check-circle"></i> Iklan pending otomatis aktif setelah dibayar</div></div></div>`
-                : `<div class="bg-white border border-slate-200 rounded-3xl p-5 shadow-sm"><div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4"><div><div class="text-xs font-black uppercase tracking-widest text-slate-400">Akun free</div><div class="text-xl font-black text-slate-900 mt-1">Jatah iklan gratis: ${usedAds}/${freeLimit}</div><p class="text-sm text-slate-500 mt-2">Kontak WA dan chat teks user lain terkunci. Upgrade untuk semua akses, atau bayar akses kontak per properti.</p></div><button onclick="requestMembershipUpgrade(true); renderUserDashboard();" class="bg-primary hover:bg-secondary text-white px-5 py-3 rounded-2xl font-black shadow-sm">Upgrade Rp ${formatNumber(monetizationSettings.membershipPrice || 75000)}</button></div></div>`;
+                : `<div class="bg-white border border-slate-200 rounded-3xl p-5 shadow-sm"><div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4"><div><div class="text-xs font-black uppercase tracking-widest text-slate-400">Akun free</div><div class="text-xl font-black text-slate-900 mt-1">Jatah iklan gratis: ${usedAds}/${freeLimit}</div><p class="text-sm text-slate-500 mt-2">Kontak WA dan chat teks user lain terkunci. Upgrade untuk semua akses, atau bayar akses kontak per properti.</p></div><button onclick="requestMembershipUpgrade(true); renderUserDashboard();" class="bg-primary hover:bg-secondary text-white px-5 py-3 rounded-2xl font-black shadow-sm">Upgrade Rp ${formatNumber(monetizationSettings.membershipPrice ?? 0)}</button></div></div>`;
             const contactsHtml = unlocked.length
                 ? unlocked.slice(0, 8).map(p => {
                     const ownerEmail = getPropertyOwnerEmail(p);
@@ -2037,7 +2079,7 @@
             if (duplicate) { showMessage('Tagihan upgrade untuk iklan ini sudah ada.'); return; }
             const invId = 'INV-' + invoiceCounter++;
             const due = new Date(); due.setDate(due.getDate() + 7);
-            invoiceDB.push({ id: invId, adId: adId, user: currentUser.name, userEmail: currentUser.email, desc: `Upgrade Premium: ${title}`, package: 'Premium Ads', amount: Number(monetizationSettings.premiumAdPrice || 50000), status: 'Belum Bayar', method: '-', dueDate: due.toLocaleDateString('id-ID'), proofImage: '', submittedAt: '', paidAt: '', adminNote: '' });
+            invoiceDB.push({ id: invId, adId: adId, user: currentUser.name, userEmail: currentUser.email, desc: `Upgrade Premium: ${title}`, package: 'Premium Ads', amount: Number(monetizationSettings.premiumAdPrice ?? 0), status: 'Belum Bayar', method: '-', dueDate: due.toLocaleDateString('id-ID'), proofImage: '', submittedAt: '', paidAt: '', adminNote: '' });
             saveAppState();
             showMessage('Tagihan berhasil dibuat. Silakan bayar tagihan Anda.');
             renderUserDashboard(); updateAdminRingkasan();
@@ -2075,7 +2117,7 @@
             }
             const invId = 'INV-' + invoiceCounter++;
             const due = new Date(); due.setDate(due.getDate() + 3);
-            invoiceDB.push({ id: invId, adId: adId, user: currentUser.name, userEmail: currentUser.email, desc: `Akses Kontak Properti: ${title}`, package: 'Akses Kontak Properti', amount: Number(monetizationSettings.contactAccessPrice || 25000), status: 'Belum Bayar', method: '-', dueDate: due.toLocaleDateString('id-ID'), proofImage: '', submittedAt: '', paidAt: '', adminNote: '' });
+            invoiceDB.push({ id: invId, adId: adId, user: currentUser.name, userEmail: currentUser.email, desc: `Akses Kontak Properti: ${title}`, package: 'Akses Kontak Properti', amount: Number(monetizationSettings.contactAccessPrice ?? 0), status: 'Belum Bayar', method: '-', dueDate: due.toLocaleDateString('id-ID'), proofImage: '', submittedAt: '', paidAt: '', adminNote: '' });
             saveAppState(); renderUserDashboard(); renderAdminPayments(); updateAdminRingkasan();
             showMessage('Tagihan akses kontak dibuat. Setelah lunas, tombol WhatsApp akan aktif.');
             navigate('user');
@@ -2265,6 +2307,7 @@
 
         function renderUserInvoices() {
             if (!currentUser) return;
+            syncPendingInvoiceAmounts(false);
             const list = document.getElementById('user-invoice-list');
             const myInvoices = invoiceDB.filter(i => i.userEmail === currentUser.email);
             if (myInvoices.length === 0) {
@@ -2280,6 +2323,7 @@
 
         function openPaymentModal(invId) {
             const inv = invoiceDB.find(i => i.id === invId); if (!inv) return;
+            if (refreshInvoiceAmountFromSettings(inv)) saveAppState();
             document.getElementById('pay-inv-id').value = inv.id;
             document.getElementById('pay-amount').innerText = 'Rp ' + formatNumber(inv.amount);
             document.getElementById('pay-desc').innerText = `${inv.id} • ${inv.desc}`;
@@ -2287,6 +2331,7 @@
             document.getElementById('pay-sender').value = inv.senderName || currentUser.name || '';
             document.getElementById('pay-note').value = inv.paymentNote || '';
             const prev = document.getElementById('pay-proof-preview'); if (prev) { prev.classList.add('hidden'); prev.innerHTML = ''; }
+            const status = document.getElementById('pay-proof-status'); if (status) status.classList.add('hidden');
             const file = document.getElementById('pay-proof-file'); if (file) file.value = '';
             const modal = document.getElementById('payment-modal'); modal.classList.remove('hidden'); setTimeout(() => modal.classList.remove('opacity-0'), 10);
         }
@@ -2299,6 +2344,8 @@
             readFileAsDataUrl(input, dataUrl => {
                 input.dataset.proof = dataUrl;
                 const prev = document.getElementById('pay-proof-preview');
+                const status = document.getElementById('pay-proof-status');
+                if (status) status.classList.remove('hidden');
                 if (prev) { prev.classList.remove('hidden'); prev.innerHTML = `<img src="${dataUrl}" class="w-full h-full object-contain bg-white">`; }
             }, 4);
         }
@@ -2314,7 +2361,7 @@
                 inv.senderName = document.getElementById('pay-sender').value.trim();
                 inv.paymentNote = document.getElementById('pay-note').value.trim();
                 inv.proofImage = dataUrl;
-                inv.proofName = fileInput.files[0]?.name || 'bukti-transfer';
+                inv.proofName = 'foto-bukti-transfer';
                 inv.submittedAt = new Date().toLocaleString('id-ID');
                 inv.adminNote = '';
                 saveAppState(); showMessage('Bukti transfer berhasil dikirim ke Admin.'); closePaymentModal(); renderUserInvoices(); renderAdminPayments(); updateAdminRingkasan();
@@ -2327,14 +2374,16 @@
             const setVal = (id, val) => { const el = document.getElementById(id); if (el) el.value = val; };
             setVal('money-free-limit', monetizationSettings.freeAdsLimit ?? 1);
             setVal('money-duration', monetizationSettings.membershipDurationDays ?? 30);
-            setVal('money-membership', monetizationSettings.membershipPrice ?? 75000);
-            setVal('money-contact', monetizationSettings.contactAccessPrice ?? 25000);
-            setVal('money-premium', monetizationSettings.premiumAdPrice ?? 50000);
+            setVal('money-membership', monetizationSettings.membershipPrice ?? 0);
+            setVal('money-contact', monetizationSettings.contactAccessPrice ?? 0);
+            setVal('money-premium', monetizationSettings.premiumAdPrice ?? 0);
             const preview = document.getElementById('monetization-preview');
             if (preview) preview.innerHTML = `
                 <div class="bg-white/10 border border-white/10 rounded-2xl p-4"><div class="text-xs text-slate-300">Iklan gratis</div><div class="font-black text-2xl">${formatNumber(monetizationSettings.freeAdsLimit || 1)} iklan</div></div>
                 <div class="bg-white/10 border border-white/10 rounded-2xl p-4"><div class="text-xs text-slate-300">Upgrade member</div><div class="font-black text-2xl">Rp ${formatNumber(monetizationSettings.membershipPrice || 0)}</div></div>
-                <div class="bg-white/10 border border-white/10 rounded-2xl p-4"><div class="text-xs text-slate-300">Akses kontak</div><div class="font-black text-2xl">Rp ${formatNumber(monetizationSettings.contactAccessPrice || 0)}</div></div>`;
+                <div class="bg-white/10 border border-white/10 rounded-2xl p-4"><div class="text-xs text-slate-300">Akses kontak</div><div class="font-black text-2xl">Rp ${formatNumber(monetizationSettings.contactAccessPrice || 0)}</div></div>
+                <div class="bg-white/10 border border-white/10 rounded-2xl p-4"><div class="text-xs text-slate-300">Premium ads</div><div class="font-black text-2xl">Rp ${formatNumber(monetizationSettings.premiumAdPrice || 0)}</div></div>`;
+            syncManualInvoiceAmount(false);
         }
 
         function saveMonetizationSettings() {
@@ -2343,7 +2392,8 @@
             monetizationSettings.membershipPrice = Number(document.getElementById('money-membership')?.value) || 0;
             monetizationSettings.contactAccessPrice = Number(document.getElementById('money-contact')?.value) || 0;
             monetizationSettings.premiumAdPrice = Number(document.getElementById('money-premium')?.value) || 0;
-            saveAppState(); renderMonetizationAdmin(); renderUserMembershipPanel(); showMessage('Pengaturan monetisasi berhasil disimpan.');
+            syncPendingInvoiceAmounts(false);
+            saveAppState(); renderMonetizationAdmin(); renderUserMembershipPanel(); renderUserInvoices(); renderAdminPayments(); showMessage('Pengaturan monetisasi berhasil disimpan dan tagihan aktif ikut disesuaikan.');
         }
 
         // -----------------------------------------------------
@@ -2487,6 +2537,7 @@
 
         function renderAdminPayments() {
             normalizeInvoices();
+            syncPendingInvoiceAmounts(false);
             const tbody = document.getElementById('admin-invoice-table'); if (!tbody) return;
             const keyword = readAdminInput('admin-payment-search').toLowerCase();
             const statusFilter = readAdminInput('admin-payment-status', 'all');
@@ -2558,7 +2609,7 @@
         function openPaymentDetail(invId) {
             const inv = invoiceDB.find(i => i.id === invId); if (!inv) return;
             const modal = document.getElementById('admin-editor-modal'); const content = document.getElementById('admin-editor-modal-content'); if (!modal || !content) return;
-            content.innerHTML = `<div class="p-6 md:p-8"><div class="mb-6"><div class="text-xs uppercase tracking-widest text-primary font-bold">Detail Pembayaran</div><h2 class="text-2xl font-black text-slate-900">${escapeHtml(inv.id)}</h2><p class="text-sm text-slate-500">${escapeHtml(inv.user)} • ${escapeHtml(inv.userEmail)}</p></div><div class="grid grid-cols-1 lg:grid-cols-2 gap-6"><div class="space-y-3 text-sm"><div class="flex justify-between border-b border-slate-100 pb-2"><span>Paket</span><b>${escapeHtml(inv.package || inv.desc)}</b></div><div class="flex justify-between border-b border-slate-100 pb-2"><span>Nominal</span><b>Rp ${formatNumber(inv.amount)}</b></div><div class="flex justify-between border-b border-slate-100 pb-2"><span>Metode</span><b>${escapeHtml(inv.method || '-')}</b></div><div class="flex justify-between border-b border-slate-100 pb-2"><span>Pengirim</span><b>${escapeHtml(inv.senderName || '-')}</b></div><div class="flex justify-between border-b border-slate-100 pb-2"><span>Status</span><span>${getStatusBadge(inv.status)}</span></div><div class="bg-slate-50 rounded-2xl p-3"><b>Catatan User:</b><br>${escapeHtml(inv.paymentNote || '-')}</div><div class="bg-slate-50 rounded-2xl p-3"><b>Catatan Admin:</b><br>${escapeHtml(inv.adminNote || '-')}</div></div><div><div class="font-black mb-2">Bukti Transfer</div><div class="h-80 bg-slate-100 border border-slate-200 rounded-3xl overflow-hidden flex items-center justify-center">${inv.proofImage ? `<img src="${escapeHtml(inv.proofImage)}" class="w-full h-full object-contain bg-white">` : `<span class="text-slate-400">Belum ada bukti</span>`}</div></div></div><div class="flex justify-end gap-2 mt-6 border-t border-slate-100 pt-4">${inv.status === 'Menunggu Verifikasi' ? `<button onclick="verifyPayment('${escapeHtml(inv.id)}', false); closeAdminEditorModal();" class="px-5 py-3 bg-red-100 text-red-700 rounded-2xl font-bold">Tolak</button><button onclick="verifyPayment('${escapeHtml(inv.id)}', true); closeAdminEditorModal();" class="px-5 py-3 bg-green-600 text-white rounded-2xl font-bold">Terima</button>` : ''}<button onclick="closeAdminEditorModal()" class="px-5 py-3 bg-slate-900 text-white rounded-2xl font-bold">Tutup</button></div></div>`;
+            content.innerHTML = `<div class="p-6 md:p-8"><div class="mb-6"><div class="text-xs uppercase tracking-widest text-primary font-bold">Detail Pembayaran</div><h2 class="text-2xl font-black text-slate-900">${escapeHtml(inv.id)}</h2><p class="text-sm text-slate-500">${escapeHtml(inv.user)} • ${escapeHtml(inv.userEmail)}</p></div><div class="grid grid-cols-1 lg:grid-cols-2 gap-6"><div class="space-y-3 text-sm"><div class="flex justify-between border-b border-slate-100 pb-2"><span>Paket</span><b>${escapeHtml(inv.package || inv.desc)}</b></div><div class="flex justify-between border-b border-slate-100 pb-2"><span>Nominal</span><b>Rp ${formatNumber(inv.amount)}</b></div><div class="flex justify-between border-b border-slate-100 pb-2"><span>Metode</span><b>${escapeHtml(inv.method || '-')}</b></div><div class="flex justify-between border-b border-slate-100 pb-2"><span>Pengirim</span><b>${escapeHtml(inv.senderName || '-')}</b></div><div class="flex justify-between border-b border-slate-100 pb-2"><span>Status</span><span>${getStatusBadge(inv.status)}</span></div><div class="bg-slate-50 rounded-2xl p-3"><b>Catatan User:</b><br>${escapeHtml(inv.paymentNote || '-')}</div><div class="bg-slate-50 rounded-2xl p-3"><b>Catatan Admin:</b><br>${escapeHtml(inv.adminNote || '-')}</div><div class="bg-blue-50 border border-blue-100 rounded-2xl p-3"><b>Rekening Tujuan:</b><br>BANK BCA • 6044837263<br>PT Kalimaja Surya Alam</div></div><div><div class="font-black mb-2">Bukti Transfer</div><div class="h-80 bg-slate-100 border border-slate-200 rounded-3xl overflow-hidden flex items-center justify-center">${inv.proofImage ? `<img src="${escapeHtml(inv.proofImage)}" class="w-full h-full object-contain bg-white">` : `<span class="text-slate-400">Belum ada bukti</span>`}</div></div></div><div class="flex justify-end gap-2 mt-6 border-t border-slate-100 pt-4">${inv.status === 'Menunggu Verifikasi' ? `<button onclick="verifyPayment('${escapeHtml(inv.id)}', false); closeAdminEditorModal();" class="px-5 py-3 bg-red-100 text-red-700 rounded-2xl font-bold">Tolak</button><button onclick="verifyPayment('${escapeHtml(inv.id)}', true); closeAdminEditorModal();" class="px-5 py-3 bg-green-600 text-white rounded-2xl font-bold">Terima</button>` : ''}<button onclick="closeAdminEditorModal()" class="px-5 py-3 bg-slate-900 text-white rounded-2xl font-bold">Tutup</button></div></div>`;
             modal.classList.remove('hidden'); modal.classList.add('flex');
         }
 
@@ -2569,10 +2620,8 @@
             const pkg = document.getElementById('manual-inv-package').value;
             let amount = Number(document.getElementById('manual-inv-amount').value) || 0;
             if (!amount) {
-                const pkgLow = String(document.getElementById('manual-inv-package').value || '').toLowerCase();
-                if (pkgLow.includes('keanggotaan')) amount = Number(monetizationSettings.membershipPrice || 0);
-                else if (pkgLow.includes('akses kontak')) amount = Number(monetizationSettings.contactAccessPrice || 0);
-                else if (pkgLow.includes('premium')) amount = Number(monetizationSettings.premiumAdPrice || 0);
+                const configured = getConfiguredPackageAmount(pkg);
+                amount = configured === null ? 0 : configured;
             }
             const due = new Date(); due.setDate(due.getDate() + 7);
             const invId = 'INV-' + invoiceCounter++;
@@ -2666,7 +2715,7 @@
             const duplicate = invoiceDB.find(inv => inv.adId === adId && inv.userEmail === email && ['Belum Bayar', 'Menunggu Verifikasi'].includes(inv.status));
             if (duplicate) { showMessage('Tagihan untuk iklan ini sudah ada.'); switchAdminTab('pembayaran'); return; }
             const invId = 'INV-' + invoiceCounter++;
-            invoiceDB.push({ id: invId, adId: adId, user: user.name, userEmail: email, desc: `Upgrade Premium: ${ad.title}`, amount: Number(monetizationSettings.premiumAdPrice || 50000), status: 'Belum Bayar' });
+            invoiceDB.push({ id: invId, adId: adId, user: user.name, userEmail: email, desc: `Upgrade Premium: ${ad.title}`, package: 'Premium Ads', amount: Number(monetizationSettings.premiumAdPrice ?? 0), status: 'Belum Bayar', method: '-', dueDate: new Date(Date.now() + 7*24*60*60*1000).toLocaleDateString('id-ID'), proofImage: '', submittedAt: '', paidAt: '', adminNote: '' });
             saveAppState(); showMessage('Tagihan upgrade berhasil dibuat.');
             renderAdminPayments(); renderAdminAds(); updateAdminRingkasan();
         }
